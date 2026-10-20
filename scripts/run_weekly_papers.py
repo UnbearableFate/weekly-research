@@ -64,13 +64,13 @@ def main():
         }
         write_json(folder / "execution.json", execution)
         prompt = (
-            f"Execute the authorized weekly paper research for run date {day} (Asia/Shanghai) "
+            f"Execute the authorized weekly paper research for run date {day} ({config['timezone']}) "
             f"in {ROOT}. Read workflows/weekly-papers.md and weekly-papers.json, then execute all "
             "stages through archive validation. The workflow instructions are English; every paper "
             "summary must pair English first, then Chinese in each corresponding section. "
             "Use the selected daily-papers and academic-research-suite subworkflows. "
-            "The configured research scope is LLM optimizers, distributed learning, PEFT, continual "
-            "learning. You are the sole research executor; do not delegate or substitute models. "
+            "Use the current topics and research_interests in weekly-papers.json as the authoritative "
+            "research scope. You are the sole research executor; do not delegate or substitute models. "
             "Use the existing scripts, modify only papers/, preserve failures and partial results, "
             "and do not change scripts, schedules, skills or user configuration. "
             "Do not send notifications or messages, publish, commit/push, inspect credentials or "

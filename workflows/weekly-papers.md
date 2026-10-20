@@ -13,8 +13,9 @@ The weekly overview may be Chinese. Do not substitute the model silently.
 
 Read `weekly-papers.json`. Its `topics`, `research_interests`, `negative_keywords`,
 `arxiv_categories`, and `fuzzy` settings override the daily-papers research scope.
-The user explicitly selected **LLM optimizers, distributed learning, PEFT, and
-continual learning**. All keywords, synonyms and fuzzy thresholds are editable.
+The initial interests are **LLM optimizers, distributed learning, PEFT, and
+continual learning**; the current configuration is authoritative when edited.
+All keywords, synonyms and fuzzy thresholds are editable.
 Use case/hyphen normalization and conservative spelling similarity for long words;
 require exact token boundaries for short acronyms. Record matched topics/terms and
 similarity, then judge relevance from the title and abstract with the executing model.
