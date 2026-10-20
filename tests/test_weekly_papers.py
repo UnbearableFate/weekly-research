@@ -99,6 +99,11 @@ class ArchiveTests(unittest.TestCase):
         self.assertEqual(self.store.db.execute("SELECT count(*) FROM relations").fetchone()[0], 1)
         with self.assertRaisesRegex(ValueError, "does not match"):
             self.store.relation("2026-10-20", {**edge, "evidence_quote": "invented quotation"})
+        # Correcting an overstated author attribution must replace, not duplicate, the edge.
+        self.store.relation("2026-10-20", {**edge, "relation_type": "method_dependency"})
+        self.assertEqual(self.store.db.execute("SELECT count(*) FROM relations").fetchone()[0], 1)
+        self.assertEqual(self.store.db.execute("SELECT relation_type FROM relations").fetchone()[0],
+                         "method_dependency")
 
     def test_changed_pdf_invalidates_registered_summary(self):
         key, _ = self.store.resolve(self.record(arxiv_id="2610.12345"))

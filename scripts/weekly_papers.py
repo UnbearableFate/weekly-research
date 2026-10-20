@@ -409,12 +409,14 @@ class Archive:
             raise ValueError("Evidence quote does not match the locally extracted original")
         existing = [json.loads(r[0]) for r in self.db.execute(
             "SELECT evidence FROM relations WHERE run_date=? AND source_key=?", (day, record["source_key"]))]
-        quotes = {r["evidence_quote"] for r in existing if (
-            r["target_key"], r["relation_type"]) != (record["target_key"], record["relation_type"])}
+        # A classification correction replaces the edge for this paper pair.
+        quotes = {r["evidence_quote"] for r in existing if r["target_key"] != record["target_key"]}
         quotes.add(record["evidence_quote"])
         if sum(len(q.split()) for q in quotes) > 25:
             raise ValueError("More than 25 quoted words from one source; shorten excerpts")
         with self.db:
+            self.db.execute("DELETE FROM relations WHERE run_date=? AND source_key=? AND target_key=?",
+                            (day, record["source_key"], record["target_key"]))
             self.db.execute("INSERT OR REPLACE INTO relations VALUES (?,?,?,?,?)",
                             (day, record["source_key"], record["target_key"], record["relation_type"],
                              json.dumps(record, ensure_ascii=False)))
