@@ -115,6 +115,13 @@ research. The launcher supplies the run date; otherwise use today's Shanghai dat
    - **Limitations / 局限**: distinguish author-acknowledged limitations from untested
      reader inferences, and state the read sections;
    - sources and AI-assisted reading disclosure. Do not mark sources human-read.
+   Before registering each note, reread its core method against the original:
+   identify which variable is updated, which quantities are fixed, and whether a
+   stated objective is optimized directly or through a surrogate. Verify that each
+   cited figure/table exists and supports the stated comparison. Separate tested
+   architectures and settings from extensions the authors merely suggest. Preserve
+   canonical paper titles; use method nicknames separately. Apply corrections to
+   both languages and to the weekly comparison.
    If only an abstract is available, identify the limited scope and keep the run
    partial. Save the original full text alongside the summary or via a checked
    relative symlink inside the archive.
