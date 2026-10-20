@@ -75,7 +75,10 @@ research. The launcher supplies the run date; otherwise use today's Shanghai dat
 5. Read Introduction, Related Work, Methods, Experiments and references. Search for
    `inspired by`, `based on`, `builds on`, `following`, and `extend`, then determine
    the actual methodological dependency. Usually select **one or two direct
-   foundations per recent paper**, stopping at one citation hop. A generic baseline,
+   foundations per recent paper**, bounded by `max_foundations_per_paper`, stopping
+   at one citation hop. Prioritize the mathematical or algorithmic construction
+   that enables the contribution; identify framework/runtime dependencies as such.
+   A generic baseline,
    high citation count or shared topic alone does not establish a foundation.
    When none can be verified, explicitly record that outcome instead of inventing
    a relationship, using `foundation-check --date ... --key ... --note ...`.
@@ -87,7 +90,12 @@ research. The launcher supplies the run date; otherwise use today's Shanghai dat
    `source_key, target_key, relation_type, evidence_quote, locator, source_url,
    rationale_zh`. Types: `based_on`, `inspired_by`, or `method_dependency` for a
    reader inference supported by method evidence. Do not describe inferred links
-   as explicit author claims. Keep total English verbatim excerpts from each source
+   as explicit author claims. A reference-list title alone is not relationship
+   evidence: quote the methods/introduction passage that establishes actual use.
+   “A related approach” alone is not an explicit inspiration statement. Keep it as
+   background, or explain a concrete shared mechanism and label the inference.
+   Check locator headings against the actual text, not memory.
+   Keep total English verbatim excerpts from each source
    at or below 25 words. Give a precise section/equation locator. Before relying on
    PDF page anchors, run ARS `ars/scripts/pdf_read_preflight.py --help`, execute its
    actual documented interface, and keep its sidecar. Missing dependencies or FAIL
