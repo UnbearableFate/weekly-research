@@ -114,6 +114,8 @@ Verified originals and summaries are reused across weeks through relative
 symlinks. Version changes currently reuse the first archived original: this
 workflow deduplicates papers rather than archiving every arXiv revision.
 Missing/corrupt files are refetched; failed downloads never count as complete.
+Selections rejected after full-text inspection can be withdrawn with `exclude`;
+the reason is recorded and cached originals are preserved.
 Back up the **entire `papers/` directory including `.state/`** to preserve links
 and deduplication history. Downloaded material and execution logs are Git-ignored.
 

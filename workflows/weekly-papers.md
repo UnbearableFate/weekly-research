@@ -132,6 +132,12 @@ existence and SHA-256 before reuse; missing/corrupted files need repair. A faile
 request never becomes a successful download record. Repeat runs recover unfinished
 work, update observations, and avoid fetching verified originals again.
 
+If full-text review invalidates an earlier selection, run
+`exclude --date YYYY-MM-DD --key <key> --role recent|foundation --reason <reason>`.
+This withdraws only that run's selection and dependent relations, retaining the
+identity and cached originals. Report the exclusion; do not write unnecessary
+summaries for background-only papers. Re-ingesting that role explicitly restores it.
+
 ## Boundaries and completion
 
 Write only under this project's `papers/` during research. The parent task maintains

@@ -176,6 +176,10 @@ class Archive:
                 run_date TEXT NOT NULL REFERENCES runs(date),
                 paper_key TEXT NOT NULL REFERENCES papers(key), note TEXT NOT NULL,
                 PRIMARY KEY(run_date,paper_key));
+            CREATE TABLE IF NOT EXISTS exclusions(
+                run_date TEXT NOT NULL REFERENCES runs(date),
+                paper_key TEXT NOT NULL REFERENCES papers(key), role TEXT NOT NULL,
+                reason TEXT NOT NULL, PRIMARY KEY(run_date,paper_key,role));
         """)
 
     def close(self):
@@ -335,6 +339,8 @@ class Archive:
             with self.db:
                 self.db.execute("INSERT OR REPLACE INTO membership VALUES (?,?,?,?)",
                                 (self.day(value).isoformat(), key, role, json.dumps(p, ensure_ascii=False)))
+                self.db.execute("DELETE FROM exclusions WHERE run_date=? AND paper_key=? AND role=?",
+                                (self.day(value).isoformat(), key, role))
             write_json(paper_dir / "metadata.json", p)
             outcome = {"key": key, "directory": str(paper_dir), "role": role}
             try:
@@ -361,6 +367,19 @@ class Archive:
             write_json(paper_dir / "ingest.json", outcome)
             result.append(outcome)
         return result
+
+    def exclude(self, value, key, role, reason):
+        """Withdraw a selection after full-text review; preserve cached artifacts."""
+        day = self.day(value).isoformat()
+        if not reason.strip():
+            raise ValueError("Exclusion needs an evidence-based reason")
+        with self.db:
+            self.db.execute("INSERT OR REPLACE INTO exclusions VALUES (?,?,?,?)", (day, key, role, reason))
+            self.db.execute("DELETE FROM membership WHERE run_date=? AND paper_key=? AND role=?", (day, key, role))
+            endpoint = "source_key" if role == "recent" else "target_key"
+            self.db.execute(f"DELETE FROM relations WHERE run_date=? AND {endpoint}=?", (day, key))
+            if role == "recent":
+                self.db.execute("DELETE FROM foundation_checks WHERE run_date=? AND paper_key=?", (day, key))
 
     def relation(self, value, record):
         day = self.day(value).isoformat()
@@ -406,6 +425,8 @@ class Archive:
         problems, entries = [], []
         relations = [json.loads(r[0]) for r in self.db.execute(
             "SELECT evidence FROM relations WHERE run_date=?", (day,))]
+        exclusions = [dict(r) for r in self.db.execute(
+            "SELECT paper_key,role,reason FROM exclusions WHERE run_date=?", (day,))]
         rows = self.db.execute(
             "SELECT p.key,p.title,m.role,m.observation FROM membership m JOIN papers p ON p.key=m.paper_key "
             "WHERE run_date=? ORDER BY m.role,p.key", (day,)).fetchall()
@@ -452,10 +473,13 @@ class Archive:
                 identity = arxiv_id(selected.get("url"))
                 if identity and not any(e["role"] == "recent" and
                                        e["metadata"].get("arxiv_id") == identity for e in entries):
-                    problems.append(f"Selected paper not archived: {identity}")
+                    alias = self.db.execute(
+                        "SELECT paper_key FROM identifiers WHERE kind='arxiv_id' AND value=?", (identity,)).fetchone()
+                    if not alias or not any(e["paper_key"] == alias[0] and e["role"] == "recent" for e in exclusions):
+                        problems.append(f"Selected paper not archived: {identity}")
         status = "partial" if problems else "complete"
         manifest = {"date": day, "status": status, "validated_at": now(),
-                    "papers": entries, "relations": relations, "problems": problems}
+                    "papers": entries, "relations": relations, "exclusions": exclusions, "problems": problems}
         write_json(folder / "manifest.json", manifest)
         receipt = read_json(folder / "run.json")
         receipt.update(status=status, finalized_at=now())
@@ -665,6 +689,11 @@ def main():
     check.add_argument("--date")
     check.add_argument("--key", required=True)
     check.add_argument("--note", required=True)
+    exclusion = commands.add_parser("exclude")
+    exclusion.add_argument("--date")
+    exclusion.add_argument("--key", required=True)
+    exclusion.add_argument("--role", choices=("recent", "foundation"), required=True)
+    exclusion.add_argument("--reason", required=True)
     commands.add_parser("status")
     args = parser.parse_args()
     archive = Archive(args.root)
@@ -691,6 +720,9 @@ def main():
                 archive.db.execute("INSERT OR REPLACE INTO foundation_checks VALUES (?,?,?)",
                                    (archive.day(args.date).isoformat(), args.key, args.note))
             result = {"registered": True}
+        elif args.command == "exclude":
+            archive.exclude(args.date, args.key, args.role, args.reason)
+            result = {"excluded": args.key, "role": args.role, "cached_artifacts_preserved": True}
         elif args.command == "finalize":
             result = archive.finalize(args.date)
         else:

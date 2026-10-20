@@ -114,6 +114,20 @@ class ArchiveTests(unittest.TestCase):
         self.assertIsNone(self.store.artifact(key, "summary"))
         self.assertTrue(summary.exists())
 
+    def test_full_text_exclusion_preserves_cached_original(self):
+        self.store.prepare("2026-10-20")
+        key, _ = self.store.resolve(self.record(arxiv_id="2610.12345"))
+        path = self.store.papers / "cached.pdf"
+        path.write_bytes(b"%PDF-1.7 preserved")
+        self.store.register(key, "pdf", path)
+        with self.store.db:
+            self.store.db.execute("INSERT INTO membership VALUES (?,?,?,?)",
+                                  ("2026-10-20", key, "foundation", "{}"))
+        self.store.exclude("2026-10-20", key, "foundation", "Architecture background, not a core method.")
+        self.assertEqual(self.store.db.execute("SELECT count(*) FROM membership").fetchone()[0], 0)
+        self.assertEqual(self.store.db.execute("SELECT count(*) FROM exclusions").fetchone()[0], 1)
+        self.assertEqual(self.store.artifact(key, "pdf"), path)
+
     def test_empty_failed_discovery_never_completes(self):
         folder = self.store.prepare("2026-10-20")
         (folder / "README.md").write_text("No reliable source response.")
