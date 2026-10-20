@@ -1,0 +1,11 @@
+[Unit]
+Description=Weekly papers: bilingual summaries and methodological foundations
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/yu/workspace/ml-research
+Environment="PATH=/home/yu/.local/bin:/usr/local/bin:/usr/bin:/bin"
+Environment="TZ=Asia/Shanghai"
+ExecStart="/home/yu/.local/bin/uv" run --project "/home/yu/workspace/ml-research" python "/home/yu/workspace/ml-research/scripts/run_weekly_papers.py"
+TimeoutStartSec=4h
+KillMode=control-group

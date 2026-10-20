@@ -1,0 +1,11 @@
+[Unit]
+Description=Weekly paper research on Friday at 17:00 Asia/Shanghai
+
+[Timer]
+OnCalendar=Fri 17:00:00 Asia/Shanghai
+Persistent=true
+AccuracySec=1s
+Unit=ml-research-weekly-papers.service
+
+[Install]
+WantedBy=timers.target
