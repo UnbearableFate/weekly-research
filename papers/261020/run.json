@@ -1,0 +1,99 @@
+{
+  "date": "2026-10-20",
+  "timezone": "Asia/Shanghai",
+  "window_start": "2026-10-14",
+  "window_end": "2026-10-20",
+  "created_at": "2026-10-20T15:44:41.171198+00:00",
+  "requested_model": "gpt-6-luna",
+  "requested_reasoning_effort": "xhigh",
+  "status": "complete",
+  "config": {
+    "timezone": "Asia/Shanghai",
+    "schedule": "Fri 17:00",
+    "date_format": "%y%m%d",
+    "days": 7,
+    "top_n": 10,
+    "candidate_limit": 60,
+    "min_hf_upvotes": 5,
+    "max_foundations_per_paper": 2,
+    "model": "gpt-6-luna",
+    "reasoning_effort": "xhigh",
+    "research_interests": [
+      "LLM optimizers: optimizer algorithms, preconditioning, memory-efficient optimization and large language model training dynamics.",
+      "Distributed learning: data/model/pipeline/tensor parallel training, communication, synchronization, asynchronous and decentralized learning.",
+      "Parameter-efficient fine-tuning (PEFT): LoRA and low-rank adaptation, adapters, quantized fine-tuning and efficient model adaptation.",
+      "Continual learning: continual pretraining/fine-tuning, catastrophic forgetting, replay, lifelong and incremental learning."
+    ],
+    "topics": {
+      "LLM优化器": [
+        "LLM optimizer",
+        "optimizer",
+        "optimization",
+        "Adam",
+        "AdamW",
+        "Muon",
+        "Shampoo",
+        "preconditioner",
+        "preconditioning",
+        "gradient descent",
+        "memory efficient training",
+        "大模型优化器"
+      ],
+      "分布式学习": [
+        "distributed learning",
+        "distributed training",
+        "decentralized learning",
+        "data parallel",
+        "tensor parallel",
+        "pipeline parallel",
+        "model parallel",
+        "communication efficient",
+        "gradient synchronization",
+        "asynchronous training",
+        "federated learning",
+        "分布式学习"
+      ],
+      "PEFT": [
+        "PEFT",
+        "parameter efficient fine tuning",
+        "low rank adaptation",
+        "LoRA",
+        "QLoRA",
+        "DoRA",
+        "adapter tuning",
+        "prefix tuning",
+        "prompt tuning",
+        "参数高效微调"
+      ],
+      "持续学习": [
+        "continual learning",
+        "continual pretraining",
+        "continual fine tuning",
+        "lifelong learning",
+        "incremental learning",
+        "catastrophic forgetting",
+        "experience replay",
+        "持续学习"
+      ]
+    },
+    "negative_keywords": [
+      "medical imaging",
+      "drug discovery",
+      "weather forecast"
+    ],
+    "arxiv_categories": [
+      "cs.LG",
+      "cs.CL",
+      "cs.DC",
+      "cs.AI"
+    ],
+    "fuzzy": {
+      "enabled": true,
+      "threshold": 0.88,
+      "min_token_length": 5
+    },
+    "ars_skill": "/home/yu/.codex/skills/academic-research-suite",
+    "daily_skills": ".agents/skills"
+  },
+  "finalized_at": "2026-10-20T16:21:55.720346+00:00"
+}

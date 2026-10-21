@@ -1,0 +1,1439 @@
+                                              ON THE BURES-WASSERSTEIN DISTANCE BETWEEN
+                                                      POSITIVE DEFINITE MATRICES
+
+                                                        RAJENDRA BHATIA, TANVI JAIN, AND YONGDO LIM
+arXiv:1712.01504v1 [math.FA] 5 Dec 2017
+
+
+
+
+                                                                                                                         1/2
+                                                 Abstract. The metric d(A, B) = tr A + tr B − 2tr(A1/2 BA1/2 )1/2
+                                                 on the manifold of n × n positive definite matrices arises in various op-
+                                                 timisation problems, in quantum information and in the theory of optimal
+                                                 transport. It is also related to Riemannian geometry. In the first part of
+                                                 this paper we study this metric from the perspective of matrix analysis, sim-
+                                                 plifying and unifying various proofs. Then we develop a theory of a mean
+                                                 of two, and a barycentre of several, positive definite matrices with respect
+                                                 to this metric. We explain some recent work on a fixed point iteration for
+                                                 computing this Wasserstein barycentre. Our emphasis is on ideas natural
+                                                 to matrix analysis.
+
+
+
+
+                                                                            1. Introduction
+                                              Let M(n) be the space of n×n complex matrices, H(n) the real subspace
+                                          of M(n) consisting of Hermitian matrices, and P(n) the subset of H(n)
+                                          consisting of positive semi definite (psd) matrices. The Frobenius inner product
+                                          on M(n) is defined as hA, Bi = Re trA∗ B, and the associated norm kAk2 =
+                                          (trA∗ A)1/2 is called the Frobenius norm. Every psd matrix A has a unique psd
+                                          square root, which we denote by A1/2 . Given A, B in P(n) define d(A, B)
+                                          by the relation
+                                                                     h                              1/2 i1/2
+                                                          d(A, B) = tr A + tr B − 2tr A1/2 BA1/2              .        (1)
+
+                                          It turns out that d(A, B) is a metric on the space P(n) . This metric has been
+                                          of interest in quantum information where it is called the Bures distance, and in
+                                          statistics and the theory of optimal transport where it is called the Wasserstein
+                                          metric. If A and B are diagonal matrices, then d(A, B) reduces to the
+                                          Hellinger distance between probability distributions and is related to the Rao-
+                                          Fisher metric in information theory. The metric d is of interest in differential
+                                          geometry, as it is the distance function corresponding to a Riemannian metric.
+                                               In this paper we explore some fundamental properties of this metric from
+                                          the perspective of matrix analysis. This allows us to unify several known
+                                          facts and to simplify their proofs, to point out new connections, to raise new
+                                          questions and to answer some of them.
+
+                                            2010 Mathematics Subject Classification. 47A63, 47A64, 53C20, 53C22, 60D05, 81P45.
+                                            Key words and phrases. Positive definite matrices, Bures distance, Wasserstein metric,
+                                          Riemannian metric, matrix mean, optimal transport, coupling problem, fidelity.
+                                                                                      1
+2                RAJENDRA BHATIA, TANVI JAIN, AND YONGDO LIM
+
+                          2. Some variational principles
+    The metric d(A, B) and the quantity (A1/2 BA1/2 )1/2 occurring in it, both
+are related to solutions of extremal problems arising in different contexts.
+    Recall that a matrix A is psd if and only if it can be expressed as A =
+MM ∗ for some M ∈ M(n). Another matrix N satisfies the relation A =
+NN ∗ if and only if N = MU for some unitary matrix U. One special matrix
+among all these is A1/2 . Let U(n) stand for the group of all unitary matrices.
+Given a psd matrix A let F (A) be the set defined as
+                          F (A) = {M ∈ M(n) : A = MM ∗ }
+                                  
+                                = A1/2 U : U ∈ U(n) .                                 (2)
+Theorem 1. If d(A, B) is defined as in (1), then
+
+                         d(A, B) =          min      kM − Nk2
+                                          M ∈F (A)
+                                          N∈F (B)
+
+
+                                  =         min      kA1/2 − B 1/2 Uk2 .              (3)
+                                          U ∈U (n)
+
+The minimum in the last expression in (3) is attained at a unitary U occurring
+in the polar decomposition of B 1/2 A1/2 :
+                    B 1/2 A1/2 = U|B 1/2 A1/2 | = U(A1/2 BA1/2 )1/2 .
+Proof. We have for every U ∈ U(n)
+    kA1/2 − B 1/2 Uk22 = kA1/2 k22 + kB 1/2 k22 − tr(A1/2 U ∗ B 1/2 + A1/2 B 1/2 U)
+                           = trA + trB − tr(U ∗ B 1/2 A1/2 + A1/2 B 1/2 U).
+Hence,
+               min       kA1/2 − B 1/2 Uk22
+              U ∈U (n)
+
+                = trA + trB − max tr(U ∗ B 1/2 A1/2 + A1/2 B 1/2 U).                  (4)
+                                      U ∈U (n)
+
+To evaluate the maximum in (4) let X = B 1/2 A1/2 . Then |X| := (X ∗ X)1/2 =
+(A1/2 BA1/2 )1/2 . Let X = V P be the polar decomposition of X, where P =
+|X| and V is unitary. Then
+
+    tr(U ∗ B 1/2 A1/2 + A1/2 B 1/2 U) = tr(U ∗ X + X ∗ U) = tr(U ∗ V P + P V ∗ U).
+     Putting W = U ∗ V, the last expression above can be written as tr(W +
+W ∗ )P. Choosing a basis in which W = diag(eiθ1 , · · · , eiθn ) we have
+                                       Xn
+                                ∗
+                      tr(W + W )P =       (2 cos θj )pjj .
+                                                  j=1
+
+The maximum value of this is attained when W = I and is equal to
+                       X n
+                            2pjj = 2trP = 2tr|X|.
+                                j=1
+                                                                                       3
+
+So, from (4) we have
+            min kA1/2 − B 1/2 Uk22 = trA + trB − 2tr(A1/2 BA1/2 )1/2 .
+           U ∈U (n)
+
+This shows the equality of the two extreme sides of (3). The expression in the
+middle is equal to this because of the unitary invariance of k · k2 . In the course
+of the proof we saw that the minimum in (3) is attained when W = U ∗ V = I ;
+i.e., when U = V, the polar factor for X = B 1/2 A1/2 .
+    From the representations in (3) it is easy to see that d(A, B) is indeed
+a metric. Obviously d(A, B) ≥ 0. The compact sets F (A) and F (B) are
+disjoint unless A = B. So d(A, B) = 0 if and only if A = B. To prove the
+triangle inequality, note that for all psd matrices A, B, C, and unitaries U,
+V, we have
+             d(A, B) ≤ kA1/2 − B 1/2 Uk2
+                        ≤ kA1/2 − C 1/2 V k2 + kB 1/2 U − C 1/2 V k2
+                        = kA1/2 − C 1/2 V k2 + kB 1/2 − C 1/2 V U ∗ k2 .
+Taking the minimum over all U, V, we see that d(A, B) ≤ d(A, C) + d(B, C).
+This proof is adopted from [17].
+    A well-known and important problem in factor analysis and in multidimen-
+sional scaling is the orthogonal Procrustes problem. This asks for the solution
+of the minimisation problem min kA − BUk2 where A and B are given
+matrices (not necessarily psd) and U varies over unitaries. The argument in
+Theorem 1 shows that the minimum is attained when U is the unitary polar
+factor of B ∗ A. In applications A and B represent multivariate data sets,
+and the problem is to ascertain whether they are equivalent up to a rotation.
+See [18] for a brief and [16] for an expansive discussion.
+    In the following remarks we point out some more connections between the
+Bures distance and some other classical problems in matrix analysis.
+     1. The expression in (1) is reminiscent of the matrix arithmetic-geometric
+        mean inequality [11]. Indeed this inequality tells us that for any two
+        psd matrices A1/2 B 1/2 ≤ 21 |||A + B||| for every unitarily invariant
+        norm. For the trace norm k · k1 the left hand side of this inequality
+        is equal to tr(A1/2 BA1/2 )1/2 and the right hand side to 12 (trA + trB).
+        That these two quantities are equal if and only if A = B is one of the
+        assertions included in the statement that d(A, B) is a metric. (This
+        has been known for the Schatten p-norms, 1 < p < ∞ [21], and is false
+        for the case p = ∞. )
+
+    2. Let p = (p1 , . . . , pn ) and q = (q1 , . . . , qn ) be nonnegative vectors, and
+       let                           " n                     #1/2
+                                      X √             √ 2
+                          ρ(p, q) =      ( pi − qi )              .                   (5)
+                                     i=1
+       This is the l2 norm distance between the square roots of the  P vec-
+       tors p and q. If p and q are probability distributions (i.e.,   pi =
+4             RAJENDRA BHATIA, TANVI JAIN, AND YONGDO LIM
+      P
+         qi = 1 ), then ρ(p, q) is called the Hellinger distance. In anal-
+      ogy, one could define a distance ρ(A, B) on psd matrices by putting
+      ρ(A, B) = kA1/2 − B 1/2 k2 . When A and B commute, the distance
+      d(A, B) is equal to ρ(A, B).
+
+    3. A psd matrix A with trA = 1 is called a density matrix or a state.
+       The quantity
+                        F (A, B) = tr(A1/2 BA1/2 )1/2                      (6)
+      is called the fidelity between two states A and B. In this case from
+      (1) we see that
+                         1 2
+                           d (A, B) = 1 − F (A, B).                        (7)
+                         2
+      In the quantum information theory literature it is customary to define
+      the
+      p Bures distance between density matrices A and B as the quantity
+         1 − F (A, B). This is just the distance (1) restricted to density ma-
+      trices. An illuminating discussion of the Bures distance from the QIT
+      perspective can be found in [5]. If A = uu∗ for some unit vector u,
+      then A is called a pure state. In this case we have
+                           F (A, B) = hu, Bui1/2.
+      If both A and B are pure states given as A = uu∗, B = vv ∗ , then
+
+                            F (A, B) = |hu, vi|,
+      and
+                          1 2
+                            d (A, B) = 1 − |hu, vi|.
+                          2
+    4. The Bures distance is related to a measure of separation between sub-
+       spaces of Cn . Let M and N be two l -dimensional subspaces of Cn ,
+       and let P and Q be the orthogonal projections with ranges M and
+       N , respectively. Among all unitary operators on Cn that map M
+       onto N , there is a special one called a direct rotation. This unitary
+       operator U can be represented in a particular orthonormal basis as
+                                             
+                                   C −S O
+                             U =  S C O ,
+                                   O O I
+      where C and S are nonnegative diagonal matrices. If 2l ≤ n , then C
+      and S are l ×l matrices, and if 2l > n, then they are (n−l) ×(n−l)
+      matrices. Further, C 2 + S 2 = I. The operator Θ(M, N ) = arccos C
+      is called the angle operator between M and N . The diagonal entries
+      of this diagonal operator are called the canonical angles between the
+      spaces M and N . It can be seen that the nonzero singular values of
+      P Q are the nonzero diagonal entries of C. The direct rotation was used
+      in [13] in connection with perturbation theory of eigenvectors. See also
+      [6], Section VII.1 and [32] Chapter II, Section 4. The fidelity between
+                                                                               5
+
+       projections P and Q is the sum of the cosines of the canonical angles
+       between the spaces M and N :
+                                                     X
+                  F (P, Q) = tr(P QP )1/2 = kP Qk1 =   cj .
+         Here cj are the diagonal entries of C if 2l ≤ n. In the case when
+         2l > n, we take cj to be the diagonal entries of C for 1 ≤ j ≤ n − l
+         and take them to be 0 for n − l < j ≤ l. They are thus the cosines of
+         the canonical angles between M and N . We have
+                            1 2          X
+                              d (P, Q) =   (1 − cj ).
+                            2
+    The fidelity F (A, B) is a quantity of great interest and it is useful to
+have more descriptions of it. Some variational characterisations of it are given
+below. We need some facts from the theory of geometric means. See Chapter
+4 of [7].
+Let A and B be positive definite matrices. Their geometric mean A#B is
+defined by the Pusz-Woronowicz formula [30]
+                        A#B = A1/2 (A−1/2 BA−1/2 )1/2 A1/2 .                (8)
+This mean is symmetric in A and B. It is the unique positive definite solution
+of the Riccati equation
+                              XA−1 X = B.                                  (9)
+The matrix AB has positive eigenvalues, and it has a unique square root
+(AB)1/2 that has positive eigenvalues. The eigenvalues of BA are the same
+as those of AB. We have
+                        A#B = A(A−1 B)1/2 = (AB −1 )1/2 B.                 (10)
+Another useful characterisation is
+                                                        
+                                              A X
+                        A#B = max X :                    ≥0 .              (11)
+                                              X B
+Here the maximum is with respect to the Loewner partial order; for Hermitian
+matrices X and Y we say X ≥ Y if X − Y is psd. We recall also two
+necessary and sufficient conditions for the block matrix
+                                            
+                                     A X
+                                                                        (12)
+                                     X∗ B
+to be psd. The first says that the matrix (12) is psd if and only if
+                                  A ≥ XB −1 X ∗ ,                          (13)
+and the second that this is so if and only if there exists a contraction K (an
+operator with kKk ≤ 1 ) such that
+                                 X = A1/2 KB 1/2 .                         (14)
+See Chapter 1 of [7].
+6               RAJENDRA BHATIA, TANVI JAIN, AND YONGDO LIM
+
+Theorem 2. Let A and B be positive definite matrices. Then
+                                  1
+            (i)  F (A, B) = min tr(AX + BX −1 ).                             (15)
+                            X>0 2
+                                  p
+           (ii)  F (A, B) = min     tr(AX)tr(BX −1 ).                        (16)
+                            X>0
+                                  
+          (iii)  F (A, B) = max |trX| : A ≥ XB −1 X ∗ .                      (17)
+                                    X>0
+
+Proof. (i) Consider the function f (X) = tr(AX + BX −1 ) defined on P(n).
+This is a convex function and its derivative Df (X) is the linear map from
+H(n) into R given by the formula.
+               Df (X)(Y ) = tr(AY − BX −1 Y X −1 ), Y ∈ H(n).
+
+(See [6] pp.310 - 312.) So a point X0 is a minimum for f if and only if
+
+                      tr(A − X0−1 BX0−1 )Y = 0, Y ∈ H(n).
+
+This is so if and only if A − X0−1 BX0−1 = 0, or in other words X0 AX0 = B.
+This is the Riccati equation (9). So, X0 = A−1 #B. We have then
+               minf (X) = f (X0 ) = tr(A(A−1 #B) + B(A#B −1 )).
+               X>0
+
+Using (10), the right hand side of this equation can be expressed as
+     tr(A · A−1 (AB)1/2 + B(AB)1/2 B −1 ) = 2tr(AB)1/2
+                                          = 2tr(A1/2 BA1/2 )1/2 = 2F (A, B).
+This proves (i).
+(ii) In the proof of (i) above we have seen that at X0 = A−1 #B, we have
+                          trAX0 = trBX0−1 = F (A, B).
+So
+                                         q
+                     trAX0 + trBX0−1
+                                     =       tr(AX0 )tr(BX0−1 ).
+                            2
+This proves (ii).
+(iii) We have remarked earlier that
+                                    
+                                 A M
+                    −1
+            A ≥ MB M ⇔   ∗
+                                       ≥ 0 ⇔ M = A1/2 KB 1/2
+                                M∗ B
+for some contraction K. By the Schwarz inequality we have
+           |trM| = |tr(A1/2 KB 1/2 | ≤ kA1/2 Kk2 kB 1/2 k2
+                                                              √
+                                    ≤ kA1/2 k2 kB 1/2 k2 =         trAtrB.
+If                                          
+                                   A M
+                                                 ≥ 0,
+                                   M∗ B
+                                                                                           7
+
+then for every X > 0 we have
+                                                                             
+                             X 1/2 O                 A M          X 1/2 O
+            0 ≤
+                              O X  −1/2              M∗ B          O X −1/2
+                                                                 
+                              X 1/2 AX 1/2         X 1/2 MX −1/2
+                =                                                   .
+                             X −1/2 M ∗ X 1/2      X −1/2 BX −1/2
+Hence                                      q
+                   1/2         −1/2
+            |trX         MX           |≤       tr(X 1/2 AX 1/2 ) tr(X −1/2 BX −1/2 ).
+
+In other words,                 p
+                       |trM| ≤ tr(AX) tr(BX −1 ).
+This is true for all M satisfying the condition A ≥ MB −1 M ∗ and for all
+X > 0. So
+                                              p
+          max |trM| : A ≥ MB −1 M ∗ ≤ min tr(AX)tr(BX −1 )
+                                                             X>0
+                                                          = F (A, B).                   (18)
+Let M = (AB)1/2 = A(A−1 #B). Then
+        MB −1 M ∗ = (AB)1/2 B −1 (BA)1/2 = B −1 B(AB)1/2 B −1 (BA)1/2
+                         = B −1 (BA)1/2 (BA)1/2 = B −1 BA = A.
+So, the maximum on the left hand side of (18) is attained when M = (AB)1/2
+and it is equal to tr(A1/2 BA1/2 )1/2 = F (A, B). This proves (iii).
+     Theorem 2 with different proofs can be found in [2, 35].
+
+                               3. The Statistical distance
+    Let X, Y be complete separable metric spaces and let µ, ν be Borel prob-
+ability measures on X and Y, respectively. Let Γ(µ, ν) be the collection of
+probability measures γ on X ×Y whose marginals are µ and ν. Let c(x, y)
+be a nonnegative Borel measurable function on X × Y. The optimal transport
+problem is the minimisation problem of finding
+                                 Z
+                           inf      c(x, y)dγ(x, y).
+                                  γ∈Γ(µ,ν)
+                                          X×Y
+
+(Here µ, ν are thought of as mass distributions, and c(x, y) is the cost of
+moving a unit mass from X to Y. The problem is of moving one mass dis-
+tribution to another at the least cost.)
+
+    An important special case of this problem is the following. Let X = Y =
+C , let µ, ν have finite second moments, and let c(x, y) = kx − yk2. In this
+ n
+
+case it can be shown that the quantity
+                                                          1/2
+                                     Z
+                dW (µ, ν) = inf         kx − yk2 dγ(x, y)             (19)
+                                   γ∈Γ(µ,ν)
+                                                 Rn ×Rn
+8              RAJENDRA BHATIA, TANVI JAIN, AND YONGDO LIM
+
+defines a metric, which is called the 2 -Wasserstein distance between µ and
+ν. The integral on the right hand side of (19) is also written as Ekx − yk2,
+where E stands for expectation.
+
+    In the most important special case of Gaussian measures, the distance dW
+coincides with the Bures distance, and this is explained below.
+
+   Let x and y be random vectors with values in Cn , each having zero mean,
+and with covariance matrices A and B, respectively. This last statement
+means that
+                     A = [E(xi xj )] , B = [E(y i yj )] .              (20)
+We want to find x and y for which Ekx − yk2 is minimal.
+
+    The covariance matrix of the vector (x, y) is
+                                               
+                      [E(xi xj )] [E(xi yj )]             
+                                                    A M
+               C=                                 =          .                          (21)
+                                                      M∗ B
+                      [E(y i xj )] [E(y i yj )]
+Our problem is to minimise
+                                             n
+                                                                                    !
+                                             X
+              Ekx − yk2 = E                        (|xi |2 + |yi |2 − 2Re xi yi )
+                                             i=1
+                                  n
+                                  X
+                            =               E(|xi |2 + |yi |2 − 2Re xi yi )
+                                      i=1
+                            = tr(A + B) − 2Re (tr M).                                   (22)
+This is the problem of finding
+                                            
+                                      A M
+                    max |trM| : C =          ≥0 .                                       (23)
+                                      M∗ B
+(As we vary x and y over all vectors with covariance matrices A and B, the
+covariance matrix of (x, y) varies over all psd matrices of the form in (21).)
+By Theorem 2(iii) the value of the maximum in (23) is F (A, B). So
+             min Ekx − yk2 = tr(A + B) − 2tr(A1/2 BA1/2 )1/2
+                           = d2 (A, B)
+where d(A, B) is as defined in (1).
+
+   Let x be a vector with mean 0 and covariance matrix A. Then for any
+T ∈ M(n) we have
+                                          !
+                             X               X
+         E(hx, T xi) = E         tij xi xj =     tij E(xi xj )
+                                            i,j                    i,j
+                             X
+                        =               tij aij = tr T A.
+                                i,j
+                                                                               9
+
+Hence,
+           Ekx − T xk2 = E(kxk2 + kT xk2 − 2Re hx, T xi)
+                       = trA + tr T ∗ T A − 2Re tr T A
+                       = tr A + tr T AT ∗ − 2Re tr A1/2 T A1/2 .
+If we choose T = A−1 #B, then from (8) we see that tr A1/2 T A1/2 =
+tr (A1/2 BA1/2 )1/2 , and from (9) that tr T AT = tr B. Thus, for this choice of
+T, we have
+             Ekx − T xk2 = tr (A + B) − 2 tr (A1/2 BA1/2 )1/2
+                         = d2 (A, B).
+Thus the problem
+                                 min Ekx − yk2
+where x, y are vectors with mean zero and covariance matrices A and B,
+respectively, has as its solution the pairs (x, y), where x is any vector and
+y = T x, with T = A−1 #B. The matrix T is called the optimal transport
+plan, or the optimal transport map, from A to B.
+Let x be a vector with covariance matrix A, and let y = T x. Then
+                                    X
+                   E(y i yj ) = E        tik tkl xk xl
+                                       k,l
+                                 X
+                             =          tik tkl akl = (T AT )ij .
+                                 k,l
+
+If T is the optimal transport map from A to B, then T AT = B. This
+shows that the covariance matrix of the vector y is B.
+
+    The results in this section were proved by Olkin and Pukelsheim [29] and
+by Dowson and Landau [14]. The authoritative reference for optimal transport
+theory is [36]. An interesting article explaining connections between optimal
+transport and Riemannian geometry is [4].
+
+                         4. Riemannian geometry
+    The Bures-Wasserstein distance corresponds to a Riemannian metric, and
+that is explained now.
+
+     From now on we consider positive definite (i.e., nonsingular psd) matrices.
+We continue to use the notation P(n) for the set of all such matrices. This
+is an open subset of the real vector space H(n). Let GL(n) be the set of
+all nonsingular matrices. This is an open subset of M(n). Both GL(n) and
+P(n) are viewed here as differentiable manifolds.
+
+    Let π : GL(n) → P(n) be the map defined as π(M) = MM ∗ . This is
+a differentiable map, and its derivative Dπ(M) at any point M is a linear
+map from M(n) to H(n). The action of this map is
+                   Dπ(M)(Z) = ZM ∗ + MZ ∗ , Z ∈ M(n).                      (24)
+10               RAJENDRA BHATIA, TANVI JAIN, AND YONGDO LIM
+
+The kernel of this map is
+
+             ker Dπ(M) = {Z : ZM ∗ + MZ ∗ = 0}
+                       = {Z : ZM ∗ is skew-Hermitian}
+                         
+                       = Z = KM ∗−1 : K skew-Hermitian .                (25)
+The orthogonal complement of this space with respect to the Frobenius inner
+product can be readily computed. A matrix X is in this orthogonal comple-
+ment, if and only if we have for all skew-Hermitian matrices K
+             0 = hX, KM ∗−1 i = Re trX ∗ KM ∗−1 = Re trM ∗−1 X ∗ K.
+This happens if and only if M ∗−1 X ∗ is Hermitian; i.e. XM −1 is Hermitian.
+Thus
+                   (ker Dπ(M))⊥ = {X = HM : H ∈ H(n)} .                 (26)
+So, we have a direct sum decomposition of the tangent space TM GL(n) = M(n)
+as
+                  TM GL(n) = ker Dπ(M) ⊕ (ker Dπ(M))⊥
+                           = VM ⊕ HM .                                  (27)
+The spaces VM and HM , given by (25) and (26) are, respectively, called the
+vertical space and the horizontal space at M (for the map π ).
+
+     At this stage we recall two theorems from Riemannian geometry. Let
+(M, g) and (N , h) be Riemannian manifolds with Riemannian metrics g
+and h. A differentiable map π : M → N is said to be a smooth submersion
+if its differential Dπ(m) : Tm M → Tπ(m) N is surjective at every point m.
+Let Tm M = Vm ⊕ Hm be a decomposition of Tm M into vertical and hori-
+zontal spaces. Then π is called a Riemannian submersion if it is a smooth
+submersion and the map Dπ(m) : Hm → Tπ(m) N is isometric for all m.
+
+Theorem 3. Let (M, g) be a Riemannian manifold. Let G be a compact
+Lie group of isometries of (M, g) acting freely on M. Let N = M/G and
+let π : M → N be the quotient map. Then there exists a unique Riemannian
+metric h on N for which π : (M, g) → (N , h) is a Riemannian submersion.
+Theorem 4. Let (M, g) and (N , h) be Riemannian manifolds and π :
+(M, g) → (N , h) a Riemannian submersion. Let γ be a geodesic in (M, g)
+such that γ ′ (0) is horizontal. Then
+    (i) γ ′ (t) is horizontal for all t.
+   (ii) π ◦ γ is a geodesic in (N , h) of the same length as γ.
+     See [15].
+
+    Let us return to our setup now. GL(n) is a Riemannian manifold with the
+metric induced by the Frobenius inner product. The group U(n) is a compact
+Lie group of isometries for this metric. The quotient space GL(n)/U(n) is
+                                                                              11
+
+P(n). The metric inherited by the quotient space P(n) is (upto a constant
+factor) exactly the one given in Theorem 1; i.e.,
+                       minkA1/2 − B 1/2 Uk2 = d(A, B).                     (28)
+The map π(M) = MM ∗ is a smooth submersion, as is evident from (26). By
+Theorem 3 there is a unique Riemannian metric on P(n) (for each point A
+of P(n) an inner product h·, ·iA on the tangent space TA P(n) = H(n) ) for
+which π is a Riemannian submersion. To find this inner product we proceed as
+follows. Let A = MM ∗ . We want the map Dπ(M) : HM → TA P(n) = H(n)
+to be an isometry. The inner product between two elements HM and KM
+in the horizonal space HM is hHM, KMi = Re tr KMM ∗ H = Re tr KAH.
+By (24) we have Dπ(M)(HM) = HMM ∗ + MM ∗ H = HA + AH. So for
+Dπ(M) to be an isometry the inner product h·, ·iA on TA P(n) = H(n) must
+be given by
+                   hHA + AH, KA + AKiA = Re tr KAH.                     (29)
+Let Y be any element of H(n). Then there exists a unique H ∈ H(n) such
+that
+
+                                HA + AH = Y.                                (30)
+Indeed, in an orthonormal basis in which A = diag(α1 , . . . , αn ) the equation
+(30) is satisfied by the matrix H with entries
+                                         yij
+                                hij =         .                             (31)
+                                      αi + αj
+Let Z be another element of H(n). Then the matrix kij = zij /(αi + αj )
+satisfies the equation KA + AK = Z. So from (29) and (30) we get
+                                      X           Re y ji zji
+                          hY, ZiA =         αi                .            (32)
+                                      i,j
+                                                 (αi + αj )2
+To sum up, we have proved the following.
+
+Theorem 5. For each A ∈ P(n) let hY, ZiA be the inner product on H(n)
+given by (32). This gives a Riemannian metric on the manifold P(n), the
+distance function corresponding to which coincides with (28).
+
+
+
+   Figure 1 is a schematic representation of the Riemannian submersion in
+Theorem 5.
+
+   Next, we obtain a formula for the geodesic joining A and B in P(n).
+Let U be the unitary polar factor of B 1/2 A1/2 ; i.e.,
+                 B 1/2 A1/2 = U|B 1/2 A1/2 | = U(A1/2 BA1/2 )1/2 ,         (33)
+and let
+                  Z(t) = (1 − t)A1/2 + tB 1/2 U,           0 ≤ t ≤ 1.      (34)
+12             RAJENDRA BHATIA, TANVI JAIN, AND YONGDO LIM
+
+
+
+
+                        F(A)           VM
+
+
+
+
+                                        M                         HM
+
+
+
+
+                                                                  D ΠHML
+                            Π
+
+
+
+
+                                A
+                                                       T A PHnL
+
+
+
+
+                                  Figure 1.
+
+From (33) we have
+                  U = B 1/2 A1/2 (A1/2 BA1/2 )−1/2
+                      = B 1/2 A1/2 (A1/2 BA1/2 )−1/2 A−1/2 A1/2
+                      = B 1/2 (AB)−1/2 A1/2
+                      = B −1/2 B(B −1 A−1 )1/2 A1/2
+                      = B −1/2 (B#A−1 )A1/2 .                              (35)
+So, the equation (34) can be written as
+              Z(t) = (1 − t)A1/2 + t(A−1 #B)A1/2 ,      0 ≤ t ≤ 1.         (36)
+We have
+                Z(0) = A1/2 , Z(1) = (A−1 #B)A1/2 = B 1/2 U,               (37)
+and
+            Z ′ (t) = B 1/2 U − A1/2 = (A−1 #B − I)A1/2 , 0 ≤ t ≤ 1.       (38)
+Note that
+                      Z(t) = ((1 − t)I + t(A−1 #B))A1/2 ,
+                                                                                    13
+
+being a product of two positive definite matrices is in GL(n). Being a straight
+line segment, it is a geodesic. From (26) and (38) we see that Z ′ (0) is in the
+horizontal space HA1/2 . So, by Theorem 4 γ(t) = π(Z(t)) is a geodesic in the
+space P(n) with respect to the Riemannian metric (32). From (37) we see
+that
+                          γ(0) = π(Z(0)) = A, and
+                       γ(1) = π(Z(1)) = Z(1)Z(1)∗ = B.
+Thus γ(t) is a geodesic joining A and B. An explicit expression for γ(t)
+can be obtained by using (34) and (35). We have
+        γ(t) = Z(t)Z(t)∗
+                                                                         
+              = (1 − t)2 A + t2 B + t(1 − t) A1/2 U ∗ B 1/2 + B 1/2 UA1/2
+                                                                         
+              = (1 − t)2 A + t2 B + t(1 − t) A(A−1 #B) + (A−1 #B)A
+                                                                   
+              = (1 − t)2 A + t2 B + t(1 − t) (AB)1/2 + (BA)1/2 .                 (39)
+Theorem 4 tells us that the length Lγ of the geodesic in P(n) is equal to
+the length LZ in GL(n). The latter is the length of the straight line segment
+joining A1/2 and B 1/2 U. So, from Theorem 1 we have
+                        Lγ = kA1/2 − B 1/2 Uk2 = d(A, B).
+     We started with the distance d(A, B) on P(n) and used Theorems 3 and
+4 to show that this distance corresponds to a Riemannian metric given by (32).
+If, to begin with, we are provided with the metric (32) at each point A, then
+starting from it we can obtain the distance function d(A, B).
+
+     At the beginning of this section we introduced the vertical and horizontal
+spaces at a point M of GL(n). A curve e        γ in GL(n) is called horizontal
+                                     ′
+if for each t the tangent vector e γ (t) is in the horizontal space Hγe(t) . From
+(26) we see that eγ is horizontal if and only if there exists a Hermitian matrix
+H(t) such that
+
+                          e′ (t) = H(t)e
+                          γ            γ (t),   0 ≤ t ≤ 1.                       (40)
+Let
+                                  γ(t) = e     γ (t)∗ .
+                                          γ (t)e                                  (41)
+Then γ is a curve in P(n). Differentiating the relation (41) and then using
+(40) we see that
+                          γ ′ (t) = γ(t)H(t) + H(t)γ(t).                          (42)
+     If γ is any curve in P(n), then a curve γe in GL(n) is said to be a
+horizontal lift of γ if γe is horizontal and the relation (41) is satisfied. Every
+curve γ in P(n) has a unique horizontal lift e          γ that satisfies the condition
+γ (0) e
+e      γ (0)∗ = γ(0). This can be seen as follows. Given γ(t) let H(t) be
+the unique solution of the Sylvester equation (42). From the smoothness of
+γ it follows that H(t) is continous. Let M be a point of GL(n) such that
+MM ∗ = γ(0). The initial value problem X ′ (t) = H(t)X(t), X(0) = M, has
+a unique solution. Call this e    γ (t). We have seen above that this curve is a
+horizontal lift of γ(t).
+14             RAJENDRA BHATIA, TANVI JAIN, AND YONGDO LIM
+
+     The length of the curve γ is defined as
+                                       Z1
+                                                                  1/2
+                            Lγ =            h γ ′ (t), γ ′ (t) iγ(t) dt.
+                                       0
+If the inner product in the integrand is defined by (29) and H(t) by (42), then
+this gives
+                                   Z1
+                       Lγ =             (tr H(t) γ(t) H(t))1/2 dt.
+                                   0
+Using (40) and (41) we obtain from this
+                       Z1                                         Z1
+                               ′              ′      1/2
+                Lγ =        h e
+                              γ (t), γe (t) i              dt =          γ ′ (t)k2 dt.
+                                                                        ke
+                       0                                          0
+This is the length of the curve e
+                                γ with respect to the Euclidean distance, and
+cannot be smaller than the straight line distance. So
+                               Lγ ≥ ke
+                                     γ (0) − e
+                                             γ (1) k2 .
+If γ(0) = A and γ(1) = B, then γe(0) and γe(1) are points in F (A) and
+F (B), respectively. So, by Theorem 1
+                                           Lγ ≥ d(A, B).
+Earlier we have seen a curve for which the two sides of this inequality are
+equal. Thus the metric (32) leads to the distance function d(A, B) by a direct
+computation.
+    The material in this section is based on [5, 20, 33, 34]. Takatsu [33] also
+discusses the metric geometry of the spaces of psd matrices of rank k, 1 ≤ k ≤
+n. A very interesting research paper by K. Modin [27] dicusses the connections
+between optimal transport, geometry and matrix decompositions.
+
+                            5. The Wasserstein mean
+    There is another standard metric on P(n) which has been extensively
+studied. In this the inner product on the tangent space TA P(n) = H(n) is
+given by
+                          hY, ZiA = tr A−1 Y A−1 Z,                  (43)
+and the associated distance function is
+                           δ(A, B) = k log A−1/2 BA−1/2 k2 .                             (44)
+Any two points A, B of P(n) can be joined by a unique geodesic with respect
+to this metric, and a natural parametrisation for this geodesic is
+                A#t B = A1/2 (A−1/2 BA−1/2 )t A1/2 ,                      0 ≤ t ≤ 1.     (45)
+The geometric mean A#B defined in (8) is evidently the midpoint of this
+geodesic; i.e.,
+                        A#B = A#1/2 B.
+                                                                               15
+
+The metric (44) has lots of isometries. We have
+               δ(XAX ∗ , XBX ∗) = δ(A, B) for all X ∈ GL(n),                (46)
+and
+                      δ(A−1 , B −1 ) = δ(A, B) for all A, B.                (47)
+This bestows upon the geometric mean A#B several interesting and useful
+properties, and the object is much used in operator theory, quantum mechanics,
+electrical networks, elasticity, image processing, etc. The collection [28] has
+several articles on the theory, computation, and applications of this mean and
+its multivariable version.
+    It is natural to ask what properties the “ mean” with respect to the dis-
+tance (1) might have. Let us adopt the notation A ⋄t B for the geodesic γ(t)
+given in (39). The midpoint of this is
+                           1
+                  A ⋄ B = (A + B + (AB)1/2 + (BA)1/2 ).                     (48)
+                           4
+We call this the Wasserstein mean of A and B. The relations
+              (AB)1/2 = A(A−1 #B) = A1/2 (A1/2 BA1/2 )1/2 A−1/2 ,           (49)
+will be used in the following discussion.
+     For the Bures-Wasserstein distance (1) only a very restrictive version of
+(46) is true: we have d(UAU ∗ , UBU ∗ ) = d(A, B) provided U is unitary. The
+analogue of (47) is not valid for d. So the Wasserstein mean does not have
+many of the interesting properties of the mean A#B. The following theorem
+is, therefore, surprising. Recall the operator version of the harmonic-geometric-
+arithmetic mean inequality. This says
+                      A−1 + B −1 −1            A+B
+                                     ≤ A#B ≤        .                       (50)
+                           2                     2
+The second inequality in (50) can be extended as
+                     A#t B ≤ (1 − t)A + tB,      0 ≤ t ≤ 1.                 (51)
+This has an analogue for the Wasserstein mean:
+Theorem 6. For all positive definite matrices A and B we have
+                     A ⋄t B ≤ (1 − t)A + tB,      0 ≤ t ≤ 1.                (52)
+Proof. Using the equations (39) and (49) we have
+A ⋄t B = γ(t)
+       = (1 − t)2 A + t2 B
+                                                                              
+           +t(1 − t) A1/2 (A1/2 BA1/2 )1/2 A−1/2 + A−1/2 (A1/2 BA1/2 )1/2 A1/2
+               
+       = A−1/2 (1 − t)2 A2 + t2 A1/2 BA1/2
+                                                           
+           t(1 − t){A(A1/2 BA1/2 )1/2 + (A1/2 BA1/2 )1/2 A} A−1/2
+                                           2
+       = A−1/2 (1 − t)A + t(A1/2 BA1/2 )1/2 A−1/2 .
+16               RAJENDRA BHATIA, TANVI JAIN, AND YONGDO LIM
+
+The map f (X) = X 2 is matrix convex; i.e., for all Hermitian matrices X
+and Y we have
+                [(1 − t)X + tY ]2 ≤ (1 − t)X 2 + tY 2 ,   0 ≤ t ≤ 1.
+Hence,
+                                                     
+                A ⋄t B ≤ A−1/2 (1 − t)A2 + tA1/2 BA1/2 A−1/2
+                       = (1 − t)A + tB.
+
+This proves the inequality (52).
+
+      Another instructive proof of Theorem 6 goes as follows. Using the inequal-
+ity
+                     0 ≤ A−1/2 (A − (A1/2 BA1/2 )1/2 )2 A−1/2 ,
+and (49) we obtain
+                          (AB)1/2 + (BA)1/2 ≤ A + B.                       (53)
+So, from (48) we have
+                                     1
+                            A ⋄ B ≤ (A + B).                             (54)
+                                     2
+Since A ⋄t B = γ(t) is the natural parametrisation of the geodesic joining A
+and B, we have
+                         (A ⋄s B) ⋄u (A ⋄t B) = A ⋄v B,
+where v = (1 − u)s + ut for all s, t, u in [0, 1]. Using this we can obtain from
+(54) the inequality (52) for all dyadic rational values of t. By continuity it
+holds for all 0 ≤ t ≤ 1.
+    Theorem 6 may lead us to expect that the inequality
+                              A−1 + B −1 −1
+                                             ≤ A ⋄ B,                      (55)
+                                  2
+might also be true. However, this is not always the case.
+     If A and B are two positive definite matrices such that A ≤ B, then it
+follows from Theorem 6 that A ⋄ B ≤ B. However, it is not necessary that
+A ≤ A ⋄ B. If we choose
+                                               
+                               1 1             3 1
+                        A=            , B=          ,
+                               1 2             1 2
+then
+                                              
+                                  1.8495 1.0449
+                           A⋄B ≈                 ,
+                                  1.0449 1.9857
+and A  A ⋄ B.
+    This example also shows that A ⋄ B is not monotone with respect to the
+partial order ≤ ; i.e. if A ≤ A′ , then it is not necessary that A ⋄ B ≤ A′ ⋄ B.
+                                                                               17
+
+                     6. The Wasserstein barycentre
+    Let A1 , . . . , Am be elements of P(n) and let w = (w1 , . . . , wm ) be a
+weight vector ; i.e., wj > 0 and Σ wj = 1. Consider the minimisation problem
+                                   Xm
+                              min     wj d2 (X, Aj ).                      (56)
+                               X>0
+                                     j=1
+
+    This problem was first considered by Knott and Smith [22] as a multivari-
+able generalisation of the work of Olkin and Pukelsheim discussed in Section 3
+above. Agueh and Carlier [1] studied the general problem of determining the
+barycentre of several probability measures on Rn . The special case of Gauss-
+ian measures is the problem (56). The general problem has been studied as a
+part of the the multimarginal transport problem or the m -coupling problem.
+
+    Theorem 6.1 of [1] says that the problem (56) has a unique solution. The
+proof of uniqueness in [1], that draws on the earlier discussion of the general
+case, relies on tools from nonsmooth analysis, convex duality and the theory
+of optimal transport. In the spirit of this paper we now provide another proof
+using simple ideas from matrix analysis.
+
+    The minimiser in (56) is called the Wasserstein barycentre of A1 . . . , Am
+with weights w1 , . . . , wm . This is the positive definite matrix
+                                                  Xm
+               Ω(w; A1 , . . . , Am ) = argmin        wj d2 (X, Aj ).      (57)
+                                           X>0
+                                                 j=1
+
+   Using the definition (1) we see that the objective function in (57) is f (X) ,
+where               m               m
+                  X               X                    1/2   1/2
+          f (X) =      wj trAj +       wj tr(X − 2(Aj XAj )1/2 ).            (58)
+                    j=1              j=1
+This is a differentiable function on the convex cone P(n). We will calculate the
+derivative of f, and show that there is a point in P(n) at which is vanishes.
+This local minimum for f will be a (unique) global minimum if f is a (strictly)
+convex function. From (58) it is clear that to prove strict convexity of f it is
+enough to establish strict concavity of the function h(X) = tr X 1/2 . This is
+our next theorem.
+Theorem 7. The map h(X) = tr X 1/2 from P(n) into (0, ∞) is strictly
+concave; i.e., if X and Y are two distinct elemens of P(n) and α, β are
+positive numbers with α + β = 1, then
+                          h(αX + βY ) > αh(X) + βh(Y ).                     (59)
+Proof. It is well-known that X 7−→ X 1/2 is an operator concave function. See
+Chapter V of [6]. So, we have
+                          (αX + βY )1/2 ≥ αX 1/2 + βY 1/2 ,
+and hence
+                   tr(αX + βY )1/2 ≥ α trX 1/2 + β tr Y 1/2 .
+18             RAJENDRA BHATIA, TANVI JAIN, AND YONGDO LIM
+
+We have to show that in this last inequality the two sides cannot be equal if
+X 6= Y. Suppose
+                                                      
+                  tr (αX + βY )1/2 − (αX 1/2 + βY 1/2 ) = 0.
+
+The matrix inside the square brackets is positive semidefinite. So, its trace can
+be zero only if
+                           (αX + βY )1/2 = αX 1/2 + βY 1/2 .
+
+Square both sides, and then use the relations α − α2 = β − β 2 = αβ, to obtain
+
+                   αβ(X + Y − X 1/2 Y 1/2 − Y 1/2 X 1/2 ) = 0.
+
+Since αβ 6= 0, , this gives
+
+
+                                 (X 1/2 − Y 1/2 )2 = 0,
+
+and hence X 1/2 = Y 1/2 , and X = Y.
+
+    Now we show that f does have a minimum in P(n) by evaluating the
+derivative Df (X) and equating that to zero. A convenient summary of facts
+about matrix differential calculus can be found in Chapter X of [6].
+
+     The nonlinear term in (58) is g(X) = (A1/2 XA1/2 )1/2 . We evaluate Dg(X)
+from first principles. The derivative of the function Ψ(A) = A2 is the linear
+map DΨ(A) defined as DΨ(A)(X) = AX + XA. The function ϕ(A) = A1/2
+                                                                          −1
+on P(n) is the inverse of Ψ. Hence Dϕ(A) = [DΨ(ϕ(A))]−1 = DΨ(A1/2 )            .
+Thus Dϕ(A) is the inverse of the linear map X 7−→ A1/2 X + XA1/2 . By well
+known facts about the Sylvester matrix equation (see [6] or [12]) this inverse
+is given by the formula
+
+                                      Z∞
+                                                  1/2            1/2
+                     Dϕ(A)(X) =            e−tA         X e−tA         dt.
+                                      0
+
+
+Let λ(X) = A1/2 XA1/2 . Then g is the composite ϕ ◦ λ. So, by the chain
+rule of differentiation,
+
+
+     Dg(X)(Y ) = (Dϕ(λ(X)) ◦ Dλ(X))(Y )
+                  = Dϕ(A1/2 XA1/2 )(A1/2 Y A1/2 )
+                    Z∞
+                            1/2 1/2 1/2                1/2 1/2 1/2
+                  =    e−t(A X A ) (A1/2 Y A1/2 ) e−t(A XA ) dt.
+                       0
+                                                                                               19
+
+Taking traces, and using the cyclicity of trace, we get
+                              Z∞
+                                               1/2   1/2 1/2
+          tr Dg(X)(Y ) =        (tr A1/2 e−2t(A X A ) A1/2 Y ) dt
+                                0
+                                                Z∞
+                                      1/2                     1/2 X A1/2 )1/2
+                            = tr A          (        e−2t(A                     dt)A1/2 Y.
+                                                0
+
+
+The  last integral above is equal to 21 (A1/2 XA1/2 )−1/2 . (Use the fact that
+R ∞ −tα
+ 0
+   e     dt = α1 for every α > 0. ) Hence
+                              1                         1/2 1/2
+             trDg(X)(Y ) =      trA1/2 A−1/2 X −1 A−1/2     A Y
+                              2
+                              1
+                           =    (A#X −1 )Y.
+                              2
+
+So, from (58) we see that
+                                    m
+                                    X
+                Df (X)(Y ) =              wj tr(Y − (Aj #X −1 )Y )
+                                    j=1
+                                                     m
+                                                                                 !
+                                                     X                       
+                                                                          −1
+                               = tr I −                    wj Aj #X                  Y.
+                                                     j=1
+
+Thus Df (X) = 0 if and only if
+                                    m
+                                    X
+                               I=         wj (Aj #X −1 ).                                    (60)
+                                    j=1
+
+This is equivalent to saying
+                                m
+                                X
+                         X=           wj (X 1/2 Aj X 1/2 )1/2 .                              (61)
+                                j=1
+
+Finally, we show that there exists a point X in P(n) that satisfies the equation
+(61). Indeed, if αI ≤ Aj ≤ βI, for all 1 ≤ j ≤ m, then this X belongs to
+the compact convex set K = {X ∈ P(n) : αI ≤ X ≤ βI}. To see this consider
+the function
+                                 X m
+                        F (X) =       wj (X 1/2 Aj X 1/2 )1/2 .
+                                    j=1
+
+Then note that (X 1/2 Aj X 1/2 )1/2 ≤ (βX)1/2 ≤ βI for all X ∈ K. By the
+same reasoning (X 1/2 Aj X 1/2 )1/2 ≥ αI for all X ∈ K. This shows that F
+maps K into itself. By Brouwer’s fixed point theorem there exists a point X
+in K such that F (X) = X. This X is a solution of the equation (61).
+
+    We have proved the following theorem first obtained in [1], building upon
+the earlier work in [22] and [31]
+20              RAJENDRA BHATIA, TANVI JAIN, AND YONGDO LIM
+
+Theorem 8. The minimisation problem (57) has a unique solution which is
+also the solution of the nonlinear matrix equation (61).
+    We do not know how to obtain the solution of (61) in an explicit form. In
+the special case m = 2, with A1 = A, A2 = B, and (w1 , w2 ) = (1 − t, t),
+the equation (60) reduces to
+                       I = (1 − t)(A#X −1 ) + t(B#X −1 ).                        (62)
+The solution to this equation is
+                                                        
+                 X = argmin (1 − t)d2 (X, A) + td2 (X, B) .
+By the definition of geodesics with respect to the metric d, such an X is the
+unique point on the geodesic segment joining A and B at distance td(A, B)
+from A. In other words
+                                                                  
+     X = A ⋄t B = (1 − t)2 A + t2 B + t(1 − t) (AB)1/2 + (BA)1/2 .       (63)
+    The equation (61) can be used to obtain some important order properties
+of the Wasserstein barycentre. The next theorem is a multivariable analogue
+of Theorem 6.
+Theorem 9. Let A1 , . . . , Am be positive definite matrices and let w = (w1 , . . . , wm )
+be a weight vector. Then
+                                                       m
+                                                       X
+                            Ω(w; A1 , . . . , Am ) ≤         wj Aj .             (64)
+                                                       j=1
+
+Proof. The matrix Ω = Ω(w; A1 , . . . , Am ) obeys the relation
+                                   m
+                                   X
+                             Ω=          wj (Ω1/2 Aj Ω1/2 )1/2 .
+                                   j=1
+
+Square both sides and then use the fact that the function f (A) = A2 is matrix
+convex. This gives
+                     m                           m
+                                                         !
+                    X                           X
+              Ω2 ≤      wj Ω1/2 Aj Ω1/2 = Ω1/2     wj Aj Ω1/2 .
+                      j=1                                j=1
+
+The inequality (64) follows from this.
+                                                                      P
+   Theorem 9 is much stronger than the known inequality tr Ω ≤ tr        wj Aj ,
+which has been proved in [3]. (See the last inequality in Theorem 4.2 there.)
+
+
+                       7. The m -Coupling Problem
+    We explain briefly how the Wasserstein barycentre is useful in solving the
+several variable version of the problem considered in Section 3.
+                                                                                              21
+
+    Let x1 , . . . , xm be random vectors in Cn , each having zero mean, and with
+covariance matrices A1 , . . . , Am . We are asked to find a tuple (x1 , . . . , xm )
+that solves the minimisation problem
+
+                                             X
+                                 min E             kxi − xj k2 .                           (65)
+                                             1<j
+
+
+                                                                       P
+This is the same problem as the one of maximising Ek                       xj k2 . A little more
+generally, we consider the problem
+
+                                               m
+                                               X
+                                 max Ek               wj xj k2 ,                           (66)
+                                               j=1
+
+
+
+where w1 , . . . , wm are given weights.
+
+                          , Am ) and let Rj = Ω−1 #Aj , 1 ≤ j ≤ m. Let z =
+P Let Ω = Ω(w; A1 , . . . P
+   wj xj . Then hz, zi =     wj hz, xj i. If T is any positive definite matrix, and
+x, y any two vectors, then using the Schwarz inequality and the arithmetic-
+geometric mean inequality, we see that
+
+                hx, yi = hT 1/2 x, T −1/2 yi ≤ kT 1/2 xk kT −1/2 yk
+                          = hx, T xi1/2 hy, T −1yi1/2
+                            1                        
+                          ≤    hx, T xi + hy, T −1yi .                                     (67)
+                            2
+
+Hence,
+
+                       " m                            m
+                                                                             #
+                      1 X                             X
+           hz, zi ≤              wj hz, Rj zi +             wj hxj , Rj−1 xj i .
+                      2    j=1                        j=1
+
+
+                             Pm
+From (60) we know that           j=1   wj Rj = I. So, the inequality above yields
+
+                                       m
+                                       X
+                          hz, zi ≤            wj hxj , Rj−1 xj i.
+                                       j=1
+
+
+
+Thus
+
+                                       m
+                                       X
+                             2
+                      Ekzk       ≤            wj Ehxj , Rj−1 xj i.
+                                       j=1
+22             RAJENDRA BHATIA, TANVI JAIN, AND YONGDO LIM
+
+Since xj has covariance matrix Aj , this gives
+                              Xm
+                      2
+                 Ekzk    ≤         wj tr Rj−1 Aj
+                                   j=1
+                                   m
+                                   X              1/2         1/2
+                              =           wj tr Aj Rj−1 Aj
+                                   j=1
+                                   Xm
+                                                  1/2                    1/2
+                              =           wj tr Aj (Ω#A−1
+                                                       j )Aj
+                                   j=1
+                                   m
+                                   X               1/2       1/2
+                              =           wj tr (Aj ΩAj )#I
+                                   j=1
+                                      m
+                                      X                1/2   1/2
+                              = tr             wj (Aj ΩAj )1/2
+                                         j=1
+
+                              = tr Ω.                                                   (68)
+Note that both the inequalities in (67) are equalties if y = T x. Hence, there
+is equality at the first step in (68) if z = Rj xj for 1 ≤ j ≤ m. This can
+be achieved by choosing x1 arbitrarily and then putting xj = Rj R1−1 x1 for
+2 ≤ j ≤ m.
+
+     To sum up, we have shown that the problem (66) has the solution
+                         Xm
+                 max Ek     wj xj k2 = tr Ω(w; A1 , . . . , Am ).                       (69)
+                            j=1
+
+The maximum is attained at every m-tuple
+                  (x1 , R2 R1−1 x1 , R3 R1−1 x1 , . . . , Rm R1−1 x1 ),                 (70)
+where x1 is chosen arbitrarily subject to the given conditions that it has mean
+0 and covariance matrix A1 . Note that, then we have
+                Xm                        Xm
+                     wj xj = w1 x1 +           wj Rj R1−1 x1
+                  j=1                            j=2
+                                   m
+                                   X
+                               =           wj Rj R1−1 x1 = R1−1 x1 ,                    (71)
+                                    j=1
+                                                                   P
+                                                                   m
+the last equality being a consequence of the fact that                   wj Rj = I. The maps
+                                                                   j=1
+Rj R1−1 are said to provide an optimal coupling between x1 , . . . , xm that occur
+as a solution of (66).
+
+    Many of the ideas presented in Sections 6 and 7 go back to the paper of
+Knott and Smith [22]. Among other things, the matrix equation (61), that a
+solution to the minimisation problem (57) must satisfy, is derived there. How-
+ever, questions about the existence and uniqueness of solutions of this equation
+                                                                                   23
+
+are not settled in this paper. The existence was established by Ruschendorf
+and Uckelmann in [31], and the uniqueness by Agueh and Carlier in [1]. The
+elegant argument using Brouwer’s fixed point theorem to establish the exis-
+tence of a solution occurs in [1], and we have adopted it verbatim. Our proof
+of uniqueness is different, and uses ideas more familiar in matrix analysis. We
+must add that the problem studied in [1] is the more general problem of the
+barycentre of measures. The matrix case that we are discussing corresponds
+to the special Gaussian measures.
+
+                     8. Computing the Barycentre
+     Whereas for two matrices A and B their barycentre is given by an ex-
+plicit formula (51), no such formula is known in the case of three or more
+matrices. We know only that Ω is the unique solution of the equation (60),
+or equivalently of (61). The latter suggests that it may be possible to com-
+pute Ω by a fixed point iteration. Such an iteration has been developed in a
+very interesting recent paper [3]. In this section we explain the main ideas of
+this paper, restricting ourselves to matrix analytic techniques, and simplifying
+some proofs.
+
+   Throughout this section A1 , . . . , Am are given positive definite matrices
+and w = (w1 , . . . , wm ) a given set of weights. For each A ∈ P(n) let
+             Hj (A) = A−1 #Aj ,    1 ≤ j ≤ m,                                    (72)
+                      Xm
+             H(A) =       wj Hj (A),                                             (73)
+                         j=1
+                                   m
+                                                                 !2
+                                   X
+               K(A) = A−1/2              wj (A1/2 Aj A1/2 )1/2        A−1/2 .    (74)
+                                   j=1
+
+We note that
+                          K(A) = H(A)AH(A).                                      (75)
+Also, note that
+                                                         1/2
+           A−1 #K(A) = A−1/2 A1/2 K(A)A1/2                      A−1/2
+                                         m
+                                                                     !
+                                         X
+                        = A−1/2                wj (A1/2 Aj A1/2 )1/2     A−1/2
+                                         j=1
+                               X
+                        =          wj Hj (A) = H(A).                             (76)
+
+Equations (72) and (76) say that Hj (A) and H(A) are the optimal transport
+maps from A to Aj and to K(A), respectively. We define the variance of
+A as
+                                Xm
+                        V (A) =      wj d2 (A, Aj ).                  (77)
+                                   j=1
+24              RAJENDRA BHATIA, TANVI JAIN, AND YONGDO LIM
+
+The following variance inequality is a rephrasing in our context of Proposition
+3.3 in [3].
+Theorem 10. For every positive definite matrix A we have
+
+
+                          V (A) ≥ V (K(A)) + d2 (A, K(A)).                         (78)
+                                                           P
+                                                           m
+Proof. Let y1 , . . . , ym be vectors in Cn and let y =          wj yj be their weighted
+                                                           j=1
+arithmetic mean. Then for every x ∈ Cn we have
+             Xm                  Xm
+                 wj kx − yj k2 =     wj ky − yj k2 + kx − yk2 .                    (79)
+              j=1                        j=1
+
+(This is the variance equality in Euclidean space that (78) mimics. The Eu-
+clidean distance is replaced by the metric d, the points yj by the matrices
+Aj , the mean y by K(A), and we have an inequality in place of equality.)
+
+   Choose a vector x in Cn with mean 0 and covariance matrix A. For
+1 ≤ j ≤ m, let yj = Hj (A)x, we have from the results in Section 3
+               d2 (A, Aj ) = E kx − Hj (A)xk2 = E kx − yj k2 .
+Hence,
+                                       m
+                                       X
+                             V (A) =         wj Ekx − yj k2 .                      (80)
+                                       j=1
+
+Similarly, since H(A) is the optimal transport map from A to K(A), we have
+                d2 (A, K(A)) = E kx − H(A)xk2 .
+            P               P
+But H(A)x =   wj Hj (A)x =    wj yj = y. So,
+                            d2 (A, K(A)) = E kx − yk2 .                            (81)
+Since H(A) is the transport map from A to K(A) and x has covariance
+matrix A, it follows that y has K(A) as its covariance matrix. Hence
+                    E ky − yj k2 ≥ d2 (K(A), Aj ), 1 ≤ j ≤ m.                      (82)
+The relations (79)-(82) put together lead to the inequality (78).
+   Remark. Using the definition of the variance V (A) and of the metric
+d(A, B) it can be seen that the inequality (78) is equivalent to the trace in-
+equality
+                Xm
+                             1/2         1/2
+                     wj tr (Aj K(A) Aj )1/2 ≥ tr K(A).                    (83)
+                    j=1
+It might be very difficult to prove this using the usual matrix analysis argu-
+ments. The very special case A = I of (83) says
+        X             X           2      1/2      X           2
+                  1/2           1/2     1/2                    1/2
+     tr     wj Aj           wj Aj      Aj        ≥ tr     wj Aj       .   (84)
+                                                                                   25
+
+From the inequality (IX.11) on page 258 of [6] we have
+             X         2      1/2           X         
+          1/2        1/2     1/2            1/4        1/2     1/4
+      tr Aj      wj Aj      Aj        ≥ tr Aj      wj Aj     Aj .
+                                                X         
+                                            1/2        1/2
+                                      = tr Aj      wj Aj     .
+
+The inequality (84) follows from this. So, even the special case A = I of (83)
+needs rather intricate arguments. Results proved in the context of optimal
+transport could thus add to the tools used in deriving matrix inequalities.
+
+    The next theorem is the main result (Theorem 4.2) of [3]. Some steps in
+the proof have been simplified.
+
+Theorem 11. Let So be any positive definite matrix and for n ≥ 0 define
+Sn+1 = K(Sn ), where K is the map defined in (74). Then
+
+
+
+                (i)         lim Sn = Ω
+                           n→∞
+               (ii)        tr Sn ≤ tr Sn+1 ≤ tr Ω for all n ≥ 1.
+
+Proof. By definition
+
+                                  m
+                                                                  !2
+                                  X                       
+                                                       1/2 1/2
+              Sn+1 = Sn−1/2             wj Sn1/2 Aj Sn                  Sn−1/2 .
+                                  j=1
+
+
+The square function is matrix convex. Hence,
+                                        m
+                                                                  !
+                                        X
+                Sn+1   ≤    Sn−1/2            wj Sn1/2 Aj Sn1/2       Sn−1/2 .
+                                        j=1
+                           m
+                           X
+                       =          wj Aj .
+                            j=1
+
+
+Thus the sequence {Sn } is a bounded sequence in P(n). Hence it has a sub-
+sequence converging to a limit S. By the variance inequality (78), V (Sn ) ≥
+V (Sn+1 ) for all n. So {V (Sn )} is a decreasing sequence of positive numbers.
+Hence it converges. We must have lim V (Sn ) = V (S). Since K is a contin-
+uous function, this implies lim V (K(Sn )) = V (K(S)). But K(Sn ) = Sn+1 .
+So, V (K(S)) = V (S). Hence, using the variance inequality (78), we have
+d2 (S, K(S)) = 0. This means S = K(S). From the definition of K(S) in
+(74), this is possible if and only if S = Ω(w; A1 , . . . , Am ). This proves part
+(i).
+26                RAJENDRA BHATIA, TANVI JAIN, AND YONGDO LIM
+
+      By the definition of H(A) in (73) we have for every A
+                                    Xm
+                   1/2       1/2
+                 A H(A)A         =       wj A1/2 (A−1 #Aj )A1/2
+                                        j=1
+                                        Xm
+                                   =           wj (A1/2 Aj A1/2 )1/2 ,
+                                        j=1
+
+and hence,
+      Xm                                m
+                                        X
+                  2
+               wj d (A, Aj ) = trA +            wj tr Aj − 2trA1/2 H(A)A1/2 .
+         j=1                             j=1
+
+From this we can see that
+        V (Sn ) − V (Sn+1 ) = tr Sn − tr Sn+1 − 2tr Sn1/2 H(Sn )Sn1/2
+                                                                   1/2         1/2
+                                                     + 2tr Sn+1 H(Sn+1 )Sn+1 ,       (85)
+and
+            d2 (Sn , Sn+1 ) = tr Sn + tr Sn+1 − 2tr Sn1/2 H(Sn )Sn1/2 .              (86)
+The variance inequality (78) together with these two relations gives
+                                          1/2         1/2      1/2
+                        tr Sn+1 ≤ tr Sn+1 H(Sn+1 ) Sn+1 .                            (87)
+From (86) and (87) we obtain
+                0 ≤ d2 (Sn+1 , Sn+2 )
+                                                       1/2               1/2
+                    = tr Sn+1 + tr Sn+2 − 2tr Sn+1 H(Sn+1 ) Sn+1
+                                        1/2                  1/2
+                    ≤ tr Sn+2 − tr Sn+1 H(Sn+1 ) Sn+1 .                              (88)
+Finally, from (87) and (88) we see that
+                                tr Sn+1 ≤ tr Sn+2 .
+That proves (ii).
+
+                                   9. remarks
+     The geometric mean A#B has played a crucial role at several places in
+this paper. This is the midpoint of the geodesic joining A and B with the
+Riemannian metric δ defined in (46) and (47). The barycentre of m matrices
+A1 , . . . , Am with weights w1 , . . . , wm with respect to this metric is defined as
+                                                    Xm
+                   G(w; A1, . . . , Am ) = argmin      wj δ 2 (X, Aj ).
+                                               X>0
+                                                      j=1
+
+This has been an object of intense study in recent years. See [7] [8] [9] [10] [19]
+[23] [24] [25] [26]. A natural question, from the perspective of matrix analysis,
+would be to find comparisons between the two means G and Ω.
+Another classical family of means, called the power means is defined as
+                                               m
+                                                       !1/t
+                                               X
+                                                     t
+                    Qt (w; A1 , . . . , Am ) =   wj Aj      , t > 0.
+                                               j=1
+                                                                                           27
+
+These play an important role in analysis. When t = 21 , we have
+                                               m
+                                                         !2
+                                               X     1/2
+                  Q1/2 (w; A1 , . . . , Am ) =   wj Aj      .
+                                                      j=1
+
+In the special case when A1 , . . . , Am are commuting matrices, the Wasserstein
+mean Ω and the mean Q1/2 coincide. If we let
+                                                                   1/2
+         ρ(A, B) = kA1/2 − B 1/2 k2 = trA + trB − 2trA1/2 B 1/2          ,
+then
+                                                        m
+                                                        X
+                  Q1/2 (w; A1 , . . . , Am ) = argmin         wj ρ2 (X, Aj )
+                                                X>0
+                                                        j=1
+It is natural to ask for comparisons between the means Q1/2 and Ω.
+
+    These problems are studied in our forthcoming papers.
+
+Acknowledgement. The work of R. Bhatia is supported by a J. C. Bose National
+Fellowship and of T. Jain by a SERB Women Excellence Award. The work
+of Y. Lim is supported by the National Research Foundation of Korea (NRF)
+grant founded by the Korea government (MEST) (No. 2015R1A3A2031159).
+
+                                      References
+ [1] M. Agueh and G. Carlier, Barycenters in the Wasserstein space, SIAM J. Math. Anal.
+     Appl. 43 (2011), 904-924.
+ [2] P. M. Alberti, A note on the transition probability over C ∗ -algebras, Lett. Math. Phys.
+     7 (1983), 25-32.
+ [3] P.C. Alvarez-Esteban, E.del Barrio, J.A. Cuesta-Albertos and C. Matran, A fixed point
+     approach to Barycenters in Wasserstein spaces, J. Math.Anal. Appl. 441(2016 744-762.
+ [4] F. Barbaresco, Information geometry of covariance matrix: Cartan-Siegel homogeneous
+     bounded domains, Mostow/Berger fibration and Frećhet median, in Matrix Information
+     Geometry, eds. F. Nielsen and R. Bhatia, Springer, (2013), 199-256.
+ [5] I. Bengtsson and K. Zyczkowski, Geometry of Quantum States: An Introduction to
+     Quantum Entanglement, Cambridge University Press, 2006.
+ [6] R. Bhatia, Matrix Analysis, Springer, 1997.
+ [7] R. Bhatia, Positive Definite Matrices, Princeton University Press, 2007.
+ [8] R. Bhatia, The Riemannian mean of positive matrices, in Matrix Information Geometry,
+     eds. F. Nielsen and R. Bhatia, Springer, (2013), 35-51.
+ [9] R. Bhatia and J. Holbrook, Riemannian geometry and matrix geometric means, Linear
+     Algebra Appl. 413 (2006), 594-618.
+[10] R. Bhatia and R. L. Karandikar, Monotonicity of the matrix geometric mean, Math.
+     Ann. 353 (2012), 1453-1467.
+[11] R. Bhatia and F. Kittaneh, On the singular values of a product of operators, SIAM J.
+     Matrix Anal. Appl. 11 (1990), 272-277.
+[12] R. Bhatia and P. Rosenthal, How and why to solve the operator equation AX −XB = Y,
+     Bull. London Math. Soc. 29 (1997), 1-21.
+[13] C. Davis and W. M. Kahan, The rotation of eigenvectors by a perturbation III, SIAM
+     J. Numer. Anal. 7 (1970), 1-46.
+[14] D. Dowson and B. Landau, The Fréchet distance between multivariate normal distribu-
+     tions, J. Math. Anal. 12 (1982), 450-455.
+28               RAJENDRA BHATIA, TANVI JAIN, AND YONGDO LIM
+
+[15] S. Gallot, D. Hulin and J. Lafontaine, Riemannian Geometry, Springer, 2004.
+[16] J. C. Gower and G. B. Dijksterhuis, Procrustes Problems, Oxford University Press 2004.
+[17] M. Hayashi, Quantum Information, Springer, 2006.
+[18] N. Higham, Functions of Matrices: Theory and Computation, SIAM 2008.
+[19] J. Holbrook, No dice: a deterministic approach to the Cartan centroid, J. Ramanujan
+     Math. Soc. 27 (2012), 509-521.
+[20] A. Jencová, Geodesic distances on density matrices, J. Math. Phys. 45 (2004), 1787-
+     1794.
+[21] F. Kittaneh, On the convexity of the Heinz means, Integr. Eqn. Oper. Theory 68 (2010),
+     519-527.
+[22] M. Knott and C. Smith, On the optimal mapping of distributions, J. Optim. Theory
+     Appl. 43 (1984), 39-49.
+[23] J. Lawson and Y. Lim, Monotonic properties of the least squares mean, Math. Ann. 351
+     (2011), 267-279.
+[24] Y. Lim and M. Palfia, Matrix power means and the Karcher mean, J. Funct. Anal. 262
+     (2012), 1498-1514.
+[25] Y. Lim and M. Palfia, Weighted deterministic walks for the least squares mean on
+     Hadamard spaces, Bull. London Math. Soc. 46 (2014), 561-570.
+[26] M. Moakher, A differential geometric approach to the geometric mean of symmetric
+     positive-definite matrices, SIAM J. Matrix Anal. Appl. 26 (2005), 735-747.
+[27] K. Modin, Geometry of matrix decompositions seen through optimal transport and in-
+     formation geometry, J. Geom. Mech. 9 (2017), 335-390.
+[28] F. Nielsen and R. Bhatia, eds., Matrix Information Geometry, Springer, 2013.
+[29] I. Olkin and F. Pukelsheim, The distance between two random vectors with given dis-
+     persion matrices, Linear Algebra Appl. 48 (1982), 257-263.
+[30] W. Pusz and S. L. Woronowicz, Functional calculus for sesquilinear forms and the
+     purification map, Rep. Math. Phys. 8 (1975), 159-170.
+[31] L. Ruschendorf and L. Uckelmann, On the n -coupling problem, J. Multivariate Anal.
+     81(2002) 242-258
+[32] G. W. Stewart and J. G. Sun, Matrix Perturbation Theory, Academic Press, 1990.
+[33] A. Takatsu, Wasserstein geometry of Gaussian measures, Osaka J. Math. 48 (2011),
+     1005-1026.
+[34] A. Uhlmann, Density operators as an arena for differential geometry, Rep. Math. Phys.
+     33 (1993), 255-263.
+[35] A. Uhlmann, Transition probability (fidelity) and its relatives, Found. Phys. 41 (2011),
+     288-298.
+[36] C. Villani, Optimal Transport: Old and New, Springer, 2008.
+
+
+                                                                       December 4, 2017
+     Ashoka University, Sonepat,, Haryana, 131029, India
+     E-mail address: rajendra.bhatia@ashoka.edu.in
+
+     Indian Statistical Institute, New Delhi 110016, India
+     E-mail address: tanvi@isid.ac.in
+
+   Department of Mathematics, Sungkyunkwan University, Suwon 440-746,
+Korea
+   E-mail address: ylim@skku.edu
+

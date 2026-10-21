@@ -1,0 +1,530 @@
+                                                                                     Long-Horizon RL Needs Muon
+                                                                               Kai Ruan1,* Jinghao Lin* Tao Chen*
+                                                                              Ziqi Zhou2 Qianshan Wei3 Zihe Huang4
+                                                                     1
+                                                                         Gaoling School of Artificial Intelligence, Renmin University of China
+                                                                                                          2
+                                                                                                              Duke University
+                                                                                 3
+                                                                                     Institute of Automation, Chinese Academy of Sciences
+                                                                         4
+                                                                             Institute of Computing Technology, Chinese Academy of Sciences
+                                                                                                      *
+                                                                                                          Equal contribution.
+
+
+                                                                   Abstract                                              edit the codebase, and validate a candidate patch
+                                                                                                                         (Jimenez et al., 2023; Yang et al., 2024). Such
+                                             Long-horizon agents must coordinate reason-
+arXiv:2610.20256v1 [cs.LG] 14 Oct 2026
+
+
+
+
+                                                                                                                         workflows require coordinated execution across de-
+                                             ing, tool use, and environment feedback over
+                                             extended interactions. Learning from sparse
+                                                                                                                         pendent steps, a defining feature of long-horizon
+                                             outcome rewards requires weighting trajec-                                  agents (Wu et al., 2026a). Executable tests
+                                             tories of different lengths and updating the                                make these interactions a source of reinforcement-
+                                             policy while rollouts are still being collected.                            learning feedback (Jain et al., 2025; Luo et al.,
+                                             We examine a single-rollout asynchronous                                    2025; Song et al., 2026). Trajectory lengths vary,
+                                             recipe combining Muon, token-averaged loss,                                 and asynchronous collection introduces a gap be-
+                                             truncated importance sampling, and auxiliary                                tween rollout and learner policies. We study how
+                                             length and tool-error penalties. Single-rollout
+                                                                                                                         optimizer choice affects learning from sparse out-
+                                             sampling allows asynchronous learning without
+                                             waiting for multiple trajectories for the same                              comes under these conditions.
+                                             issue. We study optimizer choices and recipe                                   We compare Adam (Kingma and Ba, 2014) and
+                                             components for repository-level issue resolu-                               Muon (Jordan et al., 2024) within Single-stream
+                                             tion across two model families. The evaluated                               Policy Optimization (SPO) (Xu and Ding, 2025),
+                                             training runs show higher training success with                             then study how Muon combines with SPO++ (Ruan
+                                             the full recipe than with the baselines.                                    et al., 2026b), reward shaping, and importance cor-
+                                                                                                                         rection. Ablations examine the length penalty (Yu
+                                         1   Introduction                                                                et al., 2025), tool-error penalty, and update rules
+                                                                                                                         using the same training success rate metric.
+                                         Repository-level issue resolution requires an agent                                The full recipe achieves higher training success
+                                         to interpret an issue description, navigate and                                 than the SPO baselines in the selected runs from
+
+
+                                             (a) Software-repair interaction
+                                                                                                      Multi-turn interaction
+
+                                                                                                                                          patch
+                                                                                                                                                                   r=0/1
+
+                                                 Issue +            Policy                 Inspect                Edit           Test             Final tests      Outcome
+                                               repository
+                                                                                                 Execution feedback
+
+
+                                             (b) Training recipe
+                                                 Outcome                                                      SPO / SPO++               Parameter update
+
+                                                 r=0/1
+                                                                               Advantages
+
+
+                                               Length penalty                                             TIS Weighted loss               Adam / Muon           Updated policy
+                                              Tool-error penalty                                     Token / sequence mean
+
+
+
+
+                                         Figure 1: Overview of the training recipe. (a) A software engineering agent inspects, edits, and tests a repository;
+                                         final tests provide the binary outcome reward. (b) Length and tool-error penalties shape advantages, TIS reweights
+                                         token-level policy losses, and token-level averaging aggregates the policy loss before the Muon update.
+
+
+                                                                                                                    1
+                                         Work in progress
+                                                                                       and a sequence-level trust region (Hu et al., 2026).
+                                           MiniCPM5-2B
+                                                                                       Other methods address off-policy agent training
+                                           Qwen3.5-4B
+                                                                                       through turn-level correction (Li et al., 2025) and
+       Baseline to recipe
+
+                                                     26.8                              variance control (Huang et al., 2026). Muon has
+                                SPO + Adam         18.0
+                                                                                       also been studied in mathematical and interactive
+                                                            45.2
+                                SPO + Muon         18.2                                RL (Fan et al., 2026; Ruan et al., 2026a). We study
+                                                                                       Muon within single-rollout asynchronous training
+                                                                      74.1
+                             SPO++ + Muon                           66.9               for issue resolution.
+                                                                                       Reward and loss design. Reward shaping deter-
+                                  No length                       59.1                 mines how task outcomes and intermediate behav-
+    SPO++ + Muon
+    Learning signal
+
+
+
+
+                                    penalty          25.8
+                                                                                       ior contribute to learning, while loss aggregation
+                               No tool-error                          70.5
+                                                                     68.2
+                                                                                       determines the weight of trajectories with different
+                                    penalty
+                                                                                       lengths. Both are studied in agentic RL recipes
+                                                            46.7
+                             Neither penalty                              84.4         (Wang et al., 2026; Wu et al., 2026b; Masud et al.,
+                                                                                       2026) and in reasoning RL through length penal-
+    SPO++ + Muon
+
+
+
+
+                                                                                       ties and trajectory weighting (Yu et al., 2025; Zeng
+     Update rule
+
+
+
+
+                            − Length penalty                          70.9
+                            + Sequence mean                        59.7                et al., 2026). We examine their combination with
+                                                                 53.8
+                                                                                       Muon in multi-turn software repair.
+                            − Length penalty
+                                       − TIS                      58.3
+                                                                                       3     Method
+                                               0   25       50       75      100
+                                                   Success rate (%)                    3.1    Muon-based policy optimization
+                                                                                       For each sampled issue, the agent produces one
+Figure 2: Recipe comparisons for the selected training
+                                                                                       rollout by interacting with the repository through
+runs in Figures 4 and 5. Bars summarize unsmoothed
+training success rates. Pale green highlights the full                                 tools. Rollout collection proceeds asynchronously
+recipe.                                                                                with policy updates, introducing policy lag.
+                                                                                          Muon’s update direction admits a spectral-norm
+                                                                                       interpretation (Bernstein, 2025). For a nonzero ma-
+both model families (Figure 2).                                                        trix gradient G with compact SVD G = Ur Σr Vr⊤ ,
+                                                                                       one solution to the local linear problem is
+2           Related Work
+Learning from agent–environment interaction.                                                 min       ⟨G, ∆W ⟩,    ∆W ∗ = −ηUr Vr⊤ ,
+                                                                                           ∥∆W ∥2 ≤η
+Software engineering (SWE) agents interact with                                                                                         (1)
+code repositories and use execution-based evalua-                                      where ∥ · ∥2 denotes the spectral norm and η > 0 is
+tion (Jimenez et al., 2023; Yang et al., 2024; Wang                                    the update budget. This direction preserves the gra-
+et al., 2024), supported by environments and train-                                    dient’s singular vectors and equalizes its nonzero
+ing tasks such as SWE-Gym, R2E-Gym, and SWE-                                           singular values. The constraint bounds the change
+smith (Pan et al., 2024; Jain et al., 2025; Yang                                       in a linear layer’s output: ∥∆W x∥2 ≤ η∥x∥2 .
+et al., 2025; JLULLM LAB, 2026). Training feed-                                        Practical Muon applies approximate orthogonal-
+back can come from software evolution (Wei et al.,                                     ization to a momentum-based update, with matrix-
+2025), test execution (Luo et al., 2025; Song et al.,                                  dependent scaling.
+2026), or simulation (Sun et al., 2026). Our experi-                                      Newton–Schulz iterations compute this approx-
+ments use execution-based rewards to study policy                                      imation using matrix multiplications, avoiding an
+optimization.                                                                          explicit SVD (Jordan et al., 2024). Our implemen-
+Single-rollout and asynchronous optimization.                                          tation applies it to hidden weight matrices; embed-
+SPO and SPO++ provide the single-rollout founda-                                       dings, the output head, normalization parameters,
+tion of our recipe (Xu and Ding, 2025; Ruan et al.,                                    and vector parameters use AdamW.
+2026b). SAO uses value-model learning and token-                                          The SPO baseline computes advantages from
+level masking based on importance ratios (Hou                                          outcome rewards and its task-specific baseline,
+et al., 2026), whereas FlashReinforce combines                                         then standardizes them across trajectories and uses
+critic-free updates with token importance sampling                                     proximal policy optimization (PPO)-style clipping
+
+
+                                                                                   2
+Work in progress
+                                                 MiniCPM5-2B                                                                         Qwen3.5-4B
+                          1.0                                                                               1.0
+                                                                                                                      SPO + Adam
+                                                                                                                      SPO + Muon
+                          0.8                                                                               0.8       SPO++ + Muon
+  Training success rate
+
+
+
+
+                                                                                    Training success rate
+                          0.6                                                                               0.6
+
+
+                          0.4                                                                               0.4
+
+
+                                    SPO + Adam
+                          0.2                                                                               0.2
+                                    SPO + Muon
+                                    SPO++ + Muon
+                          0.0                                                                               0.0
+                                0        25            50          75   100                                       0        25            50          75   100
+                                                 Training update                                                                   Training update
+
+
+Figure 3: Selected training runs. Thin translucent lines show raw values; bold lines show exponential moving
+averages (span 5) from the first observation.
+
+(Schulman et al., 2017; Xu and Ding, 2025). We                                    across valid tokens. Agent responses containing
+define valid tokens as agent-generated tokens in-                                 predefined command-rejection messages trigger an
+cluded in the policy loss. Our recipe follows SPO++                               additional trajectory-level penalty. Penalty abla-
+in standardizing advantages across valid tokens                                   tions leave the tool interface and binary outcome
+(Ruan et al., 2026b), with auxiliary reward shaping                               reward unchanged.
+for issue resolution (Figure 1).
+   Following DAPO’s Clip-Higher settings (Yu                                      3.3                        Importance correction and loss
+et al., 2025), the PPO importance-sampling ratio                                                             aggregation
+uses asymmetric clipping with ϵlow = 0.2 and                                      Truncated importance sampling (TIS) reweights
+ϵhigh = 0.28.                                                                     tokens to account for differences between training
+                                                                                  and sampling policies (Yao et al., 2025), arising
+3.2                       Outcome reward and auxiliary penalties                  from execution backends and asynchronous policy
+Following SWE-bench (Jimenez et al., 2023), the                                   lag (Zheng et al., 2025). With frozen pre-update
+final patch receives a binary outcome reward of 1                                         train evaluated by the training backend and
+                                                                                  policy πold
+if it passes all fail-to-pass (F2P) and pass-to-pass                              sampling policy π rollout , the weight for generated
+(P2P) tests, and 0 otherwise. F2P tests check issue                               token at in context st is
+resolution; P2P tests check for regressions. Empty                                                           train (a | s ) 
+                                                                                                            πold
+test sets and evaluations interrupted by infrastruc-                                                                  t    t
+                                                                                          wt = min C, rollout                   .  (3)
+ture failures remain unscored.                                                                             π         (at | st )
+    The length penalty discourages long agent re-
+                                                                                  We use C = 2 and apply the TIS weights directly to
+sponses at each interaction turn. The tool-error
+                                                                                  the masked token-level PPO losses, without batch-
+penalty applies to invalid actions and designated
+                                                                                  wise weight normalization. The no-TIS ablation
+tool, command, session, or execution errors re-
+                                                                                  removes the weights while retaining PPO ratio clip-
+ported in observations.
+                                                                                  ping.
+    When triggered, the tool-error term is −0.5. The
+                                                                                     Loss aggregation determines how trajectories of
+length penalty reaches −0.5 for responses exceed-
+                                                                                  different lengths contribute to an update (Liu et al.,
+ing 2,048 tokens, with the trajectory total propor-
+                                                                                  2025; Yu et al., 2025; Zeng et al., 2026). For a
+tionally capped. We omit this penalty on the final
+                                                                                  batch of N trajectories, let Ti > 0 count the valid
+turn contributing to the policy loss. Writing the
+                                                                                  tokens in trajectory i and ℓit denote their corrected
+length and tool-error terms at turn k as clen     k and
+  tool                                                                            losses. Tokens from environment observations are
+ck , their combined contribution is
+                                               
+       ck = clip clenk  +  c tool
+                             k    , −0.25, 0.25   . (2)
+
+The combined term is added to each valid to-
+ken’s advantage in that turn, before standardization
+
+                                                                              3
+Work in progress
+                                                                                              MiniCPM5-2B
+                                                                                                                                                                   SPO++ + Muon
+                                     SPO + Adam                                     SPO + Muon                               SPO++ + Muon                         No length penalty
+                       1.0                                          1.0                                           1.0                                  1.0
+
+
+                       0.5                       collapse           0.5                                           0.5                                  0.5
+
+
+                       0.0                                          0.0                                           0.0                                  0.0
+                             0            50            100               0              50            100              0          50           100          0            50              100
+
+                                                                                                                             SPO++ + Muon                          SPO++ + Muon
+                                   SPO++ + Muon                                    SPO++ + Muon                             No length penalty                     No length penalty
+                                 No tool-error penalty                             Neither penalty                           Sequence mean                             No TIS
+                       1.0                                          1.0                                           1.0                                  1.0
+    Training success rate
+
+
+
+
+                       0.5                                          0.5                                           0.5                                  0.5
+
+
+                       0.0                                          0.0                                           0.0                                  0.0
+                             0            50            100               0              50            100              0          50           100          0            50              100
+
+                                                                                                                             SPO++ + Adam
+                                   SPO++ + Adam                                    SPO++ + Adam                             No length penalty                      SPO++ + Adam
+                                   Neither penalty                                No length penalty                         + Sequence mean                      No tool-error penalty
+                       1.0                                          1.0                                           1.0                                  1.0
+
+                                          collapse
+                       0.5                                          0.5                                           0.5                                  0.5                     collapse
+                                                                                                     collapse
+                                                                                                                                            collapse
+
+                       0.0                                          0.0                                           0.0                                  0.0
+                             0            50            100               0              50            100              0          50           100          0            50              100
+
+
+                                   SPO++ + Adam
+                                    Both penalties
+                       1.0
+
+
+                       0.5
+                                      collapse
+
+                       0.0
+                             0            50            100
+
+
+Figure 4: Training success across MiniCPM5-2B recipes: thin lines show unsmoothed success rates, bold lines
+show span-5 EMA, red marks collapse, green marks the full recipe.
+
+excluded from the policy loss. We compare                                                                       auxiliary penalties are excluded.
+                      PN PTi                                                                                       We evaluate MiniCPM5-2B (OpenBMB, 2026)
+                                   ℓit                                                                          and Qwen3.5-4B (Qwen Team, 2026) with the
+            Ltoken = i=1  PN t=1 ,                                                               (4)
+                            i=1 Ti                                                                              same training-update and rollout budgets across
+                                                      i       N               T                                 independently initialized runs.
+                                               1 X 1 X
+                                   Lsequence =          ℓit .                                    (5)               Curves show the longest available training run
+                                               N   Ti                                                           per configuration, with a separately selected run
+                                                              i=1         t=1
+                                                                                                                for MiniCPM5-2B with SPO + Muon (Figure 3).
+The main recipe uses token-level averaging, which
+                                                                                                                Figure 2 summarizes the same runs using mean
+weights each trajectory mean in proportion to Ti .
+                                                                                                                success over updates 90–100 when that window
+The sequence-level averaging ablation weights tra-
+                                                                                                                is complete, and the last observed value other-
+jectory means equally and keeps advantage stan-
+                                                                                                                wise. Numerical summaries use recorded values;
+dardization unchanged.
+                                                                                                                matched comparisons use complete windows from
+4                       Experiments                                                                             runs with the same seed.
+                                                                                                                   Adam and Muon share the SPO baseline’s data,
+4.1                         Experimental setup                                                                  rollout budgets, termination rules, and loss aggre-
+Training uses issue-resolution tasks from R2E-                                                                  gation. Both collect task-specific outcome statistics
+Gym (Jain et al., 2025). The agent interacts with                                                               online, without SPO’s offline initialization.
+the execution environment through the Claude                                                                       The full-recipe comparison holds Muon fixed
+Code harness (version 2.1.118). Training success                                                                while jointly changing advantage normalization,
+rate is the fraction of evaluated rollouts whose fi-                                                            task-specific outcome estimation, clipping, and
+nal patches pass all required tests in each update;                                                             auxiliary penalties. Component ablations remove
+
+                                                                                                          4
+Work in progress
+                                                                                        Qwen3.5-4B
+                                                                                                                                                      SPO++ + Muon
+                                     SPO + Adam                             SPO + Muon                           SPO++ + Muon                        No length penalty
+                       1.0                                      1.0                                   1.0                                 1.0
+
+
+                       0.5                                      0.5                                   0.5                                 0.5
+                                               collapse
+
+                       0.0                                      0.0                                   0.0                                 0.0
+                             0            50              100         0           50          100           0          50           100         0            50          100
+
+                                                                                                                 SPO++ + Muon                         SPO++ + Muon
+                                   SPO++ + Muon                            SPO++ + Muon                         No length penalty                    No length penalty
+                                 No tool-error penalty                     Neither penalty                       Sequence mean                            No TIS
+                       1.0                                      1.0                                   1.0                                 1.0
+    Training success rate
+
+
+
+
+                       0.5                                      0.5                                   0.5                                 0.5
+
+
+                       0.0                                      0.0                                   0.0                                 0.0
+                             0            50              100         0           50          100           0          50           100         0            50          100
+
+                                                                                                                 SPO++ + Adam
+                                   SPO++ + Adam                            SPO++ + Adam                         No length penalty                     SPO++ + Adam
+                                   Neither penalty                        No length penalty                     + Sequence mean                     No tool-error penalty
+                       1.0                                      1.0                                   1.0                                 1.0
+
+
+                       0.5                                      0.5                                   0.5                                 0.5
+                                                                             collapse
+                                         collapse                                                                    collapse                                     collapse
+
+                       0.0                                      0.0                                   0.0                                 0.0
+                             0            50              100         0           50          100           0          50           100         0            50          100
+
+
+                                   SPO++ + Adam
+                                    Both penalties
+                       1.0
+
+
+                       0.5
+                                               collapse
+
+                       0.0
+                             0            50              100
+
+
+Figure 5: Training success across Qwen3.5-4B recipes: thin lines show unsmoothed success rates, bold lines show
+span-5 EMA, red marks collapse, green marks the full recipe.
+
+either or both penalties, or vary TIS and loss ag-                                                  ward shaping yields higher training success than
+gregation with the length penalty disabled. Each                                                    the SPO baselines in the evaluated runs from both
+configuration collects its own trajectories through                                                 model families.
+asynchronous rollouts; comparisons pair runs with
+the same seed.
+                                                                                                    References
+4.2                         Main results                                                            Jeremy Bernstein. 2025. Deriving muon.
+The full recipe reaches higher success rates than                                                   Chongyu Fan, Gaowen Liu, Mingyi Hong, Ramana Rao
+both SPO baselines later in training for both model                                                   Kompella, and Sijia Liu. 2026. Rethinking Muon
+families (Figure 3). The gain over SPO + Muon                                                         Beyond Pretraining: Spectral Failures and High-
+supports combining the optimizer with the full set                                                    Pass Remedies for VLA and RLVR. Preprint,
+                                                                                                      arXiv:2605.19282. Version v1, 2026-05-19.
+of recipe changes.
+   Across the recipe comparisons, training success                                                  Zhenyu Hou, Yujiang Li, Jie Tang, and Yuxiao
+continues to improve with the full recipe and de-                                                     Dong. 2026. Single-rollout asynchronous optimiza-
+                                                                                                      tion for agentic reinforcement learning. Preprint,
+clines in several Adam configurations (Figures 4                                                      arXiv:2607.07508. Version v1.
+and 5). Without the length penalty, the relative
+performance of token-level and sequence-level av-                                                   Jian Hu, Yifan Zhang, Hao Zhang, Binfeng Xu,
+                                                                                                       Shaokun Zhang, Hongqing Peng, Zhiding Yu, Pavlo
+eraging varies across seeds.                                                                           Molchanov, Jan Kautz, and Yi Dong. 2026. FlashRE-
+                                                                                                       INFORCE: Critic-free single-rollout asynchronous
+5                       Conclusion                                                                     RL for agentic language models.
+Combining Muon with single-rollout asynchronous                                                     Luke J. Huang, Zhuoyang Zhang, Qinghao Hu,
+updates, importance correction, and auxiliary re-                                                     Shang Yang, and Song Han. 2026. Stable Asyn-
+
+
+                                                                                                5
+Work in progress
+  chrony: Variance-Controlled Off-Policy RL for                Kai Ruan, Jinghao Lin, Zihe Huang, Ziqi Zhou, Qian-
+  LLMs. Preprint, arXiv:2602.17616.                              shan Wei, Xuan Wang, and Hao Sun. 2026a. When
+                                                                 Does Muon Help Agentic Reinforcement Learning?
+Naman Jain, Jaskirat Singh, Manish Shetty, Liang                 Preprint, arXiv:2607.16169. Version v4, 2026-08-
+  Zheng, Koushik Sen, and Ion Stoica. 2025. R2E-                 02.
+  Gym: Procedural environments and hybrid verifiers
+  for scaling open-weights SWE agents. Preprint,               Kai Ruan, Jinghao Lin, Qianshan Wei, Ziqi Zhou,
+  arXiv:2504.07164. Version 1, 9 April 2025.                     and Zihe Huang. 2026b. SPO++: Stream-Aligned
+                                                                 Policy Optimization for Asynchronous Agentic RL.
+Carlos E. Jimenez, John Yang, Alexander Wettig,                  Preprint, arXiv:2608.24870. Version v1, 2026-08-
+  Shunyu Yao, Kexin Pei, Ofir Press, and Karthik                 25.
+  Narasimhan. 2023. SWE-bench: Can language mod-
+  els resolve real-world GitHub issues? Preprint,              John Schulman, Filip Wolski, Prafulla Dhariwal,
+  arXiv:2310.06770. Version v3.                                  Alec Radford, and Oleg Klimov. 2017. Prox-
+                                                                 imal policy optimization algorithms. Preprint,
+JLULLM LAB. 2026. From issues to learning sig-                   arXiv:1707.06347.
+  nals: A survey of data for coding agents. Survey
+  manuscript.                                                  Huatong Song, Lisheng Huang, Shuang Sun, Jinhao
+                                                                 Jiang, Ran Le, Daixuan Cheng, Guoxin Chen, Yi-
+Keller Jordan, Yuchen Jin, Vlado Boza, Jiacheng You,             wen Hu, Zongchao Chen, Yiming Jia, Wayne Xin
+  Franz Cesista, Laker Newhouse, and Jeremy Bern-                Zhao, Yang Song, Tao Zhang, and Ji-Rong Wen.
+  stein. 2024. Muon: An optimizer for hidden layers              2026. SWE-Master: Unleashing the Potential of Soft-
+  in neural networks. Technical blog.                            ware Engineering Agents via Post-Training. Preprint,
+                                                                 arXiv:2602.03411.
+Diederik P. Kingma and Jimmy Ba. 2014. Adam:
+  A method for stochastic optimization. Preprint,              Shuang Sun, Huatong Song, Lisheng Huang, Jinhao
+  arXiv:1412.6980.                                               Jiang, Ran Le, Zhihao Lv, Zongchao Chen, Yi-
+                                                                 wen Hu, Wenyang Luo, Wayne Xin Zhao, Yang
+Chenliang Li, Adel Elmahdy, Alex Boyd, Zhongruo                  Song, Hongteng Xu, Tao Zhang, and Ji-Rong Wen.
+  Wang, Siliang Zeng, Alfredo Garcia, Parminder                  2026. SWE-World: Building Software Engineer-
+  Bhatia, Taha Kass-Hout, Cao Xiao, and Mingyi                   ing Agents in Docker-Free Environments. Preprint,
+  Hong. 2025. Stabilizing Off-Policy Training for                arXiv:2602.03419.
+  Long-Horizon LLM Agent via Turn-Level Impor-
+  tance Sampling and Clipping-Triggered Normaliza-             Xiaoxuan Wang, Han Zhang, Haixin Wang, Yidan Shi,
+  tion. Preprint, arXiv:2511.20718.                              Ruoyan Li, Kaiqiao Han, Chenyi Tong, Haoran Deng,
+                                                                 Alexander K. Taylor, Renliang Sun, Yanqiao Zhu,
+Zichen Liu, Changyu Chen, Wenjun Li, Penghui Qi,                 Jason Cong, Yizhou Sun, and Wei Wang. 2026. Ar-
+  Tianyu Pang, Chao Du, Wee Sun Lee, and Min Lin.                larena: A unified framework for stable agentic rein-
+  2025. Understanding R1-Zero-Like Training: A Crit-             forcement learning. Preprint, arXiv:2602.21534.
+  ical Perspective. Preprint, arXiv:2503.20783.
+                                                               Xingyao Wang, Boxuan Li, Yufan Song, Frank F. Xu,
+Michael Luo, Naman Jain, Jaskirat Singh, Sijun Tan,              Xiangru Tang, Mingchen Zhuge, Jiayi Pan, Yueqi
+  Ameen Patel, Qingyang Wu, Alpay Ariyak, Colin                  Song, Bowen Li, Jaskirat Singh, Hoang H. Tran,
+  Cai, Tarun Venkat, Shang Zhu, Ben Athiwaratkun,                Fuqiang Li, Ren Ma, Mingzhang Zheng, Bill Qian,
+  Manan Roongta, Ce Zhang, Li Erran Li, Raluca Ada               Yanjun Shao, Niklas Muennighoff, Yizhe Zhang,
+  Popa, Koushik Sen, and Ion Stoica. 2025. DeepSWE:              Binyuan Hui, and 5 others. 2024. OpenHands: An
+  Training a fully open-sourced, state-of-the-art coding         Open Platform for AI Software Developers as Gener-
+  agent by scaling RL. Together AI technical blog.               alist Agents. Preprint, arXiv:2407.16741.
+  Published 2 July 2025; accessed 23 September 2026.
+                                                               Yuxiang Wei, Olivier Duchenne, Jade Copet, Quentin
+Md Rayhanul Masud, Azmine Toushik Wasi, Salman                   Carbonneaux, Lingming Zhang, Daniel Fried,
+ Rahman, and Md Rizwan Parvez. 2026. Reward engi-                Gabriel Synnaeve, Rishabh Singh, and Sida I. Wang.
+ neering for software tasks: A survey of reinforcement           2025. SWE-RL: Advancing LLM reasoning via
+ learning approaches. Preprint, arXiv:2601.19100.                reinforcement learning on open software evolution.
+                                                                 Preprint, arXiv:2502.18449. ArXiv record.
+OpenBMB. 2026. MiniCPM5-2B model card. Hugging
+  Face model card.                                             Kai Wu, Hao Lyu, Zhen Luo, Chaofan Wang, Siyu Ye,
+Jiayi Pan, Xingyao Wang, Graham Neubig, Navdeep                  Jinghao Lin, Xiaozhong Ji, Boyuan Jiang, Shengzhi
+                                                                 Wang, Zihan Wang, Yiwen Ye, Hao Wang, Zimu
+   Jaitly, Heng Ji, Alane Suhr, and Yizhe Zhang. 2024.
+                                                                 Wang, Wenzhe Liu, Ruobing Wang, Kai Cai, Min-
+   Training software engineering agents and verifiers
+                                                                 gliang Xiong, Wen Fang, Mingqing Liu, and 4 others.
+   with SWE-gym. Preprint, arXiv:2412.21139.
+                                                                 2026a. AI4AI survey: From long-horizon agents
+Qwen Team. 2026. Qwen3.5: Towards native multi-                  to recursive self-improvement—definitions, reliable
+ modal agents.                                                   horizons, and open problems. Preprints.org.
+
+
+
+                                                           6
+Work in progress
+Xixi Wu, Qianguo Sun, Ruiyang Zhang, Chao Song,                RL training. Technical blog. First published August
+  Junlong Wu, Yiyan Qi, and Hong Cheng. 2026b. De-             5, 2025.
+  mystifying reinforcement learning for long-horizon
+  tool-using agents: A comprehensive recipe. Preprint,       Qiying Yu, Zheng Zhang, Ruofei Zhu, Yufeng Yuan,
+  arXiv:2603.21972.                                            Xiaochen Zuo, Yu Yue, Weinan Dai, Tiantian Fan,
+                                                               Gaohong Liu, Lingjun Liu, Xin Liu, Haibin Lin,
+Zhongwen Xu and Zihan Ding. 2025. Single-stream                Zhiqi Lin, Bole Ma, Guangming Sheng, Yuxuan
+  Policy Optimization. Preprint, arXiv:2509.13232.             Tong, Chi Zhang, Mofan Zhang, Wang Zhang, and
+  Version v2, 2025-09-23.                                      16 others. 2025. DAPO: An Open-Source LLM Re-
+                                                               inforcement Learning System at Scale. Preprint,
+John Yang, Carlos E. Jimenez, Alexander Wettig, Kilian         arXiv:2503.14476. Version v2, 2025-05-20.
+  Lieret, Shunyu Yao, Karthik Narasimhan, and Ofir
+  Press. 2024. SWE-agent: Agent-computer interfaces          Zhiyuan Zeng, Jiameng Huang, Zhangyue Yin, Ji-
+  enable automated software engineering. Preprint,             ashuo Liu, Ziniu Li, Bingrui Li, Yuhao Wu, Yin-
+  arXiv:2405.15793. Version 3, 11 November 2024.               ing Zheng, Ge Zhang, Wenhao Huang, and Xipeng
+                                                               Qiu. 2026. Balanced Aggregation: Understanding
+John Yang, Kilian Lieret, Carlos E. Jimenez, Alexan-           and Fixing Aggregation Bias in GRPO. Preprint,
+  der Wettig, Kabir Khandpur, Yanzhe Zhang, Binyuan            arXiv:2605.04077. Version v1, 2026-04-14.
+  Hui, Ofir Press, Ludwig Schmidt, and Diyi Yang.
+  2025. SWE-smith: Scaling data for software engi-           Chujie Zheng, Kai Dang, Bowen Yu, Mingze Li,
+  neering agents. Preprint, arXiv:2504.21798.                  Huiqiang Jiang, Junrong Lin, Yuqiong Liu, Hao Lin,
+                                                               Chencan Wu, Feng Hu, An Yang, Jingren Zhou, and
+Feng Yao, Liyuan Liu, Dinghuai Zhang, Chengyu Dong,            Junyang Lin. 2025. Stabilizing Reinforcement Learn-
+  Jingbo Shang, and Jianfeng Gao. 2025. Your effi-             ing with LLMs: Formulation and Practices. Preprint,
+  cient RL framework secretly brings you off-policy            arXiv:2512.01374.
+
+
+
+
+                                                         7
+Work in progress
+

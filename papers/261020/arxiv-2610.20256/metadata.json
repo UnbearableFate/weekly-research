@@ -1,0 +1,52 @@
+{
+  "title": "Long-Horizon RL Needs Muon",
+  "abstract": "Long-horizon agents must coordinate reasoning, tool use, and environment feedback over extended interactions. Learning from sparse outcome rewards requires weighting trajectories of different lengths and updating the policy while rollouts are still being collected. We examine a single-rollout asynchronous recipe combining Muon, token-averaged loss, truncated importance sampling, and auxiliary length and tool-error penalties. Single-rollout sampling allows asynchronous learning without waiting for multiple trajectories for the same issue. We study optimizer choices and recipe components for repository-level issue resolution across two model families. The evaluated training runs show higher training success with the full recipe than with the baselines.",
+  "authors": [
+    "Kai Ruan",
+    "Jinghao Lin",
+    "Tao Chen",
+    "Ziqi Zhou",
+    "Qianshan Wei",
+    "Zihe Huang"
+  ],
+  "url": "https://arxiv.org/abs/2610.20256",
+  "pdf": "https://arxiv.org/pdf/2610.20256",
+  "date": "2026-10-14",
+  "source": "hf-daily",
+  "hf_upvotes": 30,
+  "keyword_matches": [
+    {
+      "topic": "LLM优化器",
+      "term": "optimizer",
+      "matched": "optimizer",
+      "similarity": 1.0
+    },
+    {
+      "topic": "LLM优化器",
+      "term": "Muon",
+      "matched": "muon",
+      "similarity": 1.0
+    }
+  ],
+  "attention_evidence": [
+    {
+      "source": "hf-daily",
+      "url": "https://huggingface.co/api/daily_papers?date=2026-10-15&limit=100",
+      "attention_date": "2026-10-15",
+      "observed_at": "2026-10-20T15:45:06.808610+00:00",
+      "hf_upvotes": 30,
+      "raw_file": "_work/sources/hf-2026-10-15.json"
+    }
+  ],
+  "score": 100,
+  "keyword_score": 2,
+  "agent": {
+    "score": 4,
+    "reason": "Directly studies Muon and optimizer choices in long-horizon language-model agent training, an explicit LLM optimizer contribution."
+  },
+  "arxiv_id": "2610.20256",
+  "doi": "",
+  "published_at": "2026-10-14",
+  "year": "2026",
+  "pdf_url": "https://arxiv.org/pdf/2610.20256"
+}

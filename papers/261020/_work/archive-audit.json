@@ -1,0 +1,17 @@
+{
+  "validated_at": "2026-10-20T16:21:56.273699+00:00",
+  "status": "passed",
+  "included_papers": 15,
+  "roles": {
+    "foundation": 9,
+    "recent": 6
+  },
+  "pdfs_checked": 15,
+  "bilingual_sections_checked": 105,
+  "local_markdown_links_checked": 140,
+  "relations_checked": 9,
+  "sqlite_integrity": "ok",
+  "duplicate_relation_pairs": 0,
+  "excluded_background_papers": 2,
+  "errors": []
+}

@@ -1,0 +1,93 @@
+[
+  {
+    "title": "PyTorch: An Imperative Style, High-Performance Deep Learning Library",
+    "authors": ["Adam Paszke", "Sam Gross", "Francisco Massa", "Adam Lerer", "James Bradbury", "Gregory Chanan", "Trevor Killeen", "Zeming Lin", "Natalia Gimelshein", "Luca Antiga", "Alban Desmaison", "Andreas Köpf", "Edward Yang", "Zach DeVito", "Martin Raison", "Alykhan Tejani", "Sasank Chilamkurthy", "Benoit Steiner", "Lu Fang", "Junjie Bai", "Soumith Chintala"],
+    "year": "2019",
+    "published_at": "2019-12-03",
+    "arxiv_id": "1912.01703",
+    "url": "https://arxiv.org/abs/1912.01703",
+    "attention_evidence": "Direct citation in the selected DDP paper's References [30]."
+  },
+  {
+    "title": "LoRA: Low-Rank Adaptation of Large Language Models",
+    "authors": ["Edward J. Hu", "Yelong Shen", "Phillip Wallis", "Zeyuan Allen-Zhu", "Yuanzhi Li", "Shean Wang", "Lu Wang", "Weizhu Chen"],
+    "year": "2021",
+    "published_at": "2021-06-17",
+    "arxiv_id": "2106.09685",
+    "url": "https://arxiv.org/abs/2106.09685",
+    "attention_evidence": "Direct citation in the selected brain-encoding PEFT paper's References."
+  },
+  {
+    "title": "SPO++: Stream-Aligned Policy Optimization for Asynchronous Agentic RL",
+    "authors": ["Kai Ruan", "Jinghao Lin", "Qianshan Wei", "Ziqi Zhou", "Zihe Huang"],
+    "year": "2026",
+    "published_at": "2026-08-25",
+    "arxiv_id": "2608.24870",
+    "url": "https://arxiv.org/abs/2608.24870",
+    "attention_evidence": "Selected Long-Horizon RL paper states in Related Work that SPO and SPO++ provide the single-rollout foundation and that its recipe follows SPO++."
+  },
+  {
+    "title": "SOP: A Scalable Online Post-Training System for Vision-Language-Action Models",
+    "authors": ["Mingjie Pan", "Siyuan Feng", "Qinglin Zhang", "Xinchen Li", "Jianheng Song", "Chendi Qu", "Yi Wang", "Chuankang Li", "Ziyu Xiong", "Zhi Chen", "Yi Liu", "Jianlan Luo"],
+    "year": "2026",
+    "published_at": "2026-01-06",
+    "arxiv_id": "2601.03044",
+    "url": "https://arxiv.org/abs/2601.03044",
+    "attention_evidence": "Cited as the prior fleet-to-central-learner online policy-distribution system in the selected Fleet paper's Related Work."
+  },
+  {
+    "title": "RLinf: Flexible and Efficient Large-scale Reinforcement Learning via Macro-to-Micro Flow Transformation",
+    "authors": ["Chao Yu", "Yuanqing Wang", "Zhen Guo", "Hao Lin", "Si Xu", "Hongzhi Zang", "Quanlu Zhang", "Yongji Wu", "Chunyang Zhu", "Junhao Hu", "Zixiao Huang", "Mingjie Wei", "Yuqing Xie", "Ke Yang", "Bo Dai", "Zhexuan Xu", "Jiakun Du", "Xiangyuan Wang", "Xu Fu", "Letong Shi", "Zhihao Liu", "Kang Chen", "Weilin Liu", "Gang Liu", "Boxun Li", "Jianlei Yang", "Zhi Yang", "Guohao Dai", "Yu Wang"],
+    "year": "2026",
+    "published_at": "2026-07-13",
+    "arxiv_id": "2509.15965",
+    "url": "https://arxiv.org/abs/2509.15965",
+    "attention_evidence": "Selected Fleet paper states FATS is implemented on RLinf [41]; OSDI 2026 official page confirms bibliographic metadata."
+  },
+  {
+    "title": "On-Policy Distillation of Language Models: Learning from Self-Generated Mistakes",
+    "authors": ["Rishabh Agarwal", "Nino Vieillard", "Yongchao Zhou", "Piotr Stanczyk", "Sabela Ramos", "Matthieu Geist", "Olivier Bachem"],
+    "year": "2024",
+    "published_at": "2023-06-23",
+    "arxiv_id": "2306.13649",
+    "url": "https://arxiv.org/abs/2306.13649",
+    "attention_evidence": "Selected ROAD MOPD paper cites on-policy distillation as its underlying objective and uses the same student-generated trajectory setup."
+  },
+  {
+    "title": "Gradient Surgery for Multi-Task Learning",
+    "authors": ["Tianhe Yu", "Saurabh Kumar", "Abhishek Gupta", "Sergey Levine", "Karol Hausman", "Chelsea Finn"],
+    "year": "2020",
+    "published_at": "2020-01-19",
+    "arxiv_id": "2001.06782",
+    "url": "https://arxiv.org/abs/2001.06782",
+    "attention_evidence": "Selected ROAD MOPD paper directly compares and adapts the gradient-projection construction discussed in Section 3.3."
+  },
+  {
+    "title": "Visual Instruction Tuning",
+    "authors": ["Haotian Liu", "Chunyuan Li", "Qingyang Wu", "Yong Jae Lee"],
+    "year": "2023",
+    "published_at": "2023-04-17",
+    "arxiv_id": "2304.08485",
+    "url": "https://arxiv.org/abs/2304.08485",
+    "attention_evidence": "Selected PORTAL paper directly studies the LLaVA projector architecture introduced by this work."
+  },
+  {
+    "title": "Deep CORAL: Correlation Alignment for Deep Domain Adaptation",
+    "authors": ["Baochen Sun", "Kate Saenko"],
+    "year": "2016",
+    "published_at": "2016-07-06",
+    "arxiv_id": "1607.01719",
+    "url": "https://arxiv.org/abs/1607.01719",
+    "attention_evidence": "Selected PORTAL paper explicitly identifies CORAL as the closest unpaired distribution-alignment work and extends the moment-alignment idea."
+  },
+  {
+    "title": "On the Bures-Wasserstein Distance Between Positive Definite Matrices",
+    "authors": ["Rajendra Bhatia", "Tanvi Jain", "Yongdo Lim"],
+    "year": "2019",
+    "published_at": "2019-06",
+    "arxiv_id": "1712.01504",
+    "doi": "10.1016/j.exmath.2018.01.002",
+    "url": "https://arxiv.org/abs/1712.01504",
+    "attention_evidence": "Selected PORTAL paper cites this work for the Gaussian optimal transport map used to derive its affine projector parameters."
+  }
+]

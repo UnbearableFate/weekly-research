@@ -1,0 +1,18 @@
+{
+  "title": "Gradient Surgery for Multi-Task Learning",
+  "authors": [
+    "Tianhe Yu",
+    "Saurabh Kumar",
+    "Abhishek Gupta",
+    "Sergey Levine",
+    "Karol Hausman",
+    "Chelsea Finn"
+  ],
+  "year": "2020",
+  "published_at": "2020-01-19",
+  "arxiv_id": "2001.06782",
+  "url": "https://arxiv.org/abs/2001.06782",
+  "attention_evidence": "Selected ROAD MOPD paper directly compares and adapts the gradient-projection construction discussed in Section 3.3.",
+  "doi": "",
+  "pdf_url": "https://arxiv.org/pdf/2001.06782"
+}

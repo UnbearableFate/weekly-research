@@ -1,0 +1,15 @@
+{
+  "title": "On the Bures-Wasserstein Distance Between Positive Definite Matrices",
+  "authors": [
+    "Rajendra Bhatia",
+    "Tanvi Jain",
+    "Yongdo Lim"
+  ],
+  "year": "2019",
+  "published_at": "2019-06",
+  "arxiv_id": "1712.01504",
+  "doi": "10.1016/j.exmath.2018.01.002",
+  "url": "https://arxiv.org/abs/1712.01504",
+  "attention_evidence": "Selected PORTAL paper cites this work for the Gaussian optimal transport map used to derive its affine projector parameters.",
+  "pdf_url": "https://arxiv.org/pdf/1712.01504"
+}

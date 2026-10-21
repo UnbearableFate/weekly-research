@@ -1,0 +1,88 @@
+{
+  "title": "Learning from Fleet Experience: A Collective Learning Paradigm for Robots",
+  "abstract": "Experience generated during deployment offers an opportunity for robots to improve policy reliability through learning from their own executions. However, learning through human corrections requires teleoperators to monitor execution and intervene when policies fail, a demand that is difficult to meet as robot fleets grow. We introduce collective experience learning (CEL), a learning paradigm in which deployed robots share their execution experience to improve a common policy. We realize CEL through failure-guided experience retrieval fine-tuning (FERT), which uses failure contexts from robot executions to retrieve relevant trajectory segments from the fleet's shared successful experience and uses their actions as supervision for policy updates, without collecting additional expert demonstrations or corrective actions. A fault-tolerant asynchronous training system (FATS) coordinates experience collection, policy optimization and policy distribution despite local interruptions within the robot fleet. Across five real-world manipulation tasks, the resulting policies achieve success rates of 93.3-99.2%, evaluated over 120 trials per task on robots excluded from training data collection. With collection time per robot held fixed, larger fleets provide more experience and FERT generally achieves higher success rates across the evaluated sizes. On multi-stage phone packaging, learning with 96 robots increases success from 79.2% to 98.3%. These results support collective experience as a practical basis for scalable robot learning and a path towards improving policy reliability during deployment without collecting additional expert corrective actions.",
+  "authors": [
+    "Chao Yu",
+    "Shu&#39;ang Yu",
+    "Hao Lin",
+    "Hongzhi Zang",
+    "Yuxiang Yan",
+    "Chenxi Jiang",
+    "Zhen Guo",
+    "Chuankang Li",
+    "Yihao Chen",
+    "Xin Xu",
+    "Xu Fu",
+    "Jiakai Zhou",
+    "Liangzhi Shi",
+    "Hongyi Ren",
+    "Yiwei Liu",
+    "Jing Wu",
+    "Yuanqing Wang",
+    "Chen Wu",
+    "Bo Dai",
+    "Chunyu Yang",
+    "Hongliang Huang",
+    "Shuoyu Yue",
+    "Weiqi Yin",
+    "Yinuo Chen",
+    "Ruihua Chen",
+    "Chunyang Zhu",
+    "Han Xiao",
+    "Yanghao Li",
+    "Ruipu Wu",
+    "Zhikai Cai",
+    "Xiu Chen",
+    "Xu Tan",
+    "Yuchen Yan",
+    "Jialin Zhang",
+    "Wen Zeng",
+    "Yiming Zhou",
+    "Zixiao Huang",
+    "Guanghui Ren",
+    "Quanlu Zhang",
+    "Boxun Li",
+    "Maoqing Yao",
+    "Yu Wang"
+  ],
+  "url": "https://arxiv.org/abs/2610.25736",
+  "pdf": "https://arxiv.org/pdf/2610.25736",
+  "date": "2026-10-19",
+  "source": "hf-daily",
+  "hf_upvotes": 105,
+  "keyword_matches": [
+    {
+      "topic": "LLM优化器",
+      "term": "optimization",
+      "matched": "optimization",
+      "similarity": 1.0
+    },
+    {
+      "topic": "分布式学习",
+      "term": "asynchronous training",
+      "matched": "asynchronous training",
+      "similarity": 1.0
+    }
+  ],
+  "attention_evidence": [
+    {
+      "source": "hf-daily",
+      "url": "https://huggingface.co/api/daily_papers?date=2026-10-20&limit=100",
+      "attention_date": "2026-10-20",
+      "observed_at": "2026-10-20T15:45:15.687311+00:00",
+      "hf_upvotes": 105,
+      "raw_file": "_work/sources/hf-2026-10-20.json"
+    }
+  ],
+  "score": 100,
+  "keyword_score": 2,
+  "agent": {
+    "score": 4,
+    "reason": "A concrete collective distributed-learning system with shared fleet experience, asynchronous training, and policy distribution; directly within distributed learning despite its robotics application."
+  },
+  "arxiv_id": "2610.25736",
+  "doi": "",
+  "published_at": "2026-10-19",
+  "year": "2026",
+  "pdf_url": "https://arxiv.org/pdf/2610.25736"
+}

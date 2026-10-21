@@ -1,0 +1,16 @@
+{
+  "title": "Visual Instruction Tuning",
+  "authors": [
+    "Haotian Liu",
+    "Chunyuan Li",
+    "Qingyang Wu",
+    "Yong Jae Lee"
+  ],
+  "year": "2023",
+  "published_at": "2023-04-17",
+  "arxiv_id": "2304.08485",
+  "url": "https://arxiv.org/abs/2304.08485",
+  "attention_evidence": "Selected PORTAL paper directly studies the LLaVA projector architecture introduced by this work.",
+  "doi": "",
+  "pdf_url": "https://arxiv.org/pdf/2304.08485"
+}

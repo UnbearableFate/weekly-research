@@ -8,6 +8,3 @@ wheels/
 
 # Virtual environments
 .venv
-
-# Downloaded research, SQLite state and local execution logs
-papers/
