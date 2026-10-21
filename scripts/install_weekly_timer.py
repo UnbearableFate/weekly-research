@@ -24,7 +24,7 @@ def main():
         raise RuntimeError("uv is unavailable on PATH")
     name = "ml-research-weekly-papers"
     service = f"""[Unit]
-Description=Weekly papers: bilingual summaries and methodological foundations
+Description=Weekly papers: originals and bilingual summaries
 
 [Service]
 Type=oneshot

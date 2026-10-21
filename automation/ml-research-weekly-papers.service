@@ -1,5 +1,5 @@
 [Unit]
-Description=Weekly papers: bilingual summaries and methodological foundations
+Description=Weekly papers: originals and bilingual summaries
 
 [Service]
 Type=oneshot

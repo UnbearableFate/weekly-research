@@ -1,13 +1,13 @@
 # Weekly paper research
 
 Search public papers on **LLM optimizers, distributed learning, PEFT, and continual
-learning**, identify their direct methodological foundations, and archive original
-PDFs with **English-first, Chinese-second** summaries.
+learning** that received attention during the reporting window, and archive their
+original PDFs with **English-first, Chinese-second** summaries.
 
 The executable instructions are in [workflows/weekly-papers.md](workflows/weekly-papers.md).
 The selected subskills are daily-papers-fetch, daily-papers-review, and
-academic-research-suite / deep-research / three-way-scan, with bibliography,
-source-verification and synthesis role contracts.
+academic-research-suite / deep-research / three-way-scan, limited to source
+verification and synthesis of the selected papers.
 
 ## Configuration
 
@@ -23,7 +23,7 @@ Edit [weekly-papers.json](weekly-papers.json):
 | `arxiv_categories` | arXiv discovery categories |
 | `top_n` | Maximum recent/attention-qualified papers per week; default 10 |
 | `min_hf_upvotes` | Minimum observed cumulative HF votes; default 5 |
-| `max_foundations_per_paper` | Normal direct-foundation limit; default 2 |
+| `max_foundations_per_paper` | `0`: standalone foundation collection is disabled |
 | `model` / `reasoning_effort` | `gpt-6-luna` / `xhigh` |
 | `timezone` / `schedule` | `Asia/Shanghai` / `Fri 17:00` |
 
@@ -107,8 +107,8 @@ papers/
 
 SQLite tracks normalized arXiv IDs (ignoring version suffixes), DOI aliases,
 conservative title/first-author/year identity, artifact SHA-256 hashes, weekly
-membership and citation relationships. Same-title papers with different authors
-remain distinct. Conflicting strong identifiers require reconciliation.
+membership and historical citation relationships. Same-title papers with different
+authors remain distinct. Conflicting strong identifiers require reconciliation.
 
 Verified originals and summaries are reused across weeks through relative
 symlinks. Version changes currently reuse the first archived original: this
@@ -126,12 +126,14 @@ Older work with current attention is labelled separately. Discovery is bounded
 fuzzy-matched candidates); this is a weekly reading selection, not an exhaustive
 literature review. Empty or failing sources are reported explicitly.
 
-Foundation relationships require a quote found in the saved citing paper plus
-a section/equation locator and an explanation of the dependency. Explicit
-`based_on` / `inspired_by` statements are distinguished from reader-inferred
-`method_dependency`. Every included foundation gets an original and bilingual
-summary too. Existence/hash checks do not prove semantic correctness; the research
-executor must inspect the original passages.
+The weekly workflow collects only the attention-qualified selections. It skips
+standalone foundation downloads, foundation summaries and citation tracing.
+With `max_foundations_per_paper` set to `0`, foundation ingestion is disabled and
+completion does not require foundation-search records or citation relationships.
+Existing archived foundations and relationships remain available as historical
+records. Summaries explain each selected paper's core content, methods, evidence
+and limitations. Existence/hash checks do not prove semantic correctness; the
+research executor must inspect the original passages.
 
 ## Validation
 

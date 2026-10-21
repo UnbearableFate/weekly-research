@@ -1,11 +1,14 @@
-# Weekly influential papers and their methodological foundations
+# Weekly influential papers
 
 ## User contract
 
 Search and download public research papers in this project. Execute the research
 with **gpt-6-luna / xhigh**. Run every Friday at **17:00 Asia/Shanghai**;
-use `papers/YYMMDD/` (e.g. `papers/261020/`). Today is an authorized trial.
-Write workflow instructions in English. For **every paper**, including foundations,
+use `papers/YYMMDD/` (e.g. `papers/261020/`).
+The collection contains only papers selected for attention within the reporting
+window. Standalone foundational-paper collection and citation tracing are out of
+scope. `max_foundations_per_paper` is set to `0`.
+Write workflow instructions in English. For **every selected paper**,
 write a paired summary: **English first, then Chinese in each corresponding section**.
 The weekly overview may be Chinese. Do not substitute the model silently.
 
@@ -30,9 +33,9 @@ Read only these selected workflows and relevant role contracts:
    contribution and reading priorities. The user's project output path overrides
    the default Obsidian destination; do not modify an external vault.
 3. `$academic-research-suite`: read its root `SKILL.md`, then
-   `ars/deep-research/WORKFLOW.md` in **three-way-scan** mode. Load
-   `agents/bibliography_agent.md` for citation tracing,
-   `agents/source_verification_agent.md` for source checks, and
+   `ars/deep-research/WORKFLOW.md` in **three-way-scan** mode, limited to verifying
+   and synthesizing the selected papers. Load
+   `agents/source_verification_agent.md` for source checks and
    `agents/synthesis_agent.md` for the final comparison, only at their phases.
    Follow the root router's network/runtime overrides. Use official metadata and
    browsing; do not launch Semantic Scholar/OpenAlex/Crossref resolver clients.
@@ -73,35 +76,19 @@ research. The launcher supplies the run date; otherwise use today's Shanghai dat
    a string array. Upstream `url/pdf/date` and comma-separated authors are accepted.
    Read the returned canonical keys and paths. Download failures remain incomplete;
    seek legitimate open originals from authors or official proceedings when needed.
-5. Read Introduction, Related Work, Methods, Experiments and references. Search for
-   `inspired by`, `based on`, `builds on`, `following`, and `extend`, then determine
-   the actual methodological dependency. Usually select **one or two direct
-   foundations per recent paper**, bounded by `max_foundations_per_paper`, stopping
-   at one citation hop. Prioritize the mathematical or algorithmic construction
-   that enables the contribution; identify framework/runtime dependencies as such.
-   A generic baseline,
-   high citation count or shared topic alone does not establish a foundation.
-   When none can be verified, explicitly record that outcome instead of inventing
-   a relationship, using `foundation-check --date ... --key ... --note ...`.
-6. Verify each cited foundation's title/authors/year/identifiers against both the
-   citing paper's bibliography and an official source. Use `ingest ... --role
-   foundation`. **Every foundation also needs its original and a bilingual summary.**
-   Reuse already-complete papers across weeks. Do not recursively trace foundations.
-7. Register each supported dependency with `relation --date ... --input <JSON>`:
-   `source_key, target_key, relation_type, evidence_quote, locator, source_url,
-   rationale_zh`. Types: `based_on`, `inspired_by`, or `method_dependency` for a
-   reader inference supported by method evidence. Do not describe inferred links
-   as explicit author claims. A reference-list title alone is not relationship
-   evidence: quote the methods/introduction passage that establishes actual use.
-   “A related approach” alone is not an explicit inspiration statement. Keep it as
-   background, or explain a concrete shared mechanism and label the inference.
-   Check locator headings against the actual text, not memory.
-   Keep total English verbatim excerpts from each source
-   at or below 25 words. Give a precise section/equation locator. Before relying on
+5. Read each selected paper's Introduction, Related Work, Methods and Experiments.
+   Consult its references only as needed to explain its own method. Analyze the
+   problem, contribution, algorithm, experimental evidence and limitations within
+   the selected paper. Do not expand the collection by downloading or separately
+   summarizing cited foundations, and skip `relation` and `foundation-check`.
+   Verify title/authors/year/identifiers against official metadata. Check locator
+   headings against the actual text, not memory. Keep English verbatim excerpts
+   from each source at or below 25 words. Give a precise section/equation locator.
+   Before relying on
    PDF page anchors, run ARS `ars/scripts/pdf_read_preflight.py --help`, execute its
    actual documented interface, and keep its sidecar. Missing dependencies or FAIL
    cannot be called PASS; prefer section/equation locators when suitable.
-8. Write `<paper-key>/summary.md`, then register it with
+6. Write `<paper-key>/summary.md`, then register it with
    `register-summary --key <key> --path <path>`. Use approximately 500–900 English
    words plus the corresponding Chinese translation, adjusted to actual substance.
    Each section has an **English** paragraph followed by its **中文** counterpart:
@@ -111,8 +98,6 @@ research. The launcher supplies the run date; otherwise use today's Shanghai dat
      training and inference steps; explain key equations when they clarify the method;
    - **WHAT / Evidence / 实验证据**: results with actual experimental conditions and
      source table/section locators; no invented numbers;
-   - **Foundations / 基础关系**: what is inherited, what changed, supporting locator,
-     and relative links to originals and summaries (for recent papers);
    - **Limitations / 局限**: distinguish author-acknowledged limitations from untested
      reader inferences, and state the read sections;
    - sources and AI-assisted reading disclosure. Do not mark sources human-read.
@@ -126,13 +111,14 @@ research. The launcher supplies the run date; otherwise use today's Shanghai dat
    If only an abstract is available, identify the limited scope and keep the run
    partial. Save the original full text alongside the summary or via a checked
    relative symlink inside the archive.
-9. Write `README.md` in the dated directory with the window, source health, priorities,
+7. Write `README.md` in the dated directory with the window, source health, priorities,
    publication versus attention dates, relative links for all originals and summaries,
-   the dependency table, WHY/HOW/WHAT comparison, reused counts and failure list.
+   a WHY/HOW/WHAT comparison, reused counts and failure list.
    Keep `_work/search-notes.md` with supplemental browser queries and exclusions.
    `finalize --date YYYY-MM-DD` produces `manifest.json` and validation results.
-   A run is complete only when artifacts, hashes, bilingual notes, relationship
-   review and overview are present. All failed sources mean **partial**, not no papers.
+   A run is complete only when selected-paper artifacts, hashes, bilingual notes
+   and the overview are present. Foundation searches and relationships are not
+   required. All failed sources mean **partial**, not no papers.
 
 ## Deduplication and recovery
 
@@ -140,18 +126,18 @@ research. The launcher supplies the run date; otherwise use today's Shanghai dat
 normalized arXiv IDs (without version suffix) or DOI first; use normalized
 (title + first author + year) conservatively. Conflicting strong identifiers fail
 visibly; same titles with different authors must not merge. Use the CLI, not direct
-DB edits. Transactions and unique constraints protect identities and relations.
+DB edits. Transactions and unique constraints protect identities and observations.
 
-The same paper can occupy multiple roles or weeks. Reuse its verified PDF and
+The same paper can appear in multiple weeks. Reuse its verified PDF and
 summary, creating relative symlinks in the current dated directory. Check file
 existence and SHA-256 before reuse; missing/corrupted files need repair. A failed
 request never becomes a successful download record. Repeat runs recover unfinished
 work, update observations, and avoid fetching verified originals again.
 
 If full-text review invalidates an earlier selection, run
-`exclude --date YYYY-MM-DD --key <key> --role recent|foundation --reason <reason>`.
-This withdraws only that run's selection and dependent relations, retaining the
-identity and cached originals. Report the exclusion; do not write unnecessary
+`exclude --date YYYY-MM-DD --key <key> --role recent --reason <reason>`.
+This withdraws only that run's selection, retaining the identity and cached
+originals. Report the exclusion; do not write unnecessary
 summaries for background-only papers. Re-ingesting that role explicitly restores it.
 
 ## Boundaries and completion

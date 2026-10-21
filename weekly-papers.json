@@ -6,7 +6,7 @@
   "top_n": 10,
   "candidate_limit": 60,
   "min_hf_upvotes": 5,
-  "max_foundations_per_paper": 2,
+  "max_foundations_per_paper": 0,
   "model": "gpt-6-luna",
   "reasoning_effort": "xhigh",
   "summary_languages": ["en", "zh"],

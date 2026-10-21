@@ -330,6 +330,8 @@ class Archive:
         target.symlink_to(os.path.relpath(source, target.parent))
 
     def ingest(self, value, records, role):
+        if role == "foundation" and self.config["max_foundations_per_paper"] <= 0:
+            raise ValueError("Foundation collection is disabled in weekly-papers.json")
         folder = self.prepare(value)
         result = []
         for record in records:
@@ -448,7 +450,8 @@ class Archive:
             if row["role"] == "recent":
                 checked = self.db.execute(
                     "SELECT note FROM foundation_checks WHERE run_date=? AND paper_key=?", (day, key)).fetchone()
-                if not checked and not any(r["source_key"] == key for r in relations):
+                if (self.config["max_foundations_per_paper"] > 0 and not checked
+                        and not any(r["source_key"] == key for r in relations)):
                     problems.append(f"{key}: foundation search not documented")
                 if checked:
                     entry["foundation_search"] = checked[0]

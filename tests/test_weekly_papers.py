@@ -74,12 +74,14 @@ class ArchiveTests(unittest.TestCase):
         path.write_bytes(b"%PDF-1.7 reused")
         self.store.register(key, "pdf", path)
         with patch.object(weekly, "download_pdf") as download, patch.object(weekly.subprocess, "run"):
-            result = self.store.ingest("2026-10-23", [self.record(arxiv_id="2610.12345v2")], "foundation")
+            result = self.store.ingest("2026-10-23", [self.record(arxiv_id="2610.12345v2")], "recent")
         download.assert_not_called()
         self.assertEqual(result[0]["download"], "reused")
         self.assertEqual((self.store.papers / "261023" / key / "original.pdf").resolve(), path)
 
     def test_relation_requires_quote_in_original_and_is_idempotent(self):
+        # Preserve coverage for relationships in archives created under the earlier workflow.
+        self.store.config["max_foundations_per_paper"] = 2
         self.store.prepare("2026-10-20")
         keys = []
         for ident in ("2610.12345", "2501.12345"):

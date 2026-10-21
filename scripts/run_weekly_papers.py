@@ -68,6 +68,8 @@ def main():
             f"in {ROOT}. Read workflows/weekly-papers.md and weekly-papers.json, then execute all "
             "stages through archive validation. The workflow instructions are English; every paper "
             "summary must pair English first, then Chinese in each corresponding section. "
+            "Collect only the attention-qualified selections; skip standalone foundational papers "
+            "and citation tracing. "
             "Use the selected daily-papers and academic-research-suite subworkflows. "
             "Use the current topics and research_interests in weekly-papers.json as the authoritative "
             "research scope. You are the sole research executor; do not delegate or substitute models. "
