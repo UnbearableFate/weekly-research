@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-21",
+  "started_at": "2026-10-21T08:52:41.768505+00:00",
+  "mechanism": "native-subagent",
+  "agent": "/root/weekly_rebuild",
+  "requested_model": "gpt-6-luna",
+  "requested_reasoning_effort": "xhigh",
+  "status": "complete",
+  "finished_at": "2026-10-21T09:06:30.077704+00:00",
+  "paper_count": 6,
+  "max_english_words": 52,
+  "cleanup_before_run": {
+    "removed_directory": "papers/261020",
+    "reset_catalog_and_cache": true
+  },
+  "validation_receipt": "papers/.state/runs/261021/archive-audit.json"
+}

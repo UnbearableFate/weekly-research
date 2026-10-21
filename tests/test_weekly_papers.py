@@ -77,49 +77,10 @@ class ArchiveTests(unittest.TestCase):
             result = self.store.ingest("2026-10-23", [self.record(arxiv_id="2610.12345v2")], "recent")
         download.assert_not_called()
         self.assertEqual(result[0]["download"], "reused")
-        self.assertEqual((self.store.papers / "261023" / key / "original.pdf").resolve(), path)
-
-    def test_relation_requires_quote_in_original_and_is_idempotent(self):
-        # Preserve coverage for relationships in archives created under the earlier workflow.
-        self.store.config["max_foundations_per_paper"] = 2
-        self.store.prepare("2026-10-20")
-        keys = []
-        for ident in ("2610.12345", "2501.12345"):
-            key, p = self.store.resolve(self.record(arxiv_id=ident))
-            keys.append(key)
-            with self.store.db:
-                self.store.db.execute("INSERT INTO membership VALUES (?,?,?,?)",
-                                      ("2026-10-20", key, "recent" if len(keys) == 1 else "foundation", "{}"))
-            folder = self.store.directory("2026-10-20") / key
-            folder.mkdir()
-            (folder / "original.txt").write_text("Our method is based on Low Rank Adaptation.")
-        edge = dict(source_key=keys[0], target_key=keys[1], relation_type="based_on",
-                    evidence_quote="based on Low Rank Adaptation", locator="Methods",
-                    source_url="https://arxiv.org/abs/2610.12345", rationale_zh="直接继承低秩分解。")
-        self.store.relation("2026-10-20", edge)
-        self.store.relation("2026-10-20", edge)
-        self.assertEqual(self.store.db.execute("SELECT count(*) FROM relations").fetchone()[0], 1)
-        with self.assertRaisesRegex(ValueError, "does not match"):
-            self.store.relation("2026-10-20", {**edge, "evidence_quote": "invented quotation"})
-        # Correcting an overstated author attribution must replace, not duplicate, the edge.
-        self.store.relation("2026-10-20", {**edge, "relation_type": "method_dependency"})
-        self.assertEqual(self.store.db.execute("SELECT count(*) FROM relations").fetchone()[0], 1)
-        self.assertEqual(self.store.db.execute("SELECT relation_type FROM relations").fetchone()[0],
-                         "method_dependency")
-
-    def test_changed_pdf_invalidates_registered_summary(self):
-        key, _ = self.store.resolve(self.record(arxiv_id="2610.12345"))
-        path = self.store.papers / "source.pdf"
-        path.write_bytes(b"%PDF-1.7 original")
-        self.store.register(key, "pdf", path)
-        summary = self.store.papers / "summary.md"
-        summary.write_text("WHY HOW WHAT\nEnglish\n" + "A substantive method explanation. " * 30 +
-                           "\n中文\n" + "方法与实验的中文解释。" * 15)
-        self.store.register(key, "summary", summary)
-        path.write_bytes(b"%PDF-1.7 repaired with different source bytes")
-        self.store.register(key, "pdf", path)
-        self.assertIsNone(self.store.artifact(key, "summary"))
-        self.assertTrue(summary.exists())
+        visible = Path(result[0]["pdf"])
+        self.assertEqual(visible.parent, self.store.papers / "261023")
+        self.assertFalse(visible.is_symlink())
+        self.assertEqual(visible.read_bytes(), path.read_bytes())
 
     def test_full_text_exclusion_preserves_cached_original(self):
         self.store.prepare("2026-10-20")
@@ -129,8 +90,8 @@ class ArchiveTests(unittest.TestCase):
         self.store.register(key, "pdf", path)
         with self.store.db:
             self.store.db.execute("INSERT INTO membership VALUES (?,?,?,?)",
-                                  ("2026-10-20", key, "foundation", "{}"))
-        self.store.exclude("2026-10-20", key, "foundation", "Architecture background, not a core method.")
+                                  ("2026-10-20", key, "recent", "{}"))
+        self.store.exclude("2026-10-20", key, "recent", "Full text is outside the configured interests.")
         self.assertEqual(self.store.db.execute("SELECT count(*) FROM membership").fetchone()[0], 0)
         self.assertEqual(self.store.db.execute("SELECT count(*) FROM exclusions").fetchone()[0], 1)
         self.assertEqual(self.store.artifact(key, "pdf"), path)
@@ -138,9 +99,10 @@ class ArchiveTests(unittest.TestCase):
     def test_empty_failed_discovery_never_completes(self):
         folder = self.store.prepare("2026-10-20")
         (folder / "README.md").write_text("No reliable source response.")
-        weekly.write_json(folder / "_work/discovery.json", {"healthy_sources": 0, "failed_sources": 9})
-        weekly.write_json(folder / "_work/daily_papers_candidates.json", {"run_id": "new"})
-        weekly.write_json(folder / "_work/daily_papers_ranking.json", {"run_id": "new", "status": "complete"})
+        work = self.store.work("2026-10-20")
+        weekly.write_json(work / "discovery.json", {"healthy_sources": 0, "failed_sources": 9})
+        weekly.write_json(work / "daily_papers_candidates.json", {"run_id": "new"})
+        weekly.write_json(work / "daily_papers_ranking.json", {"run_id": "new", "status": "complete"})
         result = self.store.finalize("2026-10-20")
         self.assertEqual(result["status"], "partial")
         self.assertTrue(any("No successful discovery" in x for x in result["problems"]))
@@ -148,9 +110,10 @@ class ArchiveTests(unittest.TestCase):
     def test_stale_ranking_receipt_never_completes(self):
         folder = self.store.prepare("2026-10-20")
         (folder / "README.md").write_text("Nothing selected.")
-        weekly.write_json(folder / "_work/discovery.json", {"healthy_sources": 9, "failed_sources": 0})
-        weekly.write_json(folder / "_work/daily_papers_candidates.json", {"run_id": "new"})
-        weekly.write_json(folder / "_work/daily_papers_ranking.json", {"run_id": "old", "status": "complete"})
+        work = self.store.work("2026-10-20")
+        weekly.write_json(work / "discovery.json", {"healthy_sources": 9, "failed_sources": 0})
+        weekly.write_json(work / "daily_papers_candidates.json", {"run_id": "new"})
+        weekly.write_json(work / "daily_papers_ranking.json", {"run_id": "old", "status": "complete"})
         result = self.store.finalize("2026-10-20")
         self.assertEqual(result["status"], "partial")
         self.assertIn("Ranking receipt belongs to a different discovery request", result["problems"])

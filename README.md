@@ -1,143 +1,94 @@
-# Weekly paper research
+# Weekly paper brief
 
-Search public papers on **LLM optimizers, distributed learning, PEFT, and continual
-learning** that received attention during the reporting window, and archive their
-original PDFs with **English-first, Chinese-second** summaries.
+Find papers receiving attention during the last week on **LLM optimizers,
+distributed learning, PEFT and continual learning**. The workflow is in
+[workflows/weekly-papers.md](workflows/weekly-papers.md).
 
-The executable instructions are in [workflows/weekly-papers.md](workflows/weekly-papers.md).
-The selected subskills are daily-papers-fetch, daily-papers-review, and
-academic-research-suite / deep-research / three-way-scan, limited to source
-verification and synthesis of the selected papers.
+## Output
+
+```text
+papers/
+  YYMMDD/
+    README.md
+    Original Paper Title.pdf
+    Another Original Title.pdf
+  .state/
+    catalog.sqlite3
+    papers/<paper-key>/       # verified PDF cache and extracted text
+    runs/YYMMDD/              # receipts, manifest and private work records
+    logs/
+```
+
+Each weekly report entry contains only the title linked to its local PDF, first
+upload date, and WHY/HOW. The English WHY/HOW total is at most **100 words**, followed
+by concise Chinese counterparts. The report command enforces this limit and renders
+one weekly file. There are no separate paper-summary files or foundation searches.
+
+PDF filenames use original titles with incompatible characters replaced. Unicode is
+normalized, both NFC and NFD UTF-8 lengths are capped at 240 bytes, and names that
+collide under case/Unicode normalization receive a stable identity suffix. These
+rules support Ubuntu and common macOS filesystems. Full titles appear in the report.
 
 ## Configuration
 
-Edit [weekly-papers.json](weekly-papers.json):
+Edit [weekly-papers.json](weekly-papers.json). Changes are read on each run.
 
 | Setting | Meaning |
 | --- | --- |
-| `topics` | Topic labels and editable keyword/synonym lists |
-| `research_interests` | Semantic relevance instructions for the executor |
-| `fuzzy.enabled` / `threshold` | Enable spelling-tolerant recall; default similarity 0.88 |
-| `fuzzy.min_token_length` | Short acronyms remain exact matches; default 5 |
+| `topics` | Editable keywords and synonyms |
+| `research_interests` | Semantic relevance instructions |
+| `fuzzy.enabled` / `threshold` | Spelling-tolerant recall; similarity defaults to 0.88 |
+| `fuzzy.min_token_length` | Short acronyms stay exact; default 5 |
 | `negative_keywords` | Explicit exclusions |
-| `arxiv_categories` | arXiv discovery categories |
-| `top_n` | Maximum recent/attention-qualified papers per week; default 10 |
+| `arxiv_categories` | Discovery categories |
+| `top_n` | Weekly selection cap; default 10 |
 | `min_hf_upvotes` | Minimum observed cumulative HF votes; default 5 |
-| `max_foundations_per_paper` | `0`: standalone foundation collection is disabled |
 | `model` / `reasoning_effort` | `gpt-6-luna` / `xhigh` |
 | `timezone` / `schedule` | `Asia/Shanghai` / `Fri 17:00` |
 
-For example, add `"GaLore"` under `topics.LLM优化器` or add a new topic with its
-aliases. No code change is needed. A broad keyword such as `optimization` only
-recalls candidates; the executing model must reject generic agent/prompt
-optimization that does not address a configured research interest. Fuzzy matching
-handles case, hyphens and small spelling differences; it is not an embedding search.
-Semantic selection then reads each candidate's title and abstract.
+Fuzzy matches recall candidates; the executor judges actual relevance. HF placement
+or a current Trending snapshot provides attention evidence. Publication can be older
+than the attention window, and the report always uses the true first-upload date.
+Discovery is bounded to 100 HF records per endpoint, 500 arXiv records and a default
+60-candidate semantic review pool. Private receipts record coverage and failures.
 
 ## Run
 
-Requires Python 3.13+, `uv`, the installed local skills listed in the workflow,
-`codex` logged in with ChatGPT, and Poppler's `pdfinfo` / `pdftotext`.
-Core scripts use the Python standard library; no separate model API key is needed.
+Requires Python 3.13+, `uv`, authenticated `codex`, Poppler (`pdfinfo`, `pdftotext`),
+and the local skills named in the workflow. Archive scripts use the Python stdlib.
 
 ```bash
-# Inspect the launch arguments without invoking a model.
-uv run python scripts/run_weekly_papers.py --dry-run
-
-# Execute all stages using the configured model and reasoning effort.
 uv run python scripts/run_weekly_papers.py
-
-# Select an explicit run date (historical runs omit the current Trending snapshot).
-uv run python scripts/run_weekly_papers.py --date 2026-10-20
-
-# Inspect the archive and validate a completed run.
+uv run python scripts/run_weekly_papers.py --date 2026-10-21
+uv run python scripts/run_weekly_papers.py --dry-run
 uv run python scripts/weekly_papers.py status
-uv run python scripts/weekly_papers.py finalize --date 2026-10-20
+uv run python scripts/weekly_papers.py finalize --date 2026-10-21
 ```
 
-The runner uses Codex's noninteractive interface with workspace-write permissions,
-network access for public sources and approvals set to `never` for unattended
-execution. It preserves configured security/rule files. Authentication/model
-errors are visible in the execution receipt; it does not switch models.
-See the official [noninteractive-mode documentation](https://learn.chatgpt.com/docs/non-interactive-mode).
+The launcher reads the workflow, runs Codex with the configured model/effort, and
+validates completion. Its lock prevents concurrent launcher runs; the timeout is
+four hours. Execution logs and failures remain under `.state/`.
 
 ## Schedule
 
+The user timer runs every Friday at **17:00 Asia/Shanghai** (09:00 UTC), beginning
+2026-10-23. User lingering keeps the timer available after logout. The host must be
+powered on and connected. Persistent scheduling catches up after a missed trigger.
+
 ```bash
-# Validate and install/refresh this project's user service and timer.
 uv run python scripts/install_weekly_timer.py --install
 systemctl --user list-timers ml-research-weekly-papers.timer
-
-# Read service output or pause future runs.
 journalctl --user -u ml-research-weekly-papers.service
 systemctl --user disable --now ml-research-weekly-papers.timer
 ```
 
-The installed schedule is every Friday at **17:00 Asia/Shanghai** (09:00 UTC).
-After changing `schedule` or `timezone`, rerun the installer. Other settings are
-read on each execution. `Persistent=true` catches up a missed trigger when the user
-manager starts. User lingering is enabled on this host so logout does not stop
-the timer. The host must be powered on and connected; the timer cannot wake a
-powered-off machine. The first scheduled run is **2026-10-23 17:00 Asia/Shanghai**.
+Rerun the installer after changing `schedule` or `timezone`.
 
-An advisory file lock prevents overlapping scheduled/manual launcher executions.
-Each model run has a four-hour timeout and local stdout/stderr/exit-status receipts.
-Failures preserve partial artifacts; `complete` requires archive validation.
+## Deduplication
 
-## Archive
-
-```text
-papers/
-  .state/
-    catalog.sqlite3
-    logs/
-  YYMMDD/
-    README.md
-    run.json
-    execution.json
-    manifest.json
-    _work/                 # candidates, scores, raw sources, search evidence
-    <canonical-paper-key>/
-      metadata.json
-      original.pdf
-      original.txt
-      summary.md           # each section: English first, then Chinese
-      ingest.json
-```
-
-SQLite tracks normalized arXiv IDs (ignoring version suffixes), DOI aliases,
-conservative title/first-author/year identity, artifact SHA-256 hashes, weekly
-membership and historical citation relationships. Same-title papers with different
-authors remain distinct. Conflicting strong identifiers require reconciliation.
-
-Verified originals and summaries are reused across weeks through relative
-symlinks. Version changes currently reuse the first archived original: this
-workflow deduplicates papers rather than archiving every arXiv revision.
-Missing/corrupt files are refetched; failed downloads never count as complete.
-Selections rejected after full-text inspection can be withdrawn with `exclude`;
-the reason is recorded and cached originals are preserved.
-Back up the **entire `papers/` directory including `.state/`** to preserve links
-and deduplication history. Downloaded material and execution logs are Git-ignored.
-
-HF Daily placement is dated attention evidence; Trending is a retrieval-time
-snapshot. HF vote counts are cumulative, not weekly gains or quality scores.
-Older work with current attention is labelled separately. Discovery is bounded
-(up to 100 HF records per date, 100 Trending records, 500 arXiv records, and 60
-fuzzy-matched candidates); this is a weekly reading selection, not an exhaustive
-literature review. Empty or failing sources are reported explicitly.
-
-The weekly workflow collects only the attention-qualified selections. It skips
-standalone foundation downloads, foundation summaries and citation tracing.
-With `max_foundations_per_paper` set to `0`, foundation ingestion is disabled and
-completion does not require foundation-search records or citation relationships.
-Existing archived foundations and relationships remain available as historical
-records. Summaries explain each selected paper's core content, methods, evidence
-and limitations. Existence/hash checks do not prove semantic correctness; the
-research executor must inspect the original passages.
-
-## Validation
-
-```bash
-uv run python -m unittest discover -s tests -v
-uv run python scripts/install_weekly_timer.py
-```
+SQLite deduplicates paper identity using normalized arXiv IDs, DOI aliases and a
+conservative title/first-author/year fallback. A paper appears once in each report.
+Verified PDFs are reused across weeks from the private cache using hard links, or
+copies on filesystems without hard-link support. SHA-256 detects corruption before
+reuse; failed downloads remain incomplete. The first archived revision is reused.
+Back up the whole `papers/` tree to retain both readable reports and the catalog.

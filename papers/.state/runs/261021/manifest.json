@@ -1,0 +1,420 @@
+{
+  "date": "2026-10-21",
+  "status": "complete",
+  "validated_at": "2026-10-21T09:06:29.882899+00:00",
+  "layout": "weekly-brief-v1",
+  "report": "README.md",
+  "papers": [
+    {
+      "key": "arxiv-2610.13521",
+      "title": "Beyond Domain-Routed Supervision: Cross-Teacher Guarding for Multi-Teacher On-Policy Distillation",
+      "metadata": {
+        "title": "Beyond Domain-Routed Supervision: Cross-Teacher Guarding for Multi-Teacher On-Policy Distillation",
+        "abstract": "Multi-teacher on-policy distillation (MOPD) extends on-policy distillation (OPD) by routing domain-specific data to specialized teachers, integrating their capabilities through dense token-level supervision on student-generated trajectories. However, domain routing only distinguishes the supervision sources for different domains; updates from all domains still act on shared parameters. When teachers differ substantially in response style and domain expertise, supervision that is effective in isolation may still lead to persistent gradient conflicts and capability degradation during joint optimization. To address this challenge, we propose Cross-Teacher Guarding for MOPD (Road MOPD), which introduces non-routed teachers as auxiliary cross-domain critics on the same student trajectories and coordinates multi-teacher supervision through token-level credit assignment and gradient updates. Specifically, cross-teacher-guided credit assignment uses teacher agreement to strengthen token-level corrections jointly supported by the teachers and attenuate conflicting signals; preventive multi-teacher gradient projection uses auxiliary gradients from the same trajectories to constrain potentially conflicting updates and adaptively controls projection strength to retain target-domain learning signals. In experiments, Road MOPD mitigates degradation in the disadvantaged domain, gains over 5 percentage points under high conflict, and improves overall performance in low-conflict and three-domain settings.",
+        "authors": [
+          "Shi-Yu Tian",
+          "Yong Liu",
+          "Ximan Liu",
+          "Tianrui Zhu",
+          "Sule Bai",
+          "Xinwei Yang",
+          "Ruiqi Liu",
+          "Kun-Yang Yu",
+          "Ming Yang",
+          "Zhi Zhou",
+          "Yu-Feng Li",
+          "Yipeng Sun",
+          "Gu Simiu"
+        ],
+        "url": "https://arxiv.org/abs/2610.13521",
+        "pdf": "https://arxiv.org/pdf/2610.13521",
+        "date": "2026-10-09",
+        "source": "hf-daily",
+        "hf_upvotes": 251,
+        "keyword_matches": [
+          {
+            "topic": "LLM优化器",
+            "term": "optimization",
+            "matched": "optimization",
+            "similarity": 1.0
+          }
+        ],
+        "attention_evidence": [
+          {
+            "source": "hf-daily",
+            "url": "https://huggingface.co/api/daily_papers?date=2026-10-15&limit=100",
+            "attention_date": "2026-10-15",
+            "observed_at": "2026-10-21T08:54:07.787142+00:00",
+            "hf_upvotes": 251,
+            "raw_file": "papers/.state/runs/261021/work/sources/hf-2026-10-15.json"
+          }
+        ],
+        "score": 100,
+        "keyword_score": 1,
+        "agent": {
+          "score": 4,
+          "reason": "It adds agreement-based token credit and gradient projection to control conflicting updates in multi-teacher LLM post-training."
+        },
+        "arxiv_id": "2610.13521",
+        "doi": "",
+        "published_at": "2026-10-09",
+        "year": "2026",
+        "pdf_url": "https://arxiv.org/pdf/2610.13521"
+      },
+      "pdf": "Beyond Domain-Routed Supervision - Cross-Teacher Guarding for Multi-Teacher On-Policy Distillation.pdf",
+      "pdf_sha256": "0abc5c3b04321141543c1d17e5401e100548e73d33de7721a9d849bc188148cf"
+    },
+    {
+      "key": "arxiv-2610.25736",
+      "title": "Learning from Fleet Experience: A Collective Learning Paradigm for Robots",
+      "metadata": {
+        "title": "Learning from Fleet Experience: A Collective Learning Paradigm for Robots",
+        "abstract": "Experience generated during deployment offers an opportunity for robots to improve policy reliability through learning from their own executions. However, learning through human corrections requires teleoperators to monitor execution and intervene when policies fail, a demand that is difficult to meet as robot fleets grow. We introduce collective experience learning (CEL), a learning paradigm in which deployed robots share their execution experience to improve a common policy. We realize CEL through failure-guided experience retrieval fine-tuning (FERT), which uses failure contexts from robot executions to retrieve relevant trajectory segments from the fleet's shared successful experience and uses their actions as supervision for policy updates, without collecting additional expert demonstrations or corrective actions. A fault-tolerant asynchronous training system (FATS) coordinates experience collection, policy optimization and policy distribution despite local interruptions within the robot fleet. Across five real-world manipulation tasks, the resulting policies achieve success rates of 93.3-99.2%, evaluated over 120 trials per task on robots excluded from training data collection. With collection time per robot held fixed, larger fleets provide more experience and FERT generally achieves higher success rates across the evaluated sizes. On multi-stage phone packaging, learning with 96 robots increases success from 79.2% to 98.3%. These results support collective experience as a practical basis for scalable robot learning and a path towards improving policy reliability during deployment without collecting additional expert corrective actions.",
+        "authors": [
+          "Chao Yu",
+          "Shu&#39;ang Yu",
+          "Hao Lin",
+          "Hongzhi Zang",
+          "Yuxiang Yan",
+          "Chenxi Jiang",
+          "Zhen Guo",
+          "Chuankang Li",
+          "Yihao Chen",
+          "Xin Xu",
+          "Xu Fu",
+          "Jiakai Zhou",
+          "Liangzhi Shi",
+          "Hongyi Ren",
+          "Yiwei Liu",
+          "Jing Wu",
+          "Yuanqing Wang",
+          "Chen Wu",
+          "Bo Dai",
+          "Chunyu Yang",
+          "Hongliang Huang",
+          "Shuoyu Yue",
+          "Weiqi Yin",
+          "Yinuo Chen",
+          "Ruihua Chen",
+          "Chunyang Zhu",
+          "Han Xiao",
+          "Yanghao Li",
+          "Ruipu Wu",
+          "Zhikai Cai",
+          "Xiu Chen",
+          "Xu Tan",
+          "Yuchen Yan",
+          "Jialin Zhang",
+          "Wen Zeng",
+          "Yiming Zhou",
+          "Zixiao Huang",
+          "Guanghui Ren",
+          "Quanlu Zhang",
+          "Boxun Li",
+          "Maoqing Yao",
+          "Yu Wang"
+        ],
+        "url": "https://arxiv.org/abs/2610.25736",
+        "pdf": "https://arxiv.org/pdf/2610.25736",
+        "date": "2026-10-19",
+        "source": "hf-daily",
+        "hf_upvotes": 111,
+        "keyword_matches": [
+          {
+            "topic": "LLM优化器",
+            "term": "optimization",
+            "matched": "optimization",
+            "similarity": 1.0
+          },
+          {
+            "topic": "分布式学习",
+            "term": "asynchronous training",
+            "matched": "asynchronous training",
+            "similarity": 1.0
+          }
+        ],
+        "attention_evidence": [
+          {
+            "source": "hf-daily",
+            "url": "https://huggingface.co/api/daily_papers?date=2026-10-20&limit=100",
+            "attention_date": "2026-10-20",
+            "observed_at": "2026-10-21T08:54:16.562112+00:00",
+            "hf_upvotes": 111,
+            "raw_file": "papers/.state/runs/261021/work/sources/hf-2026-10-20.json"
+          }
+        ],
+        "score": 100,
+        "keyword_score": 2,
+        "agent": {
+          "score": 4,
+          "reason": "It combines shared-experience policy fine-tuning with fault-tolerant asynchronous collection, optimization, and distribution across robot fleets."
+        },
+        "arxiv_id": "2610.25736",
+        "doi": "",
+        "published_at": "2026-10-19",
+        "year": "2026",
+        "pdf_url": "https://arxiv.org/pdf/2610.25736"
+      },
+      "pdf": "Learning from Fleet Experience - A Collective Learning Paradigm for Robots.pdf",
+      "pdf_sha256": "892f50e4617322729262115a43af413247cdbed1881d352c9781bcaf951928ce"
+    },
+    {
+      "key": "arxiv-2610.20256",
+      "title": "Long-Horizon RL Needs Muon",
+      "metadata": {
+        "title": "Long-Horizon RL Needs Muon",
+        "abstract": "Long-horizon agents must coordinate reasoning, tool use, and environment feedback over extended interactions. Learning from sparse outcome rewards requires weighting trajectories of different lengths and updating the policy while rollouts are still being collected. We examine a single-rollout asynchronous recipe combining Muon, token-averaged loss, truncated importance sampling, and auxiliary length and tool-error penalties. Single-rollout sampling allows asynchronous learning without waiting for multiple trajectories for the same issue. We study optimizer choices and recipe components for repository-level issue resolution across two model families. The evaluated training runs show higher training success with the full recipe than with the baselines.",
+        "authors": [
+          "Kai Ruan",
+          "Jinghao Lin",
+          "Tao Chen",
+          "Ziqi Zhou",
+          "Qianshan Wei",
+          "Zihe Huang"
+        ],
+        "url": "https://arxiv.org/abs/2610.20256",
+        "pdf": "https://arxiv.org/pdf/2610.20256",
+        "date": "2026-10-14",
+        "source": "hf-daily",
+        "hf_upvotes": 30,
+        "keyword_matches": [
+          {
+            "topic": "LLM优化器",
+            "term": "optimizer",
+            "matched": "optimizer",
+            "similarity": 1.0
+          },
+          {
+            "topic": "LLM优化器",
+            "term": "Muon",
+            "matched": "muon",
+            "similarity": 1.0
+          }
+        ],
+        "attention_evidence": [
+          {
+            "source": "hf-daily",
+            "url": "https://huggingface.co/api/daily_papers?date=2026-10-15&limit=100",
+            "attention_date": "2026-10-15",
+            "observed_at": "2026-10-21T08:54:07.787142+00:00",
+            "hf_upvotes": 30,
+            "raw_file": "papers/.state/runs/261021/work/sources/hf-2026-10-15.json"
+          }
+        ],
+        "score": 100,
+        "keyword_score": 2,
+        "agent": {
+          "score": 4,
+          "reason": "It directly compares Muon and other optimizer choices for asynchronous long-horizon LLM RL training."
+        },
+        "arxiv_id": "2610.20256",
+        "doi": "",
+        "published_at": "2026-10-14",
+        "year": "2026",
+        "pdf_url": "https://arxiv.org/pdf/2610.20256"
+      },
+      "pdf": "Long-Horizon RL Needs Muon.pdf",
+      "pdf_sha256": "9840f4037ee77df8fd1c29a556f613dfab300a8da0bf6b1a1a8e73776102ce01"
+    },
+    {
+      "key": "arxiv-2006.15704",
+      "title": "PyTorch Distributed: Experiences on Accelerating Data Parallel Training",
+      "metadata": {
+        "title": "PyTorch Distributed: Experiences on Accelerating Data Parallel Training",
+        "abstract": "This paper presents the design, implementation, and evaluation of the PyTorch\ndistributed data parallel module. PyTorch is a widely-adopted scientific\ncomputing package used in deep learning research and applications. Recent\nadvances in deep learning argue for the value of large datasets and large\nmodels, which necessitates the ability to scale out model training to more\ncomputational resources. Data parallelism has emerged as a popular solution for\ndistributed training thanks to its straightforward principle and broad\napplicability. In general, the technique of distributed data parallelism\nreplicates the model on every computational resource to generate gradients\nindependently and then communicates those gradients at each iteration to keep\nmodel replicas consistent. Despite the conceptual simplicity of the technique,\nthe subtle dependencies between computation and communication make it\nnon-trivial to optimize the distributed training efficiency. As of v1.5,\nPyTorch natively provides several techniques to accelerate distributed data\nparallel, including bucketing gradients, overlapping computation with\ncommunication, and skipping gradient synchronization. Evaluations show that,\nwhen configured appropriately, the PyTorch distributed data parallel module\nattains near-linear scalability using 256 GPUs.",
+        "authors": [
+          "Shen Li",
+          "Yanli Zhao",
+          "Rohan Varma",
+          "Omkar Salpekar",
+          "Pieter Noordhuis",
+          "Teng Li",
+          "Adam Paszke",
+          "Jeff Smith",
+          "Brian Vaughan",
+          "Pritam Damania",
+          "Soumith Chintala"
+        ],
+        "url": "https://arxiv.org/abs/2006.15704",
+        "pdf": "https://arxiv.org/pdf/2006.15704",
+        "date": "2020-06-28",
+        "source": "hf-trending",
+        "hf_upvotes": 14,
+        "keyword_matches": [
+          {
+            "topic": "LLM优化器",
+            "term": "optimizer",
+            "matched": "optimize",
+            "similarity": 0.9412
+          },
+          {
+            "topic": "分布式学习",
+            "term": "distributed training",
+            "matched": "distributed training",
+            "similarity": 1.0
+          },
+          {
+            "topic": "分布式学习",
+            "term": "data parallel",
+            "matched": "data parallel",
+            "similarity": 1.0
+          },
+          {
+            "topic": "分布式学习",
+            "term": "gradient synchronization",
+            "matched": "gradient synchronization",
+            "similarity": 1.0
+          }
+        ],
+        "attention_evidence": [
+          {
+            "source": "hf-trending",
+            "url": "https://huggingface.co/api/daily_papers?sort=trending&limit=100",
+            "attention_date": "2026-10-21",
+            "observed_at": "2026-10-21T08:54:20.849172+00:00",
+            "hf_upvotes": 14,
+            "raw_file": "papers/.state/runs/261021/work/sources/hf-trending.json"
+          }
+        ],
+        "score": 100,
+        "keyword_score": 4,
+        "agent": {
+          "score": 4,
+          "reason": "It presents concrete mechanisms for accelerating distributed data-parallel training, including communication overlap, gradient bucketing and skip-synchronization; current weekly HF attention qualifies it independently despite its older first-upload date."
+        },
+        "arxiv_id": "2006.15704",
+        "doi": "",
+        "published_at": "2020-06-28",
+        "year": "2020",
+        "pdf_url": "https://arxiv.org/pdf/2006.15704"
+      },
+      "pdf": "PyTorch Distributed - Experiences on Accelerating Data Parallel Training.pdf",
+      "pdf_sha256": "246af7a675cfb58a4110c1f92b952baa571038e0a57457459137e8c49f8fcf96"
+    },
+    {
+      "key": "arxiv-2610.26802",
+      "title": "Scaling Parameter-Efficient Fine-Tuning for Brain Encoding",
+      "metadata": {
+        "title": "Scaling Parameter-Efficient Fine-Tuning for Brain Encoding",
+        "abstract": "Brain encoding models aim to predict neural responses to stimuli. The most widely used approach fits readouts from frozen pretrained backbones. Using neural data to train large models from scratch or fully fine-tune them after task-pretraining has proven difficult because neural data is costly and limited. We show that parameter-efficient fine-tuning (PEFT) enables us to effectively adapt very large pretrained backbones for brain encoding with a small number of trainable parameters. To make it computationally practical, we exploit the backbone's causal structure to predict multiple timepoints in a single pass instead of using sliding windows, significantly reducing feature-extraction cost. This enables efficient fine-tuning of multimodal backbones with up to 104B parameters, the largest model adapted for brain encoding to our knowledge. Trained with a low-rank adapter (LoRA) and a lightweight readout, our approach consistently improves brain encoding performance across nine diverse multimodal backbones. On the same Qwen3-Omni backbone as the prior state-of-the-art (SoTA), our method BrainLoRA achieves the best published performance on the Algonauts 2025 Challenge. We also show the adapted multimodal backbones remain interpretable: modality attribution recovers the canonical sensory topography that prior work often obtains by construction from separate unimodal encoders, and neural adaptation increases the contribution of audio inputs and cross-modal mixing within the backbone. To scale out the number of adapted models, we develop a multi-LoRA kernel that accelerates joint training of multiple LoRAs on a shared backbone. This enables an ensemble of 200+ adapted models that ranks first on the public Algonauts post-challenge leaderboard at the time of writing. Together, our results highlight PEFT as an efficient and powerful paradigm for brain encoding.",
+        "authors": [
+          "Zhuofan Josh Ying",
+          "Guanglong Sun",
+          "Nolan Ho",
+          "Kieran Liu",
+          "Rui Yang",
+          "Andrew Chen",
+          "Nikolaus Kriegeskorte",
+          "Pony Ma",
+          "Hossein Adeli"
+        ],
+        "url": "https://arxiv.org/abs/2610.26802",
+        "pdf": "https://arxiv.org/pdf/2610.26802",
+        "date": "2026-10-19",
+        "source": "hf-daily",
+        "hf_upvotes": 235,
+        "keyword_matches": [
+          {
+            "topic": "PEFT",
+            "term": "PEFT",
+            "matched": "peft",
+            "similarity": 1.0
+          },
+          {
+            "topic": "PEFT",
+            "term": "parameter efficient fine tuning",
+            "matched": "parameter efficient fine tuning",
+            "similarity": 1.0
+          },
+          {
+            "topic": "PEFT",
+            "term": "LoRA",
+            "matched": "lora",
+            "similarity": 1.0
+          },
+          {
+            "topic": "PEFT",
+            "term": "QLoRA",
+            "matched": "lora",
+            "similarity": 0.8889
+          }
+        ],
+        "attention_evidence": [
+          {
+            "source": "hf-daily",
+            "url": "https://huggingface.co/api/daily_papers?date=2026-10-20&limit=100",
+            "attention_date": "2026-10-20",
+            "observed_at": "2026-10-21T08:54:16.562112+00:00",
+            "hf_upvotes": 235,
+            "raw_file": "papers/.state/runs/261021/work/sources/hf-2026-10-20.json"
+          }
+        ],
+        "score": 75,
+        "keyword_score": 4,
+        "agent": {
+          "score": 3,
+          "reason": "It develops LoRA-based PEFT and a multi-LoRA training kernel for large multimodal backbones, though the target task is brain encoding."
+        },
+        "arxiv_id": "2610.26802",
+        "doi": "",
+        "published_at": "2026-10-19",
+        "year": "2026",
+        "pdf_url": "https://arxiv.org/pdf/2610.26802"
+      },
+      "pdf": "Scaling Parameter-Efficient Fine-Tuning for Brain Encoding.pdf",
+      "pdf_sha256": "ceb709d509963063de66bea6ff41c23b618e2e6a2129764d2311b386ace65dd2"
+    },
+    {
+      "key": "arxiv-2610.18598",
+      "title": "Rethinking Projector Training in Multimodal LLMs",
+      "metadata": {
+        "title": "Rethinking Projector Training in Multimodal LLMs",
+        "abstract": "Multimodal LLMs are typically trained by first aligning a vision encoder with a language model via projector training on large image-caption datasets, followed by joint training of the full multimodal model. Despite its widespread use, the role of the projector training stage remains poorly understood. We find that (i) using only 10 to 20% of the data for training the projector already recovers most downstream performance gains, and (ii) projectors trained on different datasets can be linearly interpolated while largely preserving performance. These results suggest that projector training mainly performs a coarse alignment, which many different projectors achieve equally well. Motivated by these findings, we propose PORTAL, a training-free projector initialization that requires neither paired image-caption data nor gradient-based optimization, but only per-modality summary statistics. PORTAL computes an optimal-transport-based map between Gaussian approximations of the vision and language feature distributions on a shared principal subspace, so that the projector training stage can be skipped entirely. Without any paired data, PORTAL matches the standard pipeline trained on 558k image-caption pairs across six LLM backbones, two vision encoders, and 16 benchmarks. It outperforms that pipeline in 3 of 7 (vision encoder, LLM) settings and reaches an average 98% of its score across the other four.",
+        "authors": [
+          "Fabian Gröger",
+          "Naël Ouerghemi",
+          "Shuo Wen",
+          "Maria Brbić"
+        ],
+        "url": "https://arxiv.org/abs/2610.18598",
+        "pdf": "https://arxiv.org/pdf/2610.18598",
+        "date": "2026-10-13",
+        "source": "hf-daily",
+        "hf_upvotes": 11,
+        "keyword_matches": [
+          {
+            "topic": "LLM优化器",
+            "term": "optimization",
+            "matched": "optimization",
+            "similarity": 1.0
+          }
+        ],
+        "attention_evidence": [
+          {
+            "source": "hf-daily",
+            "url": "https://huggingface.co/api/daily_papers?date=2026-10-15&limit=100",
+            "attention_date": "2026-10-15",
+            "observed_at": "2026-10-21T08:54:07.787142+00:00",
+            "hf_upvotes": 11,
+            "raw_file": "papers/.state/runs/261021/work/sources/hf-2026-10-15.json"
+          }
+        ],
+        "score": 75,
+        "keyword_score": 1,
+        "agent": {
+          "score": 3,
+          "reason": "It replaces gradient-based projector training in multimodal LLMs with a training-free initialization, directly addressing LLM training efficiency."
+        },
+        "arxiv_id": "2610.18598",
+        "doi": "",
+        "published_at": "2026-10-13",
+        "year": "2026",
+        "pdf_url": "https://arxiv.org/pdf/2610.18598"
+      },
+      "pdf": "Rethinking Projector Training in Multimodal LLMs.pdf",
+      "pdf_sha256": "e6679247eb22fbfeef22e0448cca9778f45fdfd3c94a07f81168caabbe93bd8e"
+    }
+  ],
+  "exclusions": [],
+  "problems": []
+}

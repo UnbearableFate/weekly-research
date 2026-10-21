@@ -9,19 +9,22 @@ import json
 import os
 from pathlib import Path
 import re
+import shutil
 import sqlite3
 import subprocess
 import sys
 import tempfile
 import unicodedata
 from datetime import date, datetime, timedelta, timezone
-from urllib.parse import urlencode, unquote, urlparse
+from urllib.parse import quote, urlencode, unquote, urlparse
 from urllib.request import Request, urlopen
 import xml.etree.ElementTree as ET
 from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parents[1]
 ARXIV = re.compile(r"(?<!\w)(\d{4}\.\d{4,5}|[a-z][a-z.\-]+/\d{7})(?:v\d+)?", re.I)
+MAX_FILENAME_BYTES = 240
+MAX_ENGLISH_WORDS = 100
 
 
 def now():
@@ -66,6 +69,44 @@ def doi_id(value):
 def digest(path):
     with open(path, "rb") as f:
         return hashlib.file_digest(f, "sha256").hexdigest()
+
+
+def filename_identity(name):
+    """Compare names conservatively on case-insensitive, normalization-aware disks."""
+    return unicodedata.normalize("NFD", name).casefold()
+
+
+def pdf_filename(title, suffix=""):
+    title = unicodedata.normalize("NFC", title)
+    title = "".join(" - " if c in '<>:"/\\|?*' else
+                    " " if unicodedata.category(c).startswith("C") else c for c in title)
+    title = " ".join(title.split()).strip(" .") or "Untitled paper"
+    ending = suffix + ".pdf"
+    while any(len(unicodedata.normalize(form, title + ending).encode("utf-8")) > MAX_FILENAME_BYTES
+              for form in ("NFC", "NFD")):
+        title = title[:-1]
+    return title.rstrip(" .") + ending
+
+
+def materialize(source, target):
+    """Place a real PDF file atomically, reusing disk blocks when hard links work."""
+    source, target = Path(source), Path(target)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    if target.is_file() and not target.is_symlink() and digest(source) == digest(target):
+        return
+    handle, name = tempfile.mkstemp(dir=target.parent, suffix=".part")
+    os.close(handle)
+    tmp = Path(name)
+    try:
+        tmp.unlink()
+        try:
+            os.link(source, tmp)
+        except OSError:
+            shutil.copyfile(source, tmp)
+        os.replace(tmp, target)
+    finally:
+        if tmp.exists():
+            tmp.unlink()
 
 
 def canonical_record(record):
@@ -166,16 +207,11 @@ class Archive:
                 run_date TEXT NOT NULL REFERENCES runs(date),
                 paper_key TEXT NOT NULL REFERENCES papers(key), role TEXT NOT NULL,
                 observation TEXT NOT NULL, PRIMARY KEY(run_date,paper_key,role));
-            CREATE TABLE IF NOT EXISTS relations(
+            CREATE TABLE IF NOT EXISTS run_files(
                 run_date TEXT NOT NULL REFERENCES runs(date),
-                source_key TEXT NOT NULL REFERENCES papers(key),
-                target_key TEXT NOT NULL REFERENCES papers(key),
-                relation_type TEXT NOT NULL, evidence TEXT NOT NULL,
-                PRIMARY KEY(run_date,source_key,target_key,relation_type));
-            CREATE TABLE IF NOT EXISTS foundation_checks(
-                run_date TEXT NOT NULL REFERENCES runs(date),
-                paper_key TEXT NOT NULL REFERENCES papers(key), note TEXT NOT NULL,
-                PRIMARY KEY(run_date,paper_key));
+                paper_key TEXT NOT NULL REFERENCES papers(key),
+                filename TEXT NOT NULL, normalized_filename TEXT NOT NULL,
+                PRIMARY KEY(run_date,paper_key), UNIQUE(run_date,normalized_filename));
             CREATE TABLE IF NOT EXISTS exclusions(
                 run_date TEXT NOT NULL REFERENCES runs(date),
                 paper_key TEXT NOT NULL REFERENCES papers(key), role TEXT NOT NULL,
@@ -192,12 +228,21 @@ class Archive:
     def directory(self, value=None):
         return self.papers / self.day(value).strftime(self.config["date_format"])
 
+    def run_state(self, value=None):
+        return self.state / "runs" / self.day(value).strftime(self.config["date_format"])
+
+    def work(self, value=None):
+        return self.run_state(value) / "work"
+
     def prepare(self, value=None):
         day = self.day(value)
         folder = self.directory(value)
-        work = folder / "_work"
+        if (folder / "run.json").exists():
+            raise ValueError("Historical archive uses the previous layout; use a new run date")
+        folder.mkdir(parents=True, exist_ok=True)
+        work = self.work(value)
         work.mkdir(parents=True, exist_ok=True)
-        receipt = folder / "run.json"
+        receipt = self.run_state(value) / "run.json"
         if receipt.exists() and read_json(receipt)["date"] != day.isoformat():
             raise ValueError("Date-directory collision")
         if not receipt.exists():
@@ -207,7 +252,7 @@ class Archive:
                 "window_end": day.isoformat(), "created_at": now(),
                 "requested_model": self.config["model"],
                 "requested_reasoning_effort": self.config["reasoning_effort"],
-                "status": "prepared", "config": self.config,
+                "status": "prepared", "config": self.config, "layout": "weekly-brief-v1",
             })
         with self.db:
             self.db.execute("INSERT OR IGNORE INTO runs VALUES (?,?,?,?)",
@@ -296,199 +341,246 @@ class Archive:
         return None
 
     def register(self, key, kind, path):
+        if kind != "pdf":
+            raise ValueError("Use the report command for weekly summaries")
         path = self.inside(path)
         if not path.is_file():
             raise ValueError("Artifact file missing")
-        if kind == "summary":
-            text = path.read_text(encoding="utf-8")
-            if not all(token in text for token in ("WHY", "HOW", "WHAT", "中文")):
-                raise ValueError("Bilingual summary requires WHY/HOW/WHAT and 中文 labels")
-            if len(re.findall(r"[a-zA-Z]{2,}", text)) < 80 or len(re.findall(r"[\u3400-\u9fff]", text)) < 80:
-                raise ValueError("Summary lacks substantive English/Chinese text")
-        checksum = digest(path)
         with self.db:
-            previous = self.db.execute(
-                "SELECT sha256 FROM artifacts WHERE paper_key=? AND kind=?", (key, kind)).fetchone()
-            if kind == "pdf" and previous and previous[0] != checksum:
-                # Keep the note on disk, but require review against changed source bytes.
-                self.db.execute("DELETE FROM artifacts WHERE paper_key=? AND kind='summary'", (key,))
             self.db.execute("INSERT OR REPLACE INTO artifacts VALUES (?,?,?,?,?)",
-                            (key, kind, str(path.relative_to(self.root)), checksum, now()))
+                            (key, kind, str(path.relative_to(self.root)), digest(path), now()))
 
-    def link(self, source, target):
-        source = self.inside(source)
-        target = Path(target)
-        if target.resolve() == source:
-            return
-        if target.is_symlink():
-            target.unlink()
-        elif target.exists():
-            # Never replace an unrelated file while reusing a cached artifact.
-            if digest(target) != digest(source):
-                raise ValueError(f"Existing artifact differs: {target}")
-            return
-        target.symlink_to(os.path.relpath(source, target.parent))
+    def allocate_filename(self, value, key, title):
+        day = self.day(value).isoformat()
+        self.db.execute("BEGIN IMMEDIATE")
+        try:
+            existing = self.db.execute(
+                "SELECT filename FROM run_files WHERE run_date=? AND paper_key=?", (day, key)).fetchone()
+            if existing:
+                self.db.commit()
+                return existing[0]
+            occupied = {filename_identity(p.name) for p in self.directory(value).iterdir()}
+            occupied.update(r[0] for r in self.db.execute(
+                "SELECT normalized_filename FROM run_files WHERE run_date=?", (day,)))
+            name = pdf_filename(title)
+            counter = 0
+            tag = hashlib.sha256(key.encode()).hexdigest()[:10]
+            while filename_identity(name) in occupied:
+                counter += 1
+                suffix = f" [{tag}]" if counter == 1 else f" [{tag}-{counter}]"
+                name = pdf_filename(title, suffix)
+            self.db.execute("INSERT INTO run_files VALUES (?,?,?,?)",
+                            (day, key, name, filename_identity(name)))
+            self.db.commit()
+            return name
+        except Exception:
+            self.db.rollback()
+            raise
 
-    def ingest(self, value, records, role):
-        if role == "foundation" and self.config["max_foundations_per_paper"] <= 0:
-            raise ValueError("Foundation collection is disabled in weekly-papers.json")
+    def entries(self, value):
+        rows = self.db.execute(
+            "SELECT m.paper_key,m.observation,f.filename FROM membership m "
+            "LEFT JOIN run_files f ON f.run_date=m.run_date AND f.paper_key=m.paper_key "
+            "WHERE m.run_date=? AND m.role='recent' ORDER BY m.rowid",
+            (self.day(value).isoformat(),)).fetchall()
+        return [{"key": r["paper_key"], "title": json.loads(r["observation"])["title"],
+                 "metadata": json.loads(r["observation"]), "pdf": r["filename"]} for r in rows]
+
+    def ingest(self, value, records, role="recent"):
+        if role != "recent":
+            raise ValueError("Only selected recent-attention papers are collected")
         folder = self.prepare(value)
         result = []
         for record in records:
             key, p = self.resolve(record)
-            paper_dir = folder / key
-            paper_dir.mkdir(exist_ok=True)
             with self.db:
                 self.db.execute("INSERT OR REPLACE INTO membership VALUES (?,?,?,?)",
                                 (self.day(value).isoformat(), key, role, json.dumps(p, ensure_ascii=False)))
                 self.db.execute("DELETE FROM exclusions WHERE run_date=? AND paper_key=? AND role=?",
                                 (self.day(value).isoformat(), key, role))
-            write_json(paper_dir / "metadata.json", p)
-            outcome = {"key": key, "directory": str(paper_dir), "role": role}
+            filename = self.allocate_filename(value, key, p["title"])
+            cache = self.state / "papers" / key
+            cache.mkdir(parents=True, exist_ok=True)
+            write_json(cache / "metadata.json", p)
+            outcome = {"key": key, "pdf": str(folder / filename), "filename": filename,
+                       "text": str(cache / "original.txt")}
             try:
+                original = cache / "original.pdf"
                 pdf = self.artifact(key, "pdf")
                 if pdf:
-                    self.link(pdf, paper_dir / "original.pdf")
+                    materialize(pdf, original)
                     outcome["download"] = "reused"
                 else:
-                    download_pdf(p["pdf_url"], paper_dir / "original.pdf")
-                    self.register(key, "pdf", paper_dir / "original.pdf")
+                    download_pdf(p["pdf_url"], original)
                     outcome["download"] = "downloaded"
-                text_path = paper_dir / "original.txt"
-                if outcome["download"] == "downloaded" or not text_path.exists():
-                    subprocess.run(["pdftotext", "-layout", str(paper_dir / "original.pdf"), str(text_path)],
+                self.register(key, "pdf", original)
+                checksum = digest(original)
+                extraction = cache / "extraction.json"
+                text_path = cache / "original.txt"
+                if (not text_path.exists() or not extraction.exists()
+                        or read_json(extraction).get("pdf_sha256") != checksum):
+                    subprocess.run(["pdftotext", "-layout", str(original), str(text_path)],
                                    check=True, capture_output=True, timeout=60)
-                summary = self.artifact(key, "summary")
-                if summary:
-                    self.link(summary, paper_dir / "summary.md")
-                    outcome["summary"] = "reused"
-                else:
-                    outcome["summary"] = "needed"
+                    write_json(extraction, {"pdf_sha256": checksum, "extracted_at": now()})
+                materialize(original, folder / filename)
             except (OSError, ValueError, subprocess.SubprocessError) as exc:
                 outcome["error"] = str(exc)
-            write_json(paper_dir / "ingest.json", outcome)
+            write_json(self.work(value) / "ingest" / f"{key}.json", outcome)
             result.append(outcome)
         return result
 
     def exclude(self, value, key, role, reason):
-        """Withdraw a selection after full-text review; preserve cached artifacts."""
+        """Withdraw a selection, keeping its cache and any previous visible copy."""
+        if role != "recent" or not reason.strip():
+            raise ValueError("Exclude requires a recent selection and a reason")
         day = self.day(value).isoformat()
-        if not reason.strip():
-            raise ValueError("Exclusion needs an evidence-based reason")
+        assigned = self.db.execute(
+            "SELECT filename FROM run_files WHERE run_date=? AND paper_key=?", (day, key)).fetchone()
+        if assigned:
+            source = self.directory(value) / assigned[0]
+            if source.exists():
+                excluded = self.run_state(value) / "excluded"
+                excluded.mkdir(exist_ok=True)
+                destination = excluded / f"{key}-{datetime.now(timezone.utc):%H%M%S%f}.pdf"
+                source.rename(destination)
         with self.db:
             self.db.execute("INSERT OR REPLACE INTO exclusions VALUES (?,?,?,?)", (day, key, role, reason))
             self.db.execute("DELETE FROM membership WHERE run_date=? AND paper_key=? AND role=?", (day, key, role))
-            endpoint = "source_key" if role == "recent" else "target_key"
-            self.db.execute(f"DELETE FROM relations WHERE run_date=? AND {endpoint}=?", (day, key))
-            if role == "recent":
-                self.db.execute("DELETE FROM foundation_checks WHERE run_date=? AND paper_key=?", (day, key))
 
-    def relation(self, value, record):
-        day = self.day(value).isoformat()
-        required = ("source_key", "target_key", "relation_type", "evidence_quote",
-                    "locator", "source_url", "rationale_zh")
-        if any(not isinstance(record.get(k), str) or not record[k].strip() for k in required):
-            raise ValueError("Relation needs identifiers, type, quote, locator, source URL and rationale")
-        if record["relation_type"] not in ("based_on", "inspired_by", "method_dependency"):
-            raise ValueError("Unknown relationship type")
-        if record["source_key"] == record["target_key"]:
-            raise ValueError("A paper cannot be its own foundation")
-        for key in (record["source_key"], record["target_key"]):
-            if not self.db.execute("SELECT 1 FROM membership WHERE run_date=? AND paper_key=?", (day, key)).fetchone():
-                raise ValueError("Both relation endpoints must be registered in this run")
-        for key, role in ((record["source_key"], "recent"), (record["target_key"], "foundation")):
-            if not self.db.execute(
-                "SELECT 1 FROM membership WHERE run_date=? AND paper_key=? AND role=?",
-                (day, key, role)).fetchone():
-                raise ValueError("Relations must point from a recent paper to a foundation")
-        targets = {r[0] for r in self.db.execute(
-            "SELECT target_key FROM relations WHERE run_date=? AND source_key=?", (day, record["source_key"]))}
-        targets.add(record["target_key"])
-        if len(targets) > self.config["max_foundations_per_paper"]:
-            raise ValueError("Foundation count exceeds the configured per-paper limit")
-        original = self.directory(value) / record["source_key"] / "original.txt"
-        if not original.exists() or normalize(record["evidence_quote"]) not in normalize(original.read_text(errors="replace")):
-            raise ValueError("Evidence quote does not match the locally extracted original")
-        existing = [json.loads(r[0]) for r in self.db.execute(
-            "SELECT evidence FROM relations WHERE run_date=? AND source_key=?", (day, record["source_key"]))]
-        # A classification correction replaces the edge for this paper pair.
-        quotes = {r["evidence_quote"] for r in existing if r["target_key"] != record["target_key"]}
-        quotes.add(record["evidence_quote"])
-        if sum(len(q.split()) for q in quotes) > 25:
-            raise ValueError("More than 25 quoted words from one source; shorten excerpts")
-        with self.db:
-            self.db.execute("DELETE FROM relations WHERE run_date=? AND source_key=? AND target_key=?",
-                            (day, record["source_key"], record["target_key"]))
-            self.db.execute("INSERT OR REPLACE INTO relations VALUES (?,?,?,?,?)",
-                            (day, record["source_key"], record["target_key"], record["relation_type"],
-                             json.dumps(record, ensure_ascii=False)))
+    def render_report(self, value, records):
+        if not isinstance(records, list):
+            raise ValueError("Briefs must be a JSON array")
+        entries = {p["key"]: p for p in self.entries(value)}
+        keys = [r.get("key") for r in records]
+        if len(keys) != len(set(keys)) or set(keys) != set(entries):
+            raise ValueError("Provide exactly one brief per included paper")
+        blocks, receipt = [], []
+        for record in records:
+            entry = entries[record["key"]]
+            values = {}
+            for name in ("why_en", "how_en", "why_zh", "how_zh"):
+                value_text = record.get(name)
+                if not isinstance(value_text, str) or not value_text.strip():
+                    raise ValueError(f"{record['key']}: missing {name}")
+                values[name] = value_text.strip()
+                if "\n" in values[name] or "\r" in values[name]:
+                    raise ValueError(f"{record['key']}: {name} must be a single concise paragraph")
+            english_words = len((values["why_en"] + " " + values["how_en"]).split())
+            if english_words > MAX_ENGLISH_WORDS:
+                raise ValueError(f"{record['key']}: WHY + HOW has {english_words} English words; maximum 100")
+            if not all(re.search(r"[A-Za-z]", values[n]) for n in ("why_en", "how_en")):
+                raise ValueError("English WHY and HOW are required")
+            if not all(re.search(r"[\u3400-\u9fff]", values[n]) for n in ("why_zh", "how_zh")):
+                raise ValueError("Chinese WHY and HOW are required")
+            uploaded = record.get("published_at", "")
+            if date.fromisoformat(uploaded).isoformat() != uploaded:
+                raise ValueError("Use an ISO YYYY-MM-DD first-upload date")
+            if uploaded != entry["metadata"].get("published_at", "")[:10]:
+                raise ValueError(f"{record['key']}: upload date disagrees with registered metadata")
+            if not entry["pdf"]:
+                raise ValueError(f"{record['key']}: PDF filename is missing")
+            pdf = self.directory(value) / entry["pdf"]
+            artifact = self.artifact(record["key"], "pdf")
+            if not artifact or not pdf.is_file() or pdf.is_symlink() or digest(pdf) != digest(artifact):
+                raise ValueError(f"{record['key']}: missing or corrupted original PDF")
+            title = entry["title"].replace("\\", "\\\\").replace("[", "\\[").replace("]", "\\]")
+            blocks.append(
+                f"## [{title}]({quote(entry['pdf'])})\n\n"
+                f"上传日期：{uploaded}\n\n"
+                f"**WHY (EN):** {values['why_en']}\n\n"
+                f"**HOW (EN):** {values['how_en']}\n\n"
+                f"**WHY（中文）：** {values['why_zh']}\n\n"
+                f"**HOW（中文）：** {values['how_zh']}\n")
+            receipt.append({"key": record["key"], "pdf": entry["pdf"],
+                            "pdf_sha256": digest(pdf), "published_at": uploaded,
+                            "english_words": english_words})
+        return ("\n".join(blocks) if blocks else "本周没有符合筛选条件的论文。\n"), receipt
+
+    def report(self, value, records):
+        content, entries = self.render_report(value, records)
+        path = self.directory(value) / "README.md"
+        with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=path.parent,
+                                         delete=False, suffix=".tmp") as output:
+            output.write(content)
+            temporary = output.name
+        os.replace(temporary, path)
+        write_json(self.work(value) / "briefs.json", records)
+        write_json(self.run_state(value) / "report.json", {
+            "generated_at": now(), "sha256": digest(path), "papers": entries})
+        return {"report": str(path), "papers": len(entries),
+                "max_english_words": max((r["english_words"] for r in entries), default=0)}
 
     def finalize(self, value):
         day = self.day(value).isoformat()
-        folder = self.directory(value)
-        problems, entries = [], []
-        relations = [json.loads(r[0]) for r in self.db.execute(
-            "SELECT evidence FROM relations WHERE run_date=?", (day,))]
+        folder, work, run_state = self.directory(value), self.work(value), self.run_state(value)
+        problems, entries = [], self.entries(value)
         exclusions = [dict(r) for r in self.db.execute(
             "SELECT paper_key,role,reason FROM exclusions WHERE run_date=?", (day,))]
-        rows = self.db.execute(
-            "SELECT p.key,p.title,m.role,m.observation FROM membership m JOIN papers p ON p.key=m.paper_key "
-            "WHERE run_date=? ORDER BY m.role,p.key", (day,)).fetchall()
-        for row in rows:
-            key = row["key"]
-            entry = {"key": key, "title": row["title"], "role": row["role"],
-                     "metadata": json.loads(row["observation"])}
-            for kind, filename in (("pdf", "original.pdf"), ("summary", "summary.md")):
-                artifact = self.artifact(key, kind)
-                target = folder / key / filename
-                if artifact:
-                    self.link(artifact, target)
-                    entry[kind] = str(target.relative_to(folder))
-                    entry[f"{kind}_sha256"] = digest(artifact)
-                else:
-                    problems.append(f"{key}: missing or corrupted {kind}")
-            if row["role"] == "recent":
-                checked = self.db.execute(
-                    "SELECT note FROM foundation_checks WHERE run_date=? AND paper_key=?", (day, key)).fetchone()
-                if (self.config["max_foundations_per_paper"] > 0 and not checked
-                        and not any(r["source_key"] == key for r in relations)):
-                    problems.append(f"{key}: foundation search not documented")
-                if checked:
-                    entry["foundation_search"] = checked[0]
-            entries.append(entry)
-        if not (folder / "README.md").is_file():
-            problems.append("Weekly README.md is missing")
-        discovery_path = folder / "_work/discovery.json"
+        for entry in entries:
+            pdf = folder / entry["pdf"] if entry["pdf"] else None
+            original = self.artifact(entry["key"], "pdf")
+            if (not original or not pdf or not pdf.is_file() or pdf.is_symlink()
+                    or digest(original) != digest(pdf)):
+                problems.append(f"{entry['key']}: missing or corrupted original PDF")
+            else:
+                entry["pdf_sha256"] = digest(pdf)
+        report_path = folder / "README.md"
+        report_receipt = run_state / "report.json"
+        briefs_path = work / "briefs.json"
+        if not report_path.is_file() or not report_receipt.is_file() or not briefs_path.is_file():
+            problems.append("Weekly report or its validation receipt is missing")
+        else:
+            try:
+                expected, details = self.render_report(value, read_json(briefs_path))
+                recorded = read_json(report_receipt)
+                if report_path.read_text(encoding="utf-8") != expected or digest(report_path) != recorded["sha256"]:
+                    problems.append("Weekly report differs from the validated concise format")
+                if details != recorded["papers"]:
+                    problems.append("Weekly report metadata or original PDF changed; review and regenerate")
+            except (ValueError, TypeError, KeyError, OSError) as exc:
+                problems.append(f"Invalid weekly brief: {exc}")
+        allowed = {e["pdf"] for e in entries} | {"README.md"}
+        if folder.exists():
+            unexpected = sorted(p.name for p in folder.iterdir() if p.name not in allowed)
+            if unexpected:
+                problems.append("Unexpected files in weekly directory: " + ", ".join(unexpected))
+        discovery_path = work / "discovery.json"
         discovery = read_json(discovery_path) if discovery_path.exists() else {}
         if not discovery.get("healthy_sources"):
             problems.append("No successful discovery source; cannot claim an empty week")
         if discovery.get("failed_sources"):
             problems.append("Some discovery sources failed; coverage is partial")
-        ranking_path = folder / "_work/daily_papers_ranking.json"
+        ranking_path = work / "daily_papers_ranking.json"
         if not ranking_path.exists() or read_json(ranking_path).get("status") != "complete":
             problems.append("Semantic ranking is incomplete")
         else:
-            request_path = folder / "_work/daily_papers_candidates.json"
-            report = read_json(ranking_path)
-            if not request_path.exists() or report.get("run_id") != read_json(request_path).get("run_id"):
+            request_path = work / "daily_papers_candidates.json"
+            ranking = read_json(ranking_path)
+            if not request_path.exists() or ranking.get("run_id") != read_json(request_path).get("run_id"):
                 problems.append("Ranking receipt belongs to a different discovery request")
-        selected_path = folder / "_work/daily_papers_selected.json"
-        if selected_path.exists():
-            for selected in read_json(selected_path):
-                identity = arxiv_id(selected.get("url"))
-                if identity and not any(e["role"] == "recent" and
-                                       e["metadata"].get("arxiv_id") == identity for e in entries):
+        selected_path = work / "daily_papers_selected.json"
+        if not selected_path.exists():
+            problems.append("Selected-paper list is missing")
+        else:
+            selected_ids = {arxiv_id(s.get("url")) for s in read_json(selected_path)}
+            for identity in selected_ids:
+                if identity and not any(e["metadata"].get("arxiv_id") == identity for e in entries):
                     alias = self.db.execute(
                         "SELECT paper_key FROM identifiers WHERE kind='arxiv_id' AND value=?", (identity,)).fetchone()
-                    if not alias or not any(e["paper_key"] == alias[0] and e["role"] == "recent" for e in exclusions):
+                    if not alias or not any(e["paper_key"] == alias[0] for e in exclusions):
                         problems.append(f"Selected paper not archived: {identity}")
+            for entry in entries:
+                if entry["metadata"].get("arxiv_id") not in selected_ids:
+                    problems.append(f"Unselected paper in weekly report: {entry['key']}")
         status = "partial" if problems else "complete"
-        manifest = {"date": day, "status": status, "validated_at": now(),
-                    "papers": entries, "relations": relations, "exclusions": exclusions, "problems": problems}
-        write_json(folder / "manifest.json", manifest)
-        receipt = read_json(folder / "run.json")
-        receipt.update(status=status, finalized_at=now())
-        write_json(folder / "run.json", receipt)
+        manifest = {"date": day, "status": status, "validated_at": now(), "layout": "weekly-brief-v1",
+                    "report": "README.md", "papers": entries, "exclusions": exclusions, "problems": problems}
+        write_json(run_state / "manifest.json", manifest)
+        receipt_path = run_state / "run.json"
+        if receipt_path.exists():
+            receipt = read_json(receipt_path)
+            receipt.update(status=status, finalized_at=now())
+            write_json(receipt_path, receipt)
         with self.db:
             self.db.execute("UPDATE runs SET status=?,updated_at=? WHERE date=?", (status, now(), day))
         return manifest
@@ -543,7 +635,7 @@ def fetch_source(url, target, receipts):
 
 def discover(archive, value):
     folder = archive.prepare(value)
-    work = folder / "_work"
+    work = archive.work(value)
     raw_dir = work / "sources"
     raw_dir.mkdir(exist_ok=True)
     config = archive.config
@@ -593,7 +685,7 @@ def discover(archive, value):
                 attention = {"source": "hf-trending" if label == "trending" else "hf-daily",
                              "url": url, "attention_date": day.isoformat() if label == "trending" else label,
                              "observed_at": observed, "hf_upvotes": p.get("upvotes", 0),
-                             "raw_file": str((raw_dir / f"hf-{label}.json").relative_to(folder))}
+                             "raw_file": str((raw_dir / f"hf-{label}.json").relative_to(archive.root))}
                 add({"title": p["title"], "abstract": p.get("summary", ""),
                      "authors": ", ".join(a.get("name", "") if isinstance(a, dict) else str(a)
                                           for a in p.get("authors", [])),
@@ -641,7 +733,7 @@ def discover(archive, value):
 
 
 def rank(archive, value):
-    work = archive.directory(value) / "_work"
+    work = archive.work(value)
     script = archive.root / archive.config["daily_skills"] / "_shared/agent_ranker.py"
     env = dict(os.environ, DAILYPAPER_CONFIG=str(work / "daily-config.json"),
                DAILYPAPER_TEMP_DIR=str(work), OBSIDIAN_VAULT_PATH=str(archive.directory(value)))
@@ -683,28 +775,22 @@ def main():
     ingest_parser = commands.add_parser("ingest")
     ingest_parser.add_argument("--date")
     ingest_parser.add_argument("--input", type=Path, required=True)
-    ingest_parser.add_argument("--role", choices=("recent", "foundation"), required=True)
-    relation_parser = commands.add_parser("relation")
-    relation_parser.add_argument("--date")
-    relation_parser.add_argument("--input", type=Path, required=True)
-    summary_parser = commands.add_parser("register-summary")
-    summary_parser.add_argument("--key", required=True)
-    summary_parser.add_argument("--path", type=Path, required=True)
-    check = commands.add_parser("foundation-check")
-    check.add_argument("--date")
-    check.add_argument("--key", required=True)
-    check.add_argument("--note", required=True)
+    ingest_parser.add_argument("--role", choices=("recent",), required=True)
+    report_parser = commands.add_parser("report")
+    report_parser.add_argument("--date")
+    report_parser.add_argument("--input", type=Path, required=True)
     exclusion = commands.add_parser("exclude")
     exclusion.add_argument("--date")
     exclusion.add_argument("--key", required=True)
-    exclusion.add_argument("--role", choices=("recent", "foundation"), required=True)
+    exclusion.add_argument("--role", choices=("recent",), required=True)
     exclusion.add_argument("--reason", required=True)
     commands.add_parser("status")
     args = parser.parse_args()
     archive = Archive(args.root)
     try:
         if args.command == "prepare":
-            result = {"directory": str(archive.prepare(args.date))}
+            result = {"directory": str(archive.prepare(args.date)),
+                      "work": str(archive.work(args.date)), "state": str(archive.run_state(args.date))}
         elif args.command == "discover":
             result = discover(archive, args.date)
         elif args.command == "rank":
@@ -712,19 +798,8 @@ def main():
         elif args.command == "ingest":
             records = read_json(args.input)
             result = archive.ingest(args.date, records if isinstance(records, list) else [records], args.role)
-        elif args.command == "relation":
-            records = read_json(args.input)
-            for record in records if isinstance(records, list) else [records]:
-                archive.relation(args.date, record)
-            result = {"registered": True}
-        elif args.command == "register-summary":
-            archive.register(args.key, "summary", args.path)
-            result = {"registered": True}
-        elif args.command == "foundation-check":
-            with archive.db:
-                archive.db.execute("INSERT OR REPLACE INTO foundation_checks VALUES (?,?,?)",
-                                   (archive.day(args.date).isoformat(), args.key, args.note))
-            result = {"registered": True}
+        elif args.command == "report":
+            result = archive.report(args.date, read_json(args.input))
         elif args.command == "exclude":
             archive.exclude(args.date, args.key, args.role, args.reason)
             result = {"excluded": args.key, "role": args.role, "cached_artifacts_preserved": True}

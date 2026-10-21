@@ -54,6 +54,7 @@ def main():
             archive.close()
             return 0
         folder = archive.prepare(day)
+        run_state = archive.run_state(day)
         execution = {
             "started_at": now(), "date": day, "mechanism": "codex-exec",
             "requested_model": config["model"], "requested_reasoning_effort": config["reasoning_effort"],
@@ -62,12 +63,15 @@ def main():
             "stderr": str((logs / f"{stamp}.stderr.log").relative_to(ROOT)),
             "final_message": str(final.relative_to(ROOT)),
         }
-        write_json(folder / "execution.json", execution)
+        write_json(run_state / "execution.json", execution)
         prompt = (
             f"Execute the authorized weekly paper research for run date {day} ({config['timezone']}) "
             f"in {ROOT}. Read workflows/weekly-papers.md and weekly-papers.json, then execute all "
-            "stages through archive validation. The workflow instructions are English; every paper "
-            "summary must pair English first, then Chinese in each corresponding section. "
+            "stages through archive validation. The workflow instructions are English. Save title-named "
+            "PDFs directly in the dated folder and one README.md weekly brief. Each entry has only a "
+            "linked title, first-upload date, and WHY/HOW: at most 100 English words combined, followed "
+            "by concise Chinese counterparts. Use the report command to enforce this format. "
+            "Keep all metadata, extracted text and work files under papers/.state/. "
             "Collect only the attention-qualified selections; skip standalone foundational papers "
             "and citation tracing. "
             "Use the selected daily-papers and academic-research-suite subworkflows. "
@@ -111,7 +115,7 @@ def main():
             execution.update(status="failed", error=str(exc))
         finally:
             execution["finished_at"] = now()
-            write_json(folder / "execution.json", execution)
+            write_json(run_state / "execution.json", execution)
             archive.close()
         print(json.dumps(execution, ensure_ascii=False, indent=2))
         return 0 if execution["status"] == "complete" else 1

@@ -1,0 +1,48 @@
+{
+  "generated_at": "2026-10-21T09:05:33.896559+00:00",
+  "sha256": "9f208a2f70cf49982394d25cb23303dbf470413322f85ad2b79dc16e33a176e9",
+  "papers": [
+    {
+      "key": "arxiv-2610.13521",
+      "pdf": "Beyond Domain-Routed Supervision - Cross-Teacher Guarding for Multi-Teacher On-Policy Distillation.pdf",
+      "pdf_sha256": "0abc5c3b04321141543c1d17e5401e100548e73d33de7721a9d849bc188148cf",
+      "published_at": "2026-10-09",
+      "english_words": 41
+    },
+    {
+      "key": "arxiv-2610.25736",
+      "pdf": "Learning from Fleet Experience - A Collective Learning Paradigm for Robots.pdf",
+      "pdf_sha256": "892f50e4617322729262115a43af413247cdbed1881d352c9781bcaf951928ce",
+      "published_at": "2026-10-19",
+      "english_words": 42
+    },
+    {
+      "key": "arxiv-2610.20256",
+      "pdf": "Long-Horizon RL Needs Muon.pdf",
+      "pdf_sha256": "9840f4037ee77df8fd1c29a556f613dfab300a8da0bf6b1a1a8e73776102ce01",
+      "published_at": "2026-10-14",
+      "english_words": 43
+    },
+    {
+      "key": "arxiv-2006.15704",
+      "pdf": "PyTorch Distributed - Experiences on Accelerating Data Parallel Training.pdf",
+      "pdf_sha256": "246af7a675cfb58a4110c1f92b952baa571038e0a57457459137e8c49f8fcf96",
+      "published_at": "2020-06-28",
+      "english_words": 33
+    },
+    {
+      "key": "arxiv-2610.26802",
+      "pdf": "Scaling Parameter-Efficient Fine-Tuning for Brain Encoding.pdf",
+      "pdf_sha256": "ceb709d509963063de66bea6ff41c23b618e2e6a2129764d2311b386ace65dd2",
+      "published_at": "2026-10-19",
+      "english_words": 52
+    },
+    {
+      "key": "arxiv-2610.18598",
+      "pdf": "Rethinking Projector Training in Multimodal LLMs.pdf",
+      "pdf_sha256": "e6679247eb22fbfeef22e0448cca9778f45fdfd3c94a07f81168caabbe93bd8e",
+      "published_at": "2026-10-13",
+      "english_words": 46
+    }
+  ]
+}

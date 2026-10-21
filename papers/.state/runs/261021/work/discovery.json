@@ -1,0 +1,81 @@
+{
+  "sources": [
+    {
+      "url": "https://huggingface.co/api/daily_papers?date=2026-10-15&limit=100",
+      "retrieved_at": "2026-10-21T08:54:07.787142+00:00",
+      "http_status": 200,
+      "status": "ok",
+      "raw_file": "/home/yu/workspace/ml-research/papers/.state/runs/261021/work/sources/hf-2026-10-15.json",
+      "sha256": "a2cc1825589dca17d00191706ce35c44f8b20e8d1802c373e678ff5372f17e53"
+    },
+    {
+      "url": "https://huggingface.co/api/daily_papers?date=2026-10-16&limit=100",
+      "retrieved_at": "2026-10-21T08:54:10.934459+00:00",
+      "http_status": 200,
+      "status": "ok",
+      "raw_file": "/home/yu/workspace/ml-research/papers/.state/runs/261021/work/sources/hf-2026-10-16.json",
+      "sha256": "1afacef6f1fe581a5ac1a524af1e2342ca287ac1df572f160b5e7a1276f73efe"
+    },
+    {
+      "url": "https://huggingface.co/api/daily_papers?date=2026-10-17&limit=100",
+      "retrieved_at": "2026-10-21T08:54:13.803589+00:00",
+      "http_status": 200,
+      "status": "ok",
+      "raw_file": "/home/yu/workspace/ml-research/papers/.state/runs/261021/work/sources/hf-2026-10-17.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "url": "https://huggingface.co/api/daily_papers?date=2026-10-18&limit=100",
+      "retrieved_at": "2026-10-21T08:54:14.015183+00:00",
+      "http_status": 200,
+      "status": "ok",
+      "raw_file": "/home/yu/workspace/ml-research/papers/.state/runs/261021/work/sources/hf-2026-10-18.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "url": "https://huggingface.co/api/daily_papers?date=2026-10-19&limit=100",
+      "retrieved_at": "2026-10-21T08:54:14.245862+00:00",
+      "http_status": 200,
+      "status": "ok",
+      "raw_file": "/home/yu/workspace/ml-research/papers/.state/runs/261021/work/sources/hf-2026-10-19.json",
+      "sha256": "6db5531956816ceb295a37afcbef0f2ce82f1ade30074aa3f97c30a960737444"
+    },
+    {
+      "url": "https://huggingface.co/api/daily_papers?date=2026-10-20&limit=100",
+      "retrieved_at": "2026-10-21T08:54:16.562112+00:00",
+      "http_status": 200,
+      "status": "ok",
+      "raw_file": "/home/yu/workspace/ml-research/papers/.state/runs/261021/work/sources/hf-2026-10-20.json",
+      "sha256": "0f09af6b0baa045f0bc20fa9435b03d94f461c78aad3b16b6406e0ca59a869dd"
+    },
+    {
+      "url": "https://huggingface.co/api/daily_papers?date=2026-10-21&limit=100",
+      "retrieved_at": "2026-10-21T08:54:19.029226+00:00",
+      "http_status": 200,
+      "status": "ok",
+      "raw_file": "/home/yu/workspace/ml-research/papers/.state/runs/261021/work/sources/hf-2026-10-21.json",
+      "sha256": "691691ccdab7f75df81812a393f693778d4c5392c9775272c9c77f0bbb87be20"
+    },
+    {
+      "url": "https://huggingface.co/api/daily_papers?sort=trending&limit=100",
+      "retrieved_at": "2026-10-21T08:54:20.849172+00:00",
+      "http_status": 200,
+      "status": "ok",
+      "raw_file": "/home/yu/workspace/ml-research/papers/.state/runs/261021/work/sources/hf-trending.json",
+      "sha256": "c49e7208f362576394c6f783be8b24f6198a5bcea9e2172b89b607a3ca1f2bcd"
+    },
+    {
+      "url": "https://export.arxiv.org/api/query?search_query=%28cat%3Acs.LG+OR+cat%3Acs.CL+OR+cat%3Acs.DC+OR+cat%3Acs.AI%29+AND+submittedDate%3A%5B202610150000+TO+202610212359%5D&sortBy=submittedDate&sortOrder=descending&max_results=500",
+      "retrieved_at": "2026-10-21T08:54:24.479686+00:00",
+      "http_status": 200,
+      "status": "ok",
+      "raw_file": "/home/yu/workspace/ml-research/papers/.state/runs/261021/work/sources/arxiv.xml",
+      "sha256": "c1dff08e2aaf6d717f3e6d492c88916b54d715e0422c772b86b4b7d73919e44b"
+    }
+  ],
+  "healthy_sources": 9,
+  "failed_sources": 0,
+  "matched_count": 207,
+  "candidate_count": 60,
+  "coverage": "HF daily <=100/day + current trending <=100; arXiv <=500 newest in window"
+}

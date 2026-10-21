@@ -1,0 +1,100 @@
+{
+  "paths": {
+    "obsidian_vault": "/home/yu/workspace/ml-research/papers/261021",
+    "paper_notes_folder": ".",
+    "daily_papers_folder": ".",
+    "github_trending_folder": "GitHubTrending",
+    "concepts_folder": "_concepts",
+    "zotero_db": "/home/yu/Zotero/zotero.sqlite",
+    "zotero_storage": "/home/yu/Zotero/storage"
+  },
+  "daily_papers": {
+    "keywords": [
+      "LLM optimizer",
+      "optimizer",
+      "optimization",
+      "Adam",
+      "AdamW",
+      "Muon",
+      "Shampoo",
+      "preconditioner",
+      "preconditioning",
+      "gradient descent",
+      "memory efficient training",
+      "大模型优化器",
+      "distributed learning",
+      "distributed training",
+      "decentralized learning",
+      "data parallel",
+      "tensor parallel",
+      "pipeline parallel",
+      "model parallel",
+      "communication efficient",
+      "gradient synchronization",
+      "asynchronous training",
+      "federated learning",
+      "分布式学习",
+      "PEFT",
+      "parameter efficient fine tuning",
+      "low rank adaptation",
+      "LoRA",
+      "QLoRA",
+      "DoRA",
+      "adapter tuning",
+      "prefix tuning",
+      "prompt tuning",
+      "参数高效微调",
+      "continual learning",
+      "continual pretraining",
+      "continual fine tuning",
+      "lifelong learning",
+      "incremental learning",
+      "catastrophic forgetting",
+      "experience replay",
+      "持续学习"
+    ],
+    "negative_keywords": [
+      "medical imaging",
+      "drug discovery",
+      "weather forecast"
+    ],
+    "domain_boost_keywords": [],
+    "arxiv_categories": [
+      "cs.LG",
+      "cs.CL",
+      "cs.DC",
+      "cs.AI"
+    ],
+    "min_score": 0,
+    "top_n": 10,
+    "research_interests": [
+      "LLM optimizers: optimizer algorithms, preconditioning, memory-efficient optimization and large language model training dynamics.",
+      "Distributed learning: data/model/pipeline/tensor parallel training, communication, synchronization, asynchronous and decentralized learning.",
+      "Parameter-efficient fine-tuning (PEFT): LoRA and low-rank adaptation, adapters, quantized fine-tuning and efficient model adaptation.",
+      "Continual learning: continual pretraining/fine-tuning, catastrophic forgetting, replay, lifelong and incremental learning."
+    ],
+    "candidate_pool_size": 60,
+    "ranking": {
+      "backend": "agent",
+      "model": "jev-1.13.0",
+      "batch_size": 30,
+      "min_score": 2
+    },
+    "project_queries": [
+      "\"physics simulation\" in:name,description",
+      "\"physics engine\" in:name,description",
+      "\"robot simulation\" in:name,description",
+      "\"differentiable simulation\" in:name,description"
+    ]
+  },
+  "automation": {
+    "auto_refresh_indexes": false,
+    "git_commit": false,
+    "git_push": false
+  },
+  "runtime": {
+    "python": "/home/yu/workspace/ml-research/.venv/bin/python",
+    "temp_dir": "/home/yu/workspace/ml-research/papers/.state/runs/261021/work",
+    "shared_config": "/home/yu/.config/dailypaper-skills/user-config.json"
+  }
+}

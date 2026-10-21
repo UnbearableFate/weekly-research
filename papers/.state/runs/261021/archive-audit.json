@@ -1,0 +1,88 @@
+{
+  "validated_at": "2026-10-21T09:06:30.069124+00:00",
+  "date": "2026-10-21",
+  "status": "complete",
+  "paper_count": 6,
+  "weekly_layout": "README.md and six flat PDFs only",
+  "link_count": 6,
+  "english_word_counts": {
+    "arxiv-2610.13521": 41,
+    "arxiv-2610.25736": 42,
+    "arxiv-2610.20256": 43,
+    "arxiv-2006.15704": 33,
+    "arxiv-2610.26802": 52,
+    "arxiv-2610.18598": 46
+  },
+  "max_english_words": 52,
+  "old_run_removed": true,
+  "sqlite_integrity": "ok",
+  "sqlite_runs": [
+    {
+      "date": "2026-10-21",
+      "status": "complete"
+    }
+  ],
+  "papers": [
+    {
+      "key": "arxiv-2610.13521",
+      "filename": "Beyond Domain-Routed Supervision - Cross-Teacher Guarding for Multi-Teacher On-Policy Distillation.pdf",
+      "filename_utf8_bytes": {
+        "NFC": 102,
+        "NFD": 102
+      },
+      "pdf_sha256": "0abc5c3b04321141543c1d17e5401e100548e73d33de7721a9d849bc188148cf",
+      "first_upload_verified": "2026-10-09"
+    },
+    {
+      "key": "arxiv-2610.25736",
+      "filename": "Learning from Fleet Experience - A Collective Learning Paradigm for Robots.pdf",
+      "filename_utf8_bytes": {
+        "NFC": 78,
+        "NFD": 78
+      },
+      "pdf_sha256": "892f50e4617322729262115a43af413247cdbed1881d352c9781bcaf951928ce",
+      "first_upload_verified": "2026-10-19"
+    },
+    {
+      "key": "arxiv-2610.20256",
+      "filename": "Long-Horizon RL Needs Muon.pdf",
+      "filename_utf8_bytes": {
+        "NFC": 30,
+        "NFD": 30
+      },
+      "pdf_sha256": "9840f4037ee77df8fd1c29a556f613dfab300a8da0bf6b1a1a8e73776102ce01",
+      "first_upload_verified": "2026-10-14"
+    },
+    {
+      "key": "arxiv-2006.15704",
+      "filename": "PyTorch Distributed - Experiences on Accelerating Data Parallel Training.pdf",
+      "filename_utf8_bytes": {
+        "NFC": 76,
+        "NFD": 76
+      },
+      "pdf_sha256": "246af7a675cfb58a4110c1f92b952baa571038e0a57457459137e8c49f8fcf96",
+      "first_upload_verified": "2020-06-28"
+    },
+    {
+      "key": "arxiv-2610.26802",
+      "filename": "Scaling Parameter-Efficient Fine-Tuning for Brain Encoding.pdf",
+      "filename_utf8_bytes": {
+        "NFC": 62,
+        "NFD": 62
+      },
+      "pdf_sha256": "ceb709d509963063de66bea6ff41c23b618e2e6a2129764d2311b386ace65dd2",
+      "first_upload_verified": "2026-10-19"
+    },
+    {
+      "key": "arxiv-2610.18598",
+      "filename": "Rethinking Projector Training in Multimodal LLMs.pdf",
+      "filename_utf8_bytes": {
+        "NFC": 52,
+        "NFD": 52
+      },
+      "pdf_sha256": "e6679247eb22fbfeef22e0448cca9778f45fdfd3c94a07f81168caabbe93bd8e",
+      "first_upload_verified": "2026-10-13"
+    }
+  ],
+  "validation_scope": "Actual rebuilt archive, PDF parser checks, links, hashes, dates, filename rules, report format, and SQLite records. Unit test suite not run."
+}

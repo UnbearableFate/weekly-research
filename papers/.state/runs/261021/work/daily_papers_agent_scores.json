@@ -1,0 +1,305 @@
+{
+  "run_id": "fa04e383-0b7c-4ac1-b0cc-dba3ebddc675",
+  "scores": [
+    {
+      "id": 0,
+      "score": 1,
+      "reason": "Dynamic sampling, data mixing and reweighting change the LLM training stream, but the contribution is a data-selection framework outside the configured optimizer, distributed-learning, PEFT and continual-learning mechanisms."
+    },
+    {
+      "id": 1,
+      "score": 4,
+      "reason": "It adds agreement-based token credit and gradient projection to control conflicting updates in multi-teacher LLM post-training."
+    },
+    {
+      "id": 2,
+      "score": 3,
+      "reason": "It develops LoRA-based PEFT and a multi-LoRA training kernel for large multimodal backbones, though the target task is brain encoding."
+    },
+    {
+      "id": 3,
+      "score": 0,
+      "reason": "This evaluates LLM agents solving operations-research engagements; it contributes a benchmark, not a configured training method."
+    },
+    {
+      "id": 4,
+      "score": 0,
+      "reason": "It optimizes external agent-skill documents while freezing model weights, outside the configured model-training interests."
+    },
+    {
+      "id": 5,
+      "score": 0,
+      "reason": "It analyzes self-evolving software harnesses with fixed model weights, not model learning or distributed training."
+    },
+    {
+      "id": 6,
+      "score": 1,
+      "reason": "It is an LLM-agent post-training recipe, but its contribution is reflection behavior rather than optimizer, PEFT, continual, or distributed learning."
+    },
+    {
+      "id": 7,
+      "score": 0,
+      "reason": "It is a general memory-management system for LLM applications, not a model-training method."
+    },
+    {
+      "id": 8,
+      "score": 0,
+      "reason": "It trains an agentic 3D-grounding policy, outside the configured model-training directions."
+    },
+    {
+      "id": 9,
+      "score": 4,
+      "reason": "It combines shared-experience policy fine-tuning with fault-tolerant asynchronous collection, optimization, and distribution across robot fleets."
+    },
+    {
+      "id": 10,
+      "score": 0,
+      "reason": "It optimizes prompts for text-to-image generation rather than model parameters or training infrastructure."
+    },
+    {
+      "id": 11,
+      "score": 0,
+      "reason": "It is a robot navigation world-action model training pipeline, not a configured optimizer, PEFT, continual, or distributed-learning contribution."
+    },
+    {
+      "id": 12,
+      "score": 0,
+      "reason": "It builds a playable video-game generation system and targets inference speed, outside the configured interests."
+    },
+    {
+      "id": 13,
+      "score": 0,
+      "reason": "It optimizes interactive video sampling at inference time, not model training."
+    },
+    {
+      "id": 14,
+      "score": 0,
+      "reason": "It presents an omni-modal interaction model and inference framework without a relevant training-method contribution."
+    },
+    {
+      "id": 15,
+      "score": 1,
+      "reason": "It is an LLM-agent distillation and policy-learning method, but not an optimizer, PEFT, continual, or distributed-learning contribution."
+    },
+    {
+      "id": 16,
+      "score": 1,
+      "reason": "It changes credit assignment for multi-session agentic RL, not the configured model optimizer or distributed-learning mechanisms."
+    },
+    {
+      "id": 17,
+      "score": 0,
+      "reason": "It is a broad agent self-improvement framework centered on predictive world models, outside the configured interests."
+    },
+    {
+      "id": 18,
+      "score": 1,
+      "reason": "It is a multimodal language-model architecture and training system, but its contribution is visual tokenization rather than a configured direction."
+    },
+    {
+      "id": 19,
+      "score": 1,
+      "reason": "It trains an LLM agent with RL while co-optimizing its harness, but does not target an optimizer, PEFT, continual learning, or distributed training."
+    },
+    {
+      "id": 20,
+      "score": 0,
+      "reason": "It is a robot world-action architecture and inference-efficiency method, outside the configured interests."
+    },
+    {
+      "id": 21,
+      "score": 0,
+      "reason": "It develops an e-commerce image-generation pipeline, not a configured model-training contribution."
+    },
+    {
+      "id": 22,
+      "score": 0,
+      "reason": "It synthesizes agent training environments and evaluates SFT/RL, without a contribution to the configured learning mechanisms."
+    },
+    {
+      "id": 23,
+      "score": 0,
+      "reason": "It is a streaming 3D reconstruction architecture, unrelated to the configured interests."
+    },
+    {
+      "id": 24,
+      "score": 1,
+      "reason": "The work applies task-specific LoRAs to a video-generation backbone; it does not contribute a PEFT method or mechanism."
+    },
+    {
+      "id": 25,
+      "score": 0,
+      "reason": "It trains visual verifiers with RL, outside the configured model-training directions."
+    },
+    {
+      "id": 26,
+      "score": 4,
+      "reason": "It directly compares Muon and other optimizer choices for asynchronous long-horizon LLM RL training."
+    },
+    {
+      "id": 27,
+      "score": 1,
+      "reason": "The model report includes a continued-pretraining stage for slide generation but does not study a continual-learning method, retention, replay or incremental adaptation."
+    },
+    {
+      "id": 28,
+      "score": 1,
+      "reason": "The system uses a recovery LoRA as one implementation component for inference quality; it does not contribute a PEFT method."
+    },
+    {
+      "id": 29,
+      "score": 1,
+      "reason": "The report describes a staged multimodal continued-pretraining recipe and retrospective, but no generalizable continual-learning method, retention mechanism or incremental-learning analysis."
+    },
+    {
+      "id": 30,
+      "score": 1,
+      "reason": "It trains an agent's delegation policy for inference-cost reduction, not a model optimizer or distributed-learning method."
+    },
+    {
+      "id": 31,
+      "score": 1,
+      "reason": "It post-trains a driving policy with RL and video supervision, but is not a configured learning direction."
+    },
+    {
+      "id": 32,
+      "score": 0,
+      "reason": "It orchestrates retrieval and curation for external agent memory; the policy is about runtime memory use, not continual model learning."
+    },
+    {
+      "id": 33,
+      "score": 1,
+      "reason": "It post-trains an agent for ML engineering with windowed rewards and asynchronous collection, but the contribution is agent task performance."
+    },
+    {
+      "id": 34,
+      "score": 0,
+      "reason": "It optimizes diffusion-generator routing with RL, not LLM training or the configured learning mechanisms."
+    },
+    {
+      "id": 35,
+      "score": 1,
+      "reason": "It is a document-parsing VLM post-training recipe, without a specific optimizer, PEFT, continual, or distributed-learning contribution."
+    },
+    {
+      "id": 36,
+      "score": 0,
+      "reason": "It recursively optimizes agent software harnesses for performance and cost, not model training."
+    },
+    {
+      "id": 37,
+      "score": 0,
+      "reason": "It is an autonomous research workflow with agents, unrelated to the configured model-learning mechanisms."
+    },
+    {
+      "id": 38,
+      "score": 1,
+      "reason": "It applies a MuSGD optimizer adapted from LLM work to vision detection, but does not study LLM optimization."
+    },
+    {
+      "id": 39,
+      "score": 0,
+      "reason": "It benchmarks robustness of decision models and contributes no relevant training method."
+    },
+    {
+      "id": 40,
+      "score": 0,
+      "reason": "It is a motion-generation model for 3D skeletons, unrelated to the configured interests."
+    },
+    {
+      "id": 41,
+      "score": 1,
+      "reason": "It changes the LLM attention architecture for compute and KV-cache efficiency, rather than an optimizer, PEFT, continual-learning or distributed-training mechanism."
+    },
+    {
+      "id": 42,
+      "score": 1,
+      "reason": "It trains LLM agents for programmatic tool orchestration, not a configured optimizer, PEFT, continual, or distributed-learning method."
+    },
+    {
+      "id": 43,
+      "score": 1,
+      "reason": "It accelerates ternary LLM inference, not model training or optimization."
+    },
+    {
+      "id": 44,
+      "score": 1,
+      "reason": "It proposes paired-credit policy optimization for social agents, a task-specific RL method outside the configured optimizer interests."
+    },
+    {
+      "id": 45,
+      "score": 0,
+      "reason": "It studies recursive research-agent improvement, not continual model learning or a model-training optimizer."
+    },
+    {
+      "id": 46,
+      "score": 0,
+      "reason": "It applies gradient-conflict correction to physics-based animation, not LLM optimization or a configured training direction."
+    },
+    {
+      "id": 47,
+      "score": 1,
+      "reason": "It proposes sparse attention for long-context inference and uses short continued pretraining, but does not contribute to the configured optimizer, PEFT, continual-learning or distributed-training mechanisms."
+    },
+    {
+      "id": 48,
+      "score": 0,
+      "reason": "It studies self-conditioning in visual flow-matching reasoning, outside the configured interests."
+    },
+    {
+      "id": 49,
+      "score": 1,
+      "reason": "It modifies rollout exploration for LLM RLVR, but is a task-level policy-training method rather than an optimizer contribution."
+    },
+    {
+      "id": 50,
+      "score": 0,
+      "reason": "It distills diffusion models for faster inference, unrelated to the configured LLM-learning directions."
+    },
+    {
+      "id": 51,
+      "score": 0,
+      "reason": "It controls painting-video generation, unrelated to the configured interests."
+    },
+    {
+      "id": 52,
+      "score": 4,
+      "reason": "It presents concrete mechanisms for accelerating distributed data-parallel training, including communication overlap, gradient bucketing and skip-synchronization; current weekly HF attention qualifies it independently despite its older first-upload date."
+    },
+    {
+      "id": 53,
+      "score": 0,
+      "reason": "It is a 3D material-generation method, unrelated to the configured interests."
+    },
+    {
+      "id": 54,
+      "score": 0,
+      "reason": "It optimizes Gaussian allocation for dynamic-scene reconstruction, outside the configured interests."
+    },
+    {
+      "id": 55,
+      "score": 0,
+      "reason": "It generates histopathology images and matches the configured negative medical-imaging scope."
+    },
+    {
+      "id": 56,
+      "score": 0,
+      "reason": "It distills a video diffusion model, not an LLM or configured training method."
+    },
+    {
+      "id": 57,
+      "score": 0,
+      "reason": "It studies self-supervised depth learning across scene domains, unrelated to the configured interests."
+    },
+    {
+      "id": 58,
+      "score": 0,
+      "reason": "It optimizes software and hardware designs with agent fleets, not model training or distributed learning."
+    },
+    {
+      "id": 59,
+      "score": 3,
+      "reason": "It replaces gradient-based projector training in multimodal LLMs with a training-free initialization, directly addressing LLM training efficiency."
+    }
+  ]
+}

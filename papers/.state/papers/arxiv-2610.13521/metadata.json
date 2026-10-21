@@ -1,0 +1,53 @@
+{
+  "title": "Beyond Domain-Routed Supervision: Cross-Teacher Guarding for Multi-Teacher On-Policy Distillation",
+  "abstract": "Multi-teacher on-policy distillation (MOPD) extends on-policy distillation (OPD) by routing domain-specific data to specialized teachers, integrating their capabilities through dense token-level supervision on student-generated trajectories. However, domain routing only distinguishes the supervision sources for different domains; updates from all domains still act on shared parameters. When teachers differ substantially in response style and domain expertise, supervision that is effective in isolation may still lead to persistent gradient conflicts and capability degradation during joint optimization. To address this challenge, we propose Cross-Teacher Guarding for MOPD (Road MOPD), which introduces non-routed teachers as auxiliary cross-domain critics on the same student trajectories and coordinates multi-teacher supervision through token-level credit assignment and gradient updates. Specifically, cross-teacher-guided credit assignment uses teacher agreement to strengthen token-level corrections jointly supported by the teachers and attenuate conflicting signals; preventive multi-teacher gradient projection uses auxiliary gradients from the same trajectories to constrain potentially conflicting updates and adaptively controls projection strength to retain target-domain learning signals. In experiments, Road MOPD mitigates degradation in the disadvantaged domain, gains over 5 percentage points under high conflict, and improves overall performance in low-conflict and three-domain settings.",
+  "authors": [
+    "Shi-Yu Tian",
+    "Yong Liu",
+    "Ximan Liu",
+    "Tianrui Zhu",
+    "Sule Bai",
+    "Xinwei Yang",
+    "Ruiqi Liu",
+    "Kun-Yang Yu",
+    "Ming Yang",
+    "Zhi Zhou",
+    "Yu-Feng Li",
+    "Yipeng Sun",
+    "Gu Simiu"
+  ],
+  "url": "https://arxiv.org/abs/2610.13521",
+  "pdf": "https://arxiv.org/pdf/2610.13521",
+  "date": "2026-10-09",
+  "source": "hf-daily",
+  "hf_upvotes": 251,
+  "keyword_matches": [
+    {
+      "topic": "LLM优化器",
+      "term": "optimization",
+      "matched": "optimization",
+      "similarity": 1.0
+    }
+  ],
+  "attention_evidence": [
+    {
+      "source": "hf-daily",
+      "url": "https://huggingface.co/api/daily_papers?date=2026-10-15&limit=100",
+      "attention_date": "2026-10-15",
+      "observed_at": "2026-10-21T08:54:07.787142+00:00",
+      "hf_upvotes": 251,
+      "raw_file": "papers/.state/runs/261021/work/sources/hf-2026-10-15.json"
+    }
+  ],
+  "score": 100,
+  "keyword_score": 1,
+  "agent": {
+    "score": 4,
+    "reason": "It adds agreement-based token credit and gradient projection to control conflicting updates in multi-teacher LLM post-training."
+  },
+  "arxiv_id": "2610.13521",
+  "doi": "",
+  "published_at": "2026-10-09",
+  "year": "2026",
+  "pdf_url": "https://arxiv.org/pdf/2610.13521"
+}
