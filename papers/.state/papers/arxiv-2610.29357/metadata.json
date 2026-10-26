@@ -1,0 +1,68 @@
+{
+  "title": "Memory-Centric Continual Learning for AI Agents",
+  "abstract": "Autonomous agents powered by foundation models can reason, plan, and use tools, but their fixed weights and context limits hinder sustained learning from experience over long-term deployment. While external memory systems attempt to bridge this gap, they mostly act as passive retrieval caches, evaluated primarily by whether they can recall stored facts or past interactions. Whether memory can drive genuine continual learning remains an open question. In this paper, we introduce Memory-Centric Continual Learning (MCCL), arguing that memory should be judged by whether it improves future actions, not merely what it retrieves. MCCL has three main parts. First, a three-axis taxonomy organizes memory by where state is stored (substrates), what form it takes (assets), and how it is managed (policies). This defines a two-loop lifecycle that updates memory state in an inner loop while refining management policies in an outer loop based on task feedback. Second, an evaluation protocol measures retention under interference, adaptation to change, and task transfer to isolate genuine behavioral gains from simple context expansion. Third, a memory scaling framework models how agent performance scales with experience, storage capacity, and compute budgets across non-parametric and parametric memory. Together, these components reframe agent memory from passive lookup to continuous learning, offering a principled route toward self-improving autonomous agents.",
+  "authors": [
+    "Dongfang Li",
+    "Zhuoen Chen",
+    "Bonian Jia",
+    "Zixuan Liu",
+    "Zhengxuan Lu",
+    "Can Deng",
+    "Yukun Shi",
+    "Yuhang Meng",
+    "Xin Zhang",
+    "Jiahe Huang",
+    "Fuhao Li",
+    "Junmai Wang",
+    "Shunyao Wen",
+    "Jingjun Sun",
+    "Jiaxu Tian",
+    "Jiangling Zhang",
+    "Zihan Wang",
+    "Liangyou Li",
+    "Yitong Yao",
+    "Shuangyong Song",
+    "Beilun Wang",
+    "Pengxu Wei",
+    "Hanlin Xu",
+    "Chang Liu",
+    "Yongxiang Li",
+    "Baotian Hu",
+    "Xiangyang Ji",
+    "Min Zhang"
+  ],
+  "url": "https://arxiv.org/abs/2610.29357",
+  "pdf": "https://arxiv.org/pdf/2610.29357",
+  "date": "2026-10-21",
+  "source": "hf-daily",
+  "hf_upvotes": 43,
+  "keyword_matches": [
+    {
+      "topic": "持续学习",
+      "term": "continual learning",
+      "matched": "continual learning",
+      "similarity": 1.0
+    }
+  ],
+  "attention_evidence": [
+    {
+      "source": "hf-daily",
+      "url": "https://huggingface.co/api/daily_papers?date=2026-10-22&limit=100",
+      "attention_date": "2026-10-22",
+      "observed_at": "2026-10-26T03:11:09.761962+00:00",
+      "hf_upvotes": 43,
+      "raw_file": "papers/.state/runs/261026/work/sources/hf-2026-10-22.json"
+    }
+  ],
+  "score": 75,
+  "keyword_score": 1,
+  "agent": {
+    "score": 3,
+    "reason": "It directly frames continual learning around memory-state and policy updates and proposes retention, adaptation, and transfer evaluation."
+  },
+  "arxiv_id": "2610.29357",
+  "doi": "",
+  "published_at": "2026-10-21",
+  "year": "2026",
+  "pdf_url": "https://arxiv.org/pdf/2610.29357"
+}

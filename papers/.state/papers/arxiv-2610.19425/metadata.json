@@ -1,0 +1,48 @@
+{
+  "title": "Evaluating Agentic Capabilities Before Post-Training: An End-to-End Approach",
+  "abstract": "Agentic capabilities are increasingly important for modern LLMs, yet remain difficult to evaluate during pretraining. Existing approaches typically rely on static trajectory-derived tasks or likelihood-based proxies, which are lightweight but provide limited visibility into how base models behave in interactive environments. We introduce ASAP (Agent Scaffold Adaptation for Pretraining Evaluation), a lightweight framework for eliciting and evaluating agentic behavior from pretrained base models on end-to-end tasks. Rather than converting base models into chat-style agents, ASAP preserves the completion interface and adapts existing agent scaffolds through structured trajectory continuation, short reference prefixes, and minimal recovery mechanisms. Across software-engineering and deep-research benchmarks, ASAP yields discriminative end-to-end performance across base models and pretraining checkpoints. Beyond aggregate scores, ASAP exposes model-generated execution trajectories, enabling analysis of exploration, editing, testing, recovery, and task completion across training stages. These trajectories provide a behavioral view of how agent-relevant capabilities change during pretraining and how execution patterns differ after post-training. Our results suggest that end-to-end agent evaluation can complement conventional pretraining benchmarks by providing a practical diagnostic of interactive model behavior.",
+  "authors": [
+    "Jiarui Qin",
+    "Junjie Huang",
+    "Yunjia Xi",
+    "Di Yin",
+    "Yong Yu",
+    "Weinan Zhang",
+    "Xing Sun",
+    "Weiwen Liu"
+  ],
+  "url": "https://arxiv.org/abs/2610.19425",
+  "pdf": "https://arxiv.org/pdf/2610.19425",
+  "date": "2026-10-14",
+  "source": "hf-daily",
+  "hf_upvotes": 11,
+  "keyword_matches": [
+    {
+      "topic": "持续学习",
+      "term": "continual pretraining",
+      "matched": "conventional pretraining",
+      "similarity": 0.8889
+    }
+  ],
+  "attention_evidence": [
+    {
+      "source": "hf-daily",
+      "url": "https://huggingface.co/api/daily_papers?date=2026-10-21&limit=100",
+      "attention_date": "2026-10-21",
+      "observed_at": "2026-10-26T03:11:06.924217+00:00",
+      "hf_upvotes": 11,
+      "raw_file": "papers/.state/runs/261026/work/sources/hf-2026-10-21.json"
+    }
+  ],
+  "score": 75,
+  "keyword_score": 1,
+  "agent": {
+    "score": 3,
+    "reason": "It measures how interactive behavior changes across pretraining checkpoints, directly addressing LLM training dynamics."
+  },
+  "arxiv_id": "2610.19425",
+  "doi": "",
+  "published_at": "2026-10-14",
+  "year": "2026",
+  "pdf_url": "https://arxiv.org/pdf/2610.19425"
+}

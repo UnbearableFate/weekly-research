@@ -1,0 +1,54 @@
+{
+  "title": "Deep Fusion Memory: A Chunk-Level Parametric Memory for Large Language Models",
+  "abstract": "Large language models need effective ways to acquire and use external knowledge beyond what they retain from pretraining. Continued pretraining risks catastrophic forgetting, while retrieval at inference time can add substantial overhead. External parametric memory avoids online retrieval, but constructing its training data requires extensive offline search, and output-level interpolation provides only shallow fusion. We introduce Deep Fusion Memory (DFM), a parametric memory architecture that reduces this construction workload and incorporates learned memory into intermediate hidden states. A causal memory predictor learns to generate memory from the preceding context, using retrieved chunk embeddings from the corpus as supervision. The predicted memory is shared across tokens within each chunk and fused into their hidden states through gated cross-attention. Memory prediction and fusion are trained end to end with the backbone frozen, and inference requires no explicit retrieval. Compared with existing parametric memory approaches, which often construct token-level memory targets, DFM requires 32times fewer retrieval queries and 2048times fewer retrieved items to construct its training data. Across six QA tasks, DFM performs better over the strongest baseline by 12.71% on Mistral-7B-v0.3 and 11.19% on Qwen3-8B-Base. Beyond QA, domain adaptation yields average gains of 6.51 and 4.38 points over Qwen3-4B-Base and Qwen3-8B-Base, respectively.",
+  "authors": [
+    "Rubin Wei",
+    "Siyuan Sun",
+    "Hao Sun",
+    "Yuliang Liu",
+    "Xiang Shi",
+    "Jiarui Wang",
+    "Junming Zhang",
+    "Zhouhan Lin"
+  ],
+  "url": "https://arxiv.org/abs/2610.25100",
+  "pdf": "https://arxiv.org/pdf/2610.25100",
+  "date": "2026-10-18",
+  "source": "hf-daily",
+  "hf_upvotes": 50,
+  "keyword_matches": [
+    {
+      "topic": "持续学习",
+      "term": "continual pretraining",
+      "matched": "continued pretraining",
+      "similarity": 0.9048
+    },
+    {
+      "topic": "持续学习",
+      "term": "catastrophic forgetting",
+      "matched": "catastrophic forgetting",
+      "similarity": 1.0
+    }
+  ],
+  "attention_evidence": [
+    {
+      "source": "hf-daily",
+      "url": "https://huggingface.co/api/daily_papers?date=2026-10-23&limit=100",
+      "attention_date": "2026-10-23",
+      "observed_at": "2026-10-26T03:11:11.861594+00:00",
+      "hf_upvotes": 50,
+      "raw_file": "papers/.state/runs/261026/work/sources/hf-2026-10-23.json"
+    }
+  ],
+  "score": 50,
+  "keyword_score": 2,
+  "agent": {
+    "score": 2,
+    "reason": "It trains a parametric memory module with the LLM backbone frozen, offering an adjacent approach to efficient knowledge adaptation."
+  },
+  "arxiv_id": "2610.25100",
+  "doi": "",
+  "published_at": "2026-10-18",
+  "year": "2026",
+  "pdf_url": "https://arxiv.org/pdf/2610.25100"
+}

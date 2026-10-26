@@ -1,0 +1,45 @@
+{
+  "title": "Policy Is Not Capability: Some Safety Benchmarks Measure Which Definition of \"Unsafe\" You Trained On",
+  "abstract": "A guardrail classifier is reported as if unsafe were a property of text. It is not: it is a property of a policy, and the policy enters the model through its labels. We exploit an accident of an industrial deployment in which the same ~53k prompts were labelled twice, under two operational definitions (\"is this a request for harmful content?\" and \"would a moderator block this?\"), and used to train ten guardrail arms sharing architecture, codebase and optimiser family, at two model scales. First, the guardrail's own training corpus already contained the benchmarks: JailbreakBench-benign is 88% and OR-Bench-hard 82% present in the training pools, two over-refusal benchmarks, the kind a guardrail reports to argue it does not over-block. Everything below is decontaminated. Second, safety benchmarks stratify sharply by how much of their score is decided by the label definition rather than by the model: with architecture and optimiser fixed, the range across the ten arms is 0.99 on HarmBench-copyright and 0.043 on WildGuard-benign, a 23x spread. Third, a benchmark score can be moved across its entire range by 0.03% of the parameters. Across these arms HarmBench-copyright spans 0-100 and OR-Bench-hard over-refusal 3.4-56.4%, and the four arms whose last supervision signal carries a given policy occupy one extreme of both (exact rank p=0.005, or 0.04-0.14 at worst), at unchanged detection capability. For a distilled student the teacher's soft labels do this even when every hard label carries the other policy, so teacher provenance is an unrecorded confound in any released checkpoint. Fourth, validation accuracy on the one split that grades all twenty arms tracks agreement with the annotator's policy (rho=+0.74), not detection capability (rho=+0.34). We argue that guardrail evaluations should report contamination, a seed floor and the definition they were graded against as first-class variables.",
+  "authors": [
+    "Vahid Jebraeeli",
+    "Jonathon Romero",
+    "Yijin Wang",
+    "Adrian Chan",
+    "Jianbang Zhang"
+  ],
+  "url": "https://arxiv.org/abs/2610.25060",
+  "pdf": "https://arxiv.org/pdf/2610.25060",
+  "date": "2026-10-18",
+  "source": "hf-daily",
+  "hf_upvotes": 17,
+  "keyword_matches": [
+    {
+      "topic": "LLM优化器",
+      "term": "optimizer",
+      "matched": "optimiser",
+      "similarity": 0.8889
+    }
+  ],
+  "attention_evidence": [
+    {
+      "source": "hf-daily",
+      "url": "https://huggingface.co/api/daily_papers?date=2026-10-20&limit=100",
+      "attention_date": "2026-10-20",
+      "observed_at": "2026-10-26T03:11:03.738186+00:00",
+      "hf_upvotes": 17,
+      "raw_file": "papers/.state/runs/261026/work/sources/hf-2026-10-20.json"
+    }
+  ],
+  "score": 50,
+  "keyword_score": 1,
+  "agent": {
+    "score": 2,
+    "reason": "It analyzes how post-training label policies and small updates change LLM benchmark behavior, relevant to training dynamics."
+  },
+  "arxiv_id": "2610.25060",
+  "doi": "",
+  "published_at": "2026-10-18",
+  "year": "2026",
+  "pdf_url": "https://arxiv.org/pdf/2610.25060"
+}

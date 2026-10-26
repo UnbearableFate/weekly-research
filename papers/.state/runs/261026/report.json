@@ -1,0 +1,76 @@
+{
+  "generated_at": "2026-10-26T03:18:37.755297+00:00",
+  "sha256": "6cdcace44d51a446c8323026f8e59c14d29fbed9df9281e116c0c0058ceb8554",
+  "papers": [
+    {
+      "key": "arxiv-2610.25736",
+      "pdf": "Learning from Fleet Experience - A Collective Learning Paradigm for Robots.pdf",
+      "pdf_sha256": "892f50e4617322729262115a43af413247cdbed1881d352c9781bcaf951928ce",
+      "published_at": "2026-10-19",
+      "english_words": 42
+    },
+    {
+      "key": "arxiv-2006.15704",
+      "pdf": "PyTorch Distributed - Experiences on Accelerating Data Parallel Training.pdf",
+      "pdf_sha256": "246af7a675cfb58a4110c1f92b952baa571038e0a57457459137e8c49f8fcf96",
+      "published_at": "2020-06-28",
+      "english_words": 37
+    },
+    {
+      "key": "arxiv-2610.26802",
+      "pdf": "Scaling Parameter-Efficient Fine-Tuning for Brain Encoding.pdf",
+      "pdf_sha256": "ceb709d509963063de66bea6ff41c23b618e2e6a2129764d2311b386ace65dd2",
+      "published_at": "2026-10-19",
+      "english_words": 44
+    },
+    {
+      "key": "arxiv-2610.29357",
+      "pdf": "Memory-Centric Continual Learning for AI Agents.pdf",
+      "pdf_sha256": "f5d32f7b605cc18e033b1820e99aa23ac715671a7bf10b1608abfd5324bce268",
+      "published_at": "2026-10-21",
+      "english_words": 36
+    },
+    {
+      "key": "arxiv-2606.03748",
+      "pdf": "Ultralytics YOLO26 - Unified Real-Time End-to-End Vision Models.pdf",
+      "pdf_sha256": "8dec3ca2adbbc78cbd4f338eb33235e4b9c13704e355e19d029fd0a4bc67fcff",
+      "published_at": "2026-06-02",
+      "english_words": 31
+    },
+    {
+      "key": "arxiv-2610.19425",
+      "pdf": "Evaluating Agentic Capabilities Before Post-Training - An End-to-End Approach.pdf",
+      "pdf_sha256": "d00af8f5671927c63e2ae6875e43106242ae7bcda4eef2d183d934c82eca7c06",
+      "published_at": "2026-10-14",
+      "english_words": 37
+    },
+    {
+      "key": "arxiv-2610.25100",
+      "pdf": "Deep Fusion Memory - A Chunk-Level Parametric Memory for Large Language Models.pdf",
+      "pdf_sha256": "25172e28e40f8ef3fd199b4fcb56d2d2f3969e2ec2899be5ea4d0beeb9c5a9ae",
+      "published_at": "2026-10-18",
+      "english_words": 43
+    },
+    {
+      "key": "arxiv-2610.25060",
+      "pdf": "Policy Is Not Capability - Some Safety Benchmarks Measure Which Definition of - Unsafe - You Trained On.pdf",
+      "pdf_sha256": "37aeb9c8645f3eb236cddd93a549a80bbe06fafbcc336e9e6864454d4c7b4280",
+      "published_at": "2026-10-18",
+      "english_words": 46
+    },
+    {
+      "key": "arxiv-2610.28474",
+      "pdf": "Answering in the User's Variety - Calibrated Accommodation Pairs for Post-Training.pdf",
+      "pdf_sha256": "e3b1be8e9bcab26250ceb1ebdda8c93f090f1e67b9623fb144a64ddbca0f5999",
+      "published_at": "2026-10-20",
+      "english_words": 39
+    },
+    {
+      "key": "arxiv-2610.26754",
+      "pdf": "TokenGate - Adapting LLMs for Fast and Memory-Efficient Prefill with Learned Token Pruning.pdf",
+      "pdf_sha256": "f2e65f25c0f032bea832cc7f12395350dd2c1868447edd85fe821816354eb037",
+      "published_at": "2026-10-19",
+      "english_words": 44
+    }
+  ]
+}

@@ -1,0 +1,216 @@
+{
+  "method": "Official arXiv abstract pages and submission-history v1 entries; metadata cross-checked against the archived PDF. No citation tracing or resolver clients used.",
+  "records": [
+    {
+      "key": "arxiv-2610.25736",
+      "arxiv_id": "2610.25736",
+      "title_in_v1_pdf": "Learning from Fleet Experience: A Collective Learning Paradigm for Robots",
+      "official_first_upload_date": "2026-10-19",
+      "official_version_history_url": "https://arxiv.org/abs/2610.25736",
+      "v1_date_verified": true,
+      "official_authors_verified": true,
+      "attention_evidence": [
+        {
+          "source": "hf-daily",
+          "url": "https://huggingface.co/api/daily_papers?date=2026-10-20&limit=100",
+          "attention_date": "2026-10-20",
+          "observed_at": "2026-10-26T03:11:03.738186+00:00",
+          "hf_upvotes": 137,
+          "raw_file": "papers/.state/runs/261026/work/sources/hf-2026-10-20.json"
+        }
+      ],
+      "attention_qualified": true,
+      "pdf_version_read": "arXiv:2610.25736v1 [cs.RO] 19 Oct 2026",
+      "title_version_note": "The cached original is v1 and bears the selected title. arXiv v2 (21 Oct 2026) changed the current title to “Learning from Fleet Experience: Collective Experience Learning Across 96 Robots”; report retains the exact v1 title paired with the archived v1 PDF."
+    },
+    {
+      "key": "arxiv-2006.15704",
+      "arxiv_id": "2006.15704",
+      "title_in_v1_pdf": "PyTorch Distributed: Experiences on Accelerating Data Parallel Training",
+      "official_first_upload_date": "2020-06-28",
+      "official_version_history_url": "https://arxiv.org/abs/2006.15704",
+      "v1_date_verified": true,
+      "official_authors_verified": true,
+      "attention_evidence": [
+        {
+          "source": "hf-trending",
+          "url": "https://huggingface.co/api/daily_papers?sort=trending&limit=100",
+          "attention_date": "2026-10-26",
+          "observed_at": "2026-10-26T03:11:14.577844+00:00",
+          "hf_upvotes": 14,
+          "raw_file": "papers/.state/runs/261026/work/sources/hf-trending.json"
+        }
+      ],
+      "attention_qualified": true,
+      "pdf_version_read": "arXiv:2006.15704v1 [cs.DC] 28 Jun 2020"
+    },
+    {
+      "key": "arxiv-2610.26802",
+      "arxiv_id": "2610.26802",
+      "title_in_v1_pdf": "Scaling Parameter-Efficient Fine-Tuning for Brain Encoding",
+      "official_first_upload_date": "2026-10-19",
+      "official_version_history_url": "https://arxiv.org/abs/2610.26802",
+      "v1_date_verified": true,
+      "official_authors_verified": true,
+      "attention_evidence": [
+        {
+          "source": "hf-daily",
+          "url": "https://huggingface.co/api/daily_papers?date=2026-10-20&limit=100",
+          "attention_date": "2026-10-20",
+          "observed_at": "2026-10-26T03:11:03.738186+00:00",
+          "hf_upvotes": 247,
+          "raw_file": "papers/.state/runs/261026/work/sources/hf-2026-10-20.json"
+        }
+      ],
+      "attention_qualified": true,
+      "pdf_version_read": "arXiv:2610.26802v1 [cs.LG] 19 Oct 2026"
+    },
+    {
+      "key": "arxiv-2610.29357",
+      "arxiv_id": "2610.29357",
+      "title_in_v1_pdf": "Memory-Centric Continual Learning for AI Agents",
+      "official_first_upload_date": "2026-10-21",
+      "official_version_history_url": "https://arxiv.org/abs/2610.29357",
+      "v1_date_verified": true,
+      "official_authors_verified": true,
+      "attention_evidence": [
+        {
+          "source": "hf-daily",
+          "url": "https://huggingface.co/api/daily_papers?date=2026-10-22&limit=100",
+          "attention_date": "2026-10-22",
+          "observed_at": "2026-10-26T03:11:09.761962+00:00",
+          "hf_upvotes": 43,
+          "raw_file": "papers/.state/runs/261026/work/sources/hf-2026-10-22.json"
+        }
+      ],
+      "attention_qualified": true,
+      "pdf_version_read": "arXiv:2610.29357v1 [cs.CL] 21 Oct 2026"
+    },
+    {
+      "key": "arxiv-2606.03748",
+      "arxiv_id": "2606.03748",
+      "title_in_v1_pdf": "Ultralytics YOLO26: Unified Real-Time End-to-End Vision Models",
+      "official_first_upload_date": "2026-06-02",
+      "official_version_history_url": "https://arxiv.org/abs/2606.03748",
+      "v1_date_verified": true,
+      "official_authors_verified": true,
+      "attention_evidence": [
+        {
+          "source": "hf-trending",
+          "url": "https://huggingface.co/api/daily_papers?sort=trending&limit=100",
+          "attention_date": "2026-10-26",
+          "observed_at": "2026-10-26T03:11:14.577844+00:00",
+          "hf_upvotes": 25,
+          "raw_file": "papers/.state/runs/261026/work/sources/hf-trending.json"
+        }
+      ],
+      "attention_qualified": true,
+      "pdf_version_read": "arXiv:2606.03748v1 [cs.CV] 2 Jun 2026"
+    },
+    {
+      "key": "arxiv-2610.19425",
+      "arxiv_id": "2610.19425",
+      "title_in_v1_pdf": "Evaluating Agentic Capabilities Before Post-Training: An End-to-End Approach",
+      "official_first_upload_date": "2026-10-14",
+      "official_version_history_url": "https://arxiv.org/abs/2610.19425",
+      "v1_date_verified": true,
+      "official_authors_verified": true,
+      "attention_evidence": [
+        {
+          "source": "hf-daily",
+          "url": "https://huggingface.co/api/daily_papers?date=2026-10-21&limit=100",
+          "attention_date": "2026-10-21",
+          "observed_at": "2026-10-26T03:11:06.924217+00:00",
+          "hf_upvotes": 11,
+          "raw_file": "papers/.state/runs/261026/work/sources/hf-2026-10-21.json"
+        }
+      ],
+      "attention_qualified": true,
+      "pdf_version_read": "arXiv:2610.19425v1 [cs.AI] 14 Oct 2026"
+    },
+    {
+      "key": "arxiv-2610.25100",
+      "arxiv_id": "2610.25100",
+      "title_in_v1_pdf": "Deep Fusion Memory: A Chunk-Level Parametric Memory for Large Language Models",
+      "official_first_upload_date": "2026-10-18",
+      "official_version_history_url": "https://arxiv.org/abs/2610.25100",
+      "v1_date_verified": true,
+      "official_authors_verified": true,
+      "attention_evidence": [
+        {
+          "source": "hf-daily",
+          "url": "https://huggingface.co/api/daily_papers?date=2026-10-23&limit=100",
+          "attention_date": "2026-10-23",
+          "observed_at": "2026-10-26T03:11:11.861594+00:00",
+          "hf_upvotes": 50,
+          "raw_file": "papers/.state/runs/261026/work/sources/hf-2026-10-23.json"
+        }
+      ],
+      "attention_qualified": true,
+      "pdf_version_read": "arXiv:2610.25100v1 [cs.CL] 18 Oct 2026"
+    },
+    {
+      "key": "arxiv-2610.25060",
+      "arxiv_id": "2610.25060",
+      "title_in_v1_pdf": "Policy Is Not Capability: Some Safety Benchmarks Measure Which Definition of \"Unsafe\" You Trained On",
+      "official_first_upload_date": "2026-10-18",
+      "official_version_history_url": "https://arxiv.org/abs/2610.25060",
+      "v1_date_verified": true,
+      "official_authors_verified": true,
+      "attention_evidence": [
+        {
+          "source": "hf-daily",
+          "url": "https://huggingface.co/api/daily_papers?date=2026-10-20&limit=100",
+          "attention_date": "2026-10-20",
+          "observed_at": "2026-10-26T03:11:03.738186+00:00",
+          "hf_upvotes": 17,
+          "raw_file": "papers/.state/runs/261026/work/sources/hf-2026-10-20.json"
+        }
+      ],
+      "attention_qualified": true,
+      "pdf_version_read": "arXiv:2610.25060v1 [cs.LG] 18 Oct 2026"
+    },
+    {
+      "key": "arxiv-2610.28474",
+      "arxiv_id": "2610.28474",
+      "title_in_v1_pdf": "Answering in the User's Variety: Calibrated Accommodation Pairs for Post-Training",
+      "official_first_upload_date": "2026-10-20",
+      "official_version_history_url": "https://arxiv.org/abs/2610.28474",
+      "v1_date_verified": true,
+      "official_authors_verified": true,
+      "attention_evidence": [
+        {
+          "source": "hf-daily",
+          "url": "https://huggingface.co/api/daily_papers?date=2026-10-22&limit=100",
+          "attention_date": "2026-10-22",
+          "observed_at": "2026-10-26T03:11:09.761962+00:00",
+          "hf_upvotes": 16,
+          "raw_file": "papers/.state/runs/261026/work/sources/hf-2026-10-22.json"
+        }
+      ],
+      "attention_qualified": true,
+      "pdf_version_read": "arXiv:2610.28474v1 [cs.CV] 20 Oct 2026"
+    },
+    {
+      "key": "arxiv-2610.26754",
+      "arxiv_id": "2610.26754",
+      "title_in_v1_pdf": "TokenGate: Adapting LLMs for Fast and Memory-Efficient Prefill with Learned Token Pruning",
+      "official_first_upload_date": "2026-10-19",
+      "official_version_history_url": "https://arxiv.org/abs/2610.26754",
+      "v1_date_verified": true,
+      "official_authors_verified": true,
+      "attention_evidence": [
+        {
+          "source": "hf-daily",
+          "url": "https://huggingface.co/api/daily_papers?date=2026-10-20&limit=100",
+          "attention_date": "2026-10-20",
+          "observed_at": "2026-10-26T03:11:03.738186+00:00",
+          "hf_upvotes": 10,
+          "raw_file": "papers/.state/runs/261026/work/sources/hf-2026-10-20.json"
+        }
+      ],
+      "attention_qualified": true,
+      "pdf_version_read": "arXiv:2610.26754v1 [cs.CL] 19 Oct 2026"
+    }
+  ]
+}

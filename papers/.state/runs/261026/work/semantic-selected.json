@@ -1,0 +1,396 @@
+[
+  {
+    "title": "PyTorch Distributed: Experiences on Accelerating Data Parallel Training",
+    "abstract": "This paper presents the design, implementation, and evaluation of the PyTorch\ndistributed data parallel module. PyTorch is a widely-adopted scientific\ncomputing package used in deep learning research and applications. Recent\nadvances in deep learning argue for the value of large datasets and large\nmodels, which necessitates the ability to scale out model training to more\ncomputational resources. Data parallelism has emerged as a popular solution for\ndistributed training thanks to its straightforward principle and broad\napplicability. In general, the technique of distributed data parallelism\nreplicates the model on every computational resource to generate gradients\nindependently and then communicates those gradients at each iteration to keep\nmodel replicas consistent. Despite the conceptual simplicity of the technique,\nthe subtle dependencies between computation and communication make it\nnon-trivial to optimize the distributed training efficiency. As of v1.5,\nPyTorch natively provides several techniques to accelerate distributed data\nparallel, including bucketing gradients, overlapping computation with\ncommunication, and skipping gradient synchronization. Evaluations show that,\nwhen configured appropriately, the PyTorch distributed data parallel module\nattains near-linear scalability using 256 GPUs.",
+    "authors": "Shen Li, Yanli Zhao, Rohan Varma, Omkar Salpekar, Pieter Noordhuis, Teng Li, Adam Paszke, Jeff Smith, Brian Vaughan, Pritam Damania, Soumith Chintala",
+    "url": "https://arxiv.org/abs/2006.15704",
+    "pdf": "https://arxiv.org/pdf/2006.15704",
+    "date": "2020-06-28",
+    "source": "hf-trending",
+    "hf_upvotes": 14,
+    "keyword_matches": [
+      {
+        "topic": "LLM优化器",
+        "term": "optimizer",
+        "matched": "optimize",
+        "similarity": 0.9412
+      },
+      {
+        "topic": "分布式学习",
+        "term": "distributed training",
+        "matched": "distributed training",
+        "similarity": 1.0
+      },
+      {
+        "topic": "分布式学习",
+        "term": "data parallel",
+        "matched": "data parallel",
+        "similarity": 1.0
+      },
+      {
+        "topic": "分布式学习",
+        "term": "gradient synchronization",
+        "matched": "gradient synchronization",
+        "similarity": 1.0
+      }
+    ],
+    "attention_evidence": [
+      {
+        "source": "hf-trending",
+        "url": "https://huggingface.co/api/daily_papers?sort=trending&limit=100",
+        "attention_date": "2026-10-26",
+        "observed_at": "2026-10-26T03:11:14.577844+00:00",
+        "hf_upvotes": 14,
+        "raw_file": "papers/.state/runs/261026/work/sources/hf-trending.json"
+      }
+    ],
+    "score": 100,
+    "keyword_score": 4,
+    "agent": {
+      "score": 4,
+      "reason": "It directly studies data-parallel training efficiency, gradient synchronization, communication overlap, and scaling across GPUs."
+    }
+  },
+  {
+    "title": "Learning from Fleet Experience: A Collective Learning Paradigm for Robots",
+    "abstract": "Experience generated during deployment offers an opportunity for robots to improve policy reliability through learning from their own executions. However, learning through human corrections requires teleoperators to monitor execution and intervene when policies fail, a demand that is difficult to meet as robot fleets grow. We introduce collective experience learning (CEL), a learning paradigm in which deployed robots share their execution experience to improve a common policy. We realize CEL through failure-guided experience retrieval fine-tuning (FERT), which uses failure contexts from robot executions to retrieve relevant trajectory segments from the fleet's shared successful experience and uses their actions as supervision for policy updates, without collecting additional expert demonstrations or corrective actions. A fault-tolerant asynchronous training system (FATS) coordinates experience collection, policy optimization and policy distribution despite local interruptions within the robot fleet. Across five real-world manipulation tasks, the resulting policies achieve success rates of 93.3-99.2%, evaluated over 120 trials per task on robots excluded from training data collection. With collection time per robot held fixed, larger fleets provide more experience and FERT generally achieves higher success rates across the evaluated sizes. On multi-stage phone packaging, learning with 96 robots increases success from 79.2% to 98.3%. These results support collective experience as a practical basis for scalable robot learning and a path towards improving policy reliability during deployment without collecting additional expert corrective actions.",
+    "authors": "Chao Yu, Shu&#39;ang Yu, Hao Lin, Hongzhi Zang, Yuxiang Yan, Chenxi Jiang, Zhen Guo, Chuankang Li, Yihao Chen, Xin Xu, Xu Fu, Jiakai Zhou, Liangzhi Shi, Hongyi Ren, Yiwei Liu, Jing Wu, Yuanqing Wang, Chen Wu, Bo Dai, Chunyu Yang, Hongliang Huang, Shuoyu Yue, Weiqi Yin, Yinuo Chen, Ruihua Chen, Chunyang Zhu, Han Xiao, Yanghao Li, Ruipu Wu, Zhikai Cai, Xiu Chen, Xu Tan, Yuchen Yan, Jialin Zhang, Wen Zeng, Yiming Zhou, Zixiao Huang, Guanghui Ren, Quanlu Zhang, Boxun Li, Maoqing Yao, Yu Wang",
+    "url": "https://arxiv.org/abs/2610.25736",
+    "pdf": "https://arxiv.org/pdf/2610.25736",
+    "date": "2026-10-19",
+    "source": "hf-daily",
+    "hf_upvotes": 137,
+    "keyword_matches": [
+      {
+        "topic": "LLM优化器",
+        "term": "optimization",
+        "matched": "optimization",
+        "similarity": 1.0
+      },
+      {
+        "topic": "分布式学习",
+        "term": "asynchronous training",
+        "matched": "asynchronous training",
+        "similarity": 1.0
+      }
+    ],
+    "attention_evidence": [
+      {
+        "source": "hf-daily",
+        "url": "https://huggingface.co/api/daily_papers?date=2026-10-20&limit=100",
+        "attention_date": "2026-10-20",
+        "observed_at": "2026-10-26T03:11:03.738186+00:00",
+        "hf_upvotes": 137,
+        "raw_file": "papers/.state/runs/261026/work/sources/hf-2026-10-20.json"
+      }
+    ],
+    "score": 100,
+    "keyword_score": 2,
+    "agent": {
+      "score": 4,
+      "reason": "It directly contributes asynchronous fleet-scale learning, shared experience fine-tuning, and policy distribution across robots."
+    }
+  },
+  {
+    "title": "Scaling Parameter-Efficient Fine-Tuning for Brain Encoding",
+    "abstract": "Brain encoding models aim to predict neural responses to stimuli. The most widely used approach fits readouts from frozen pretrained backbones. Using neural data to train large models from scratch or fully fine-tune them after task-pretraining has proven difficult because neural data is costly and limited. We show that parameter-efficient fine-tuning (PEFT) enables us to effectively adapt very large pretrained backbones for brain encoding with a small number of trainable parameters. To make it computationally practical, we exploit the backbone's causal structure to predict multiple timepoints in a single pass instead of using sliding windows, significantly reducing feature-extraction cost. This enables efficient fine-tuning of multimodal backbones with up to 104B parameters, the largest model adapted for brain encoding to our knowledge. Trained with a low-rank adapter (LoRA) and a lightweight readout, our approach consistently improves brain encoding performance across nine diverse multimodal backbones. On the same Qwen3-Omni backbone as the prior state-of-the-art (SoTA), our method BrainLoRA achieves the best published performance on the Algonauts 2025 Challenge. We also show the adapted multimodal backbones remain interpretable: modality attribution recovers the canonical sensory topography that prior work often obtains by construction from separate unimodal encoders, and neural adaptation increases the contribution of audio inputs and cross-modal mixing within the backbone. To scale out the number of adapted models, we develop a multi-LoRA kernel that accelerates joint training of multiple LoRAs on a shared backbone. This enables an ensemble of 200+ adapted models that ranks first on the public Algonauts post-challenge leaderboard at the time of writing. Together, our results highlight PEFT as an efficient and powerful paradigm for brain encoding.",
+    "authors": "Zhuofan Josh Ying, Guanglong Sun, Nolan Ho, Kieran Liu, Rui Yang, Andrew Chen, Nikolaus Kriegeskorte, Pony Ma, Hossein Adeli",
+    "url": "https://arxiv.org/abs/2610.26802",
+    "pdf": "https://arxiv.org/pdf/2610.26802",
+    "date": "2026-10-19",
+    "source": "hf-daily",
+    "hf_upvotes": 247,
+    "keyword_matches": [
+      {
+        "topic": "PEFT",
+        "term": "PEFT",
+        "matched": "peft",
+        "similarity": 1.0
+      },
+      {
+        "topic": "PEFT",
+        "term": "parameter efficient fine tuning",
+        "matched": "parameter efficient fine tuning",
+        "similarity": 1.0
+      },
+      {
+        "topic": "PEFT",
+        "term": "LoRA",
+        "matched": "lora",
+        "similarity": 1.0
+      },
+      {
+        "topic": "PEFT",
+        "term": "QLoRA",
+        "matched": "lora",
+        "similarity": 0.8889
+      }
+    ],
+    "attention_evidence": [
+      {
+        "source": "hf-daily",
+        "url": "https://huggingface.co/api/daily_papers?date=2026-10-20&limit=100",
+        "attention_date": "2026-10-20",
+        "observed_at": "2026-10-26T03:11:03.738186+00:00",
+        "hf_upvotes": 247,
+        "raw_file": "papers/.state/runs/261026/work/sources/hf-2026-10-20.json"
+      }
+    ],
+    "score": 75,
+    "keyword_score": 4,
+    "agent": {
+      "score": 3,
+      "reason": "Direct PEFT work: it scales LoRA adaptation to very large backbones and contributes a multi-LoRA training kernel."
+    }
+  },
+  {
+    "title": "Ultralytics YOLO26: Unified Real-Time End-to-End Vision Models",
+    "abstract": "Real-time vision demands models that are accurate, efficient, and simple to deploy across diverse hardware. The YOLO family has become widely deployed for this reason, yet most YOLO detectors still rely on non-maximum suppression at inference, carry heavy detection heads due to Distribution Focal Loss, require long training schedules, and can leave the smallest objects without positive label assignments. We present Ultralytics YOLO26, a unified real-time vision model family that addresses these limitations through coordinated architecture and training advances. YOLO26 uses a dual-head design for native NMS-free end-to-end inference and removes DFL entirely, yielding a lighter head with unconstrained regression range. Its training pipeline combines MuSGD, a hybrid Muon-SGD optimizer adapted from large language model training; Progressive Loss, which shifts supervision toward the inference-time head; and STAL, a label assignment strategy that guarantees positive coverage for small objects. Beyond detection, YOLO26 introduces task-specific head and loss designs for instance segmentation, pose estimation, and oriented detection, producing consistent gains across tasks and scales. The family spans five scales (n/s/m/l/x) and supports detection, instance segmentation, pose estimation, classification, and oriented detection in a single pipeline, with an open-vocabulary extension, YOLOE-26, for text-, visual-, and prompt-free inference. Across all scales, YOLO26 achieves 40.9-57.5 mAP on COCO at 1.7-11.8 ms T4 TensorRT latency, advancing the accuracy-latency Pareto front over prior real-time detectors, while YOLOE-26x reaches 40.6 AP on LVIS minival under text prompting. Code and models are available at https://github.com/ultralytics/ultralytics.",
+    "authors": "Glenn Jocher, Jing Qiu, Mengyu Liu, Shuai Lyu, Fatih Cagatay Akyon, Muhammet Esat Kalfaoglu",
+    "url": "https://arxiv.org/abs/2606.03748",
+    "pdf": "https://arxiv.org/pdf/2606.03748",
+    "date": "2026-06-02",
+    "source": "hf-trending",
+    "hf_upvotes": 25,
+    "keyword_matches": [
+      {
+        "topic": "LLM优化器",
+        "term": "optimizer",
+        "matched": "optimizer",
+        "similarity": 1.0
+      },
+      {
+        "topic": "LLM优化器",
+        "term": "Muon",
+        "matched": "muon",
+        "similarity": 1.0
+      }
+    ],
+    "attention_evidence": [
+      {
+        "source": "hf-trending",
+        "url": "https://huggingface.co/api/daily_papers?sort=trending&limit=100",
+        "attention_date": "2026-10-26",
+        "observed_at": "2026-10-26T03:11:14.577844+00:00",
+        "hf_upvotes": 25,
+        "raw_file": "papers/.state/runs/261026/work/sources/hf-trending.json"
+      }
+    ],
+    "score": 75,
+    "keyword_score": 2,
+    "agent": {
+      "score": 3,
+      "reason": "Its training pipeline introduces MuSGD, a hybrid optimizer adapted from LLM training, as a substantive model-training component."
+    }
+  },
+  {
+    "title": "Evaluating Agentic Capabilities Before Post-Training: An End-to-End Approach",
+    "abstract": "Agentic capabilities are increasingly important for modern LLMs, yet remain difficult to evaluate during pretraining. Existing approaches typically rely on static trajectory-derived tasks or likelihood-based proxies, which are lightweight but provide limited visibility into how base models behave in interactive environments. We introduce ASAP (Agent Scaffold Adaptation for Pretraining Evaluation), a lightweight framework for eliciting and evaluating agentic behavior from pretrained base models on end-to-end tasks. Rather than converting base models into chat-style agents, ASAP preserves the completion interface and adapts existing agent scaffolds through structured trajectory continuation, short reference prefixes, and minimal recovery mechanisms. Across software-engineering and deep-research benchmarks, ASAP yields discriminative end-to-end performance across base models and pretraining checkpoints. Beyond aggregate scores, ASAP exposes model-generated execution trajectories, enabling analysis of exploration, editing, testing, recovery, and task completion across training stages. These trajectories provide a behavioral view of how agent-relevant capabilities change during pretraining and how execution patterns differ after post-training. Our results suggest that end-to-end agent evaluation can complement conventional pretraining benchmarks by providing a practical diagnostic of interactive model behavior.",
+    "authors": "Jiarui Qin, Junjie Huang, Yunjia Xi, Di Yin, Yong Yu, Weinan Zhang, Xing Sun, Weiwen Liu",
+    "url": "https://arxiv.org/abs/2610.19425",
+    "pdf": "https://arxiv.org/pdf/2610.19425",
+    "date": "2026-10-14",
+    "source": "hf-daily",
+    "hf_upvotes": 11,
+    "keyword_matches": [
+      {
+        "topic": "持续学习",
+        "term": "continual pretraining",
+        "matched": "conventional pretraining",
+        "similarity": 0.8889
+      }
+    ],
+    "attention_evidence": [
+      {
+        "source": "hf-daily",
+        "url": "https://huggingface.co/api/daily_papers?date=2026-10-21&limit=100",
+        "attention_date": "2026-10-21",
+        "observed_at": "2026-10-26T03:11:06.924217+00:00",
+        "hf_upvotes": 11,
+        "raw_file": "papers/.state/runs/261026/work/sources/hf-2026-10-21.json"
+      }
+    ],
+    "score": 75,
+    "keyword_score": 1,
+    "agent": {
+      "score": 3,
+      "reason": "It measures how interactive behavior changes across pretraining checkpoints, directly addressing LLM training dynamics."
+    }
+  },
+  {
+    "title": "Memory-Centric Continual Learning for AI Agents",
+    "abstract": "Autonomous agents powered by foundation models can reason, plan, and use tools, but their fixed weights and context limits hinder sustained learning from experience over long-term deployment. While external memory systems attempt to bridge this gap, they mostly act as passive retrieval caches, evaluated primarily by whether they can recall stored facts or past interactions. Whether memory can drive genuine continual learning remains an open question. In this paper, we introduce Memory-Centric Continual Learning (MCCL), arguing that memory should be judged by whether it improves future actions, not merely what it retrieves. MCCL has three main parts. First, a three-axis taxonomy organizes memory by where state is stored (substrates), what form it takes (assets), and how it is managed (policies). This defines a two-loop lifecycle that updates memory state in an inner loop while refining management policies in an outer loop based on task feedback. Second, an evaluation protocol measures retention under interference, adaptation to change, and task transfer to isolate genuine behavioral gains from simple context expansion. Third, a memory scaling framework models how agent performance scales with experience, storage capacity, and compute budgets across non-parametric and parametric memory. Together, these components reframe agent memory from passive lookup to continuous learning, offering a principled route toward self-improving autonomous agents.",
+    "authors": "Dongfang Li, Zhuoen Chen, Bonian Jia, Zixuan Liu, Zhengxuan Lu, Can Deng, Yukun Shi, Yuhang Meng, Xin Zhang, Jiahe Huang, Fuhao Li, Junmai Wang, Shunyao Wen, Jingjun Sun, Jiaxu Tian, Jiangling Zhang, Zihan Wang, Liangyou Li, Yitong Yao, Shuangyong Song, Beilun Wang, Pengxu Wei, Hanlin Xu, Chang Liu, Yongxiang Li, Baotian Hu, Xiangyang Ji, Min Zhang",
+    "url": "https://arxiv.org/abs/2610.29357",
+    "pdf": "https://arxiv.org/pdf/2610.29357",
+    "date": "2026-10-21",
+    "source": "hf-daily",
+    "hf_upvotes": 43,
+    "keyword_matches": [
+      {
+        "topic": "持续学习",
+        "term": "continual learning",
+        "matched": "continual learning",
+        "similarity": 1.0
+      }
+    ],
+    "attention_evidence": [
+      {
+        "source": "hf-daily",
+        "url": "https://huggingface.co/api/daily_papers?date=2026-10-22&limit=100",
+        "attention_date": "2026-10-22",
+        "observed_at": "2026-10-26T03:11:09.761962+00:00",
+        "hf_upvotes": 43,
+        "raw_file": "papers/.state/runs/261026/work/sources/hf-2026-10-22.json"
+      }
+    ],
+    "score": 75,
+    "keyword_score": 1,
+    "agent": {
+      "score": 3,
+      "reason": "It directly frames continual learning around memory-state and policy updates and proposes retention, adaptation, and transfer evaluation."
+    }
+  },
+  {
+    "title": "Deep Fusion Memory: A Chunk-Level Parametric Memory for Large Language Models",
+    "abstract": "Large language models need effective ways to acquire and use external knowledge beyond what they retain from pretraining. Continued pretraining risks catastrophic forgetting, while retrieval at inference time can add substantial overhead. External parametric memory avoids online retrieval, but constructing its training data requires extensive offline search, and output-level interpolation provides only shallow fusion. We introduce Deep Fusion Memory (DFM), a parametric memory architecture that reduces this construction workload and incorporates learned memory into intermediate hidden states. A causal memory predictor learns to generate memory from the preceding context, using retrieved chunk embeddings from the corpus as supervision. The predicted memory is shared across tokens within each chunk and fused into their hidden states through gated cross-attention. Memory prediction and fusion are trained end to end with the backbone frozen, and inference requires no explicit retrieval. Compared with existing parametric memory approaches, which often construct token-level memory targets, DFM requires 32times fewer retrieval queries and 2048times fewer retrieved items to construct its training data. Across six QA tasks, DFM performs better over the strongest baseline by 12.71% on Mistral-7B-v0.3 and 11.19% on Qwen3-8B-Base. Beyond QA, domain adaptation yields average gains of 6.51 and 4.38 points over Qwen3-4B-Base and Qwen3-8B-Base, respectively.",
+    "authors": "Rubin Wei, Siyuan Sun, Hao Sun, Yuliang Liu, Xiang Shi, Jiarui Wang, Junming Zhang, Zhouhan Lin",
+    "url": "https://arxiv.org/abs/2610.25100",
+    "pdf": "https://arxiv.org/pdf/2610.25100",
+    "date": "2026-10-18",
+    "source": "hf-daily",
+    "hf_upvotes": 50,
+    "keyword_matches": [
+      {
+        "topic": "持续学习",
+        "term": "continual pretraining",
+        "matched": "continued pretraining",
+        "similarity": 0.9048
+      },
+      {
+        "topic": "持续学习",
+        "term": "catastrophic forgetting",
+        "matched": "catastrophic forgetting",
+        "similarity": 1.0
+      }
+    ],
+    "attention_evidence": [
+      {
+        "source": "hf-daily",
+        "url": "https://huggingface.co/api/daily_papers?date=2026-10-23&limit=100",
+        "attention_date": "2026-10-23",
+        "observed_at": "2026-10-26T03:11:11.861594+00:00",
+        "hf_upvotes": 50,
+        "raw_file": "papers/.state/runs/261026/work/sources/hf-2026-10-23.json"
+      }
+    ],
+    "score": 50,
+    "keyword_score": 2,
+    "agent": {
+      "score": 2,
+      "reason": "It trains a parametric memory module with the LLM backbone frozen, offering an adjacent approach to efficient knowledge adaptation."
+    }
+  },
+  {
+    "title": "Policy Is Not Capability: Some Safety Benchmarks Measure Which Definition of \"Unsafe\" You Trained On",
+    "abstract": "A guardrail classifier is reported as if unsafe were a property of text. It is not: it is a property of a policy, and the policy enters the model through its labels. We exploit an accident of an industrial deployment in which the same ~53k prompts were labelled twice, under two operational definitions (\"is this a request for harmful content?\" and \"would a moderator block this?\"), and used to train ten guardrail arms sharing architecture, codebase and optimiser family, at two model scales. First, the guardrail's own training corpus already contained the benchmarks: JailbreakBench-benign is 88% and OR-Bench-hard 82% present in the training pools, two over-refusal benchmarks, the kind a guardrail reports to argue it does not over-block. Everything below is decontaminated. Second, safety benchmarks stratify sharply by how much of their score is decided by the label definition rather than by the model: with architecture and optimiser fixed, the range across the ten arms is 0.99 on HarmBench-copyright and 0.043 on WildGuard-benign, a 23x spread. Third, a benchmark score can be moved across its entire range by 0.03% of the parameters. Across these arms HarmBench-copyright spans 0-100 and OR-Bench-hard over-refusal 3.4-56.4%, and the four arms whose last supervision signal carries a given policy occupy one extreme of both (exact rank p=0.005, or 0.04-0.14 at worst), at unchanged detection capability. For a distilled student the teacher's soft labels do this even when every hard label carries the other policy, so teacher provenance is an unrecorded confound in any released checkpoint. Fourth, validation accuracy on the one split that grades all twenty arms tracks agreement with the annotator's policy (rho=+0.74), not detection capability (rho=+0.34). We argue that guardrail evaluations should report contamination, a seed floor and the definition they were graded against as first-class variables.",
+    "authors": "Vahid Jebraeeli, Jonathon Romero, Yijin Wang, Adrian Chan, Jianbang Zhang",
+    "url": "https://arxiv.org/abs/2610.25060",
+    "pdf": "https://arxiv.org/pdf/2610.25060",
+    "date": "2026-10-18",
+    "source": "hf-daily",
+    "hf_upvotes": 17,
+    "keyword_matches": [
+      {
+        "topic": "LLM优化器",
+        "term": "optimizer",
+        "matched": "optimiser",
+        "similarity": 0.8889
+      }
+    ],
+    "attention_evidence": [
+      {
+        "source": "hf-daily",
+        "url": "https://huggingface.co/api/daily_papers?date=2026-10-20&limit=100",
+        "attention_date": "2026-10-20",
+        "observed_at": "2026-10-26T03:11:03.738186+00:00",
+        "hf_upvotes": 17,
+        "raw_file": "papers/.state/runs/261026/work/sources/hf-2026-10-20.json"
+      }
+    ],
+    "score": 50,
+    "keyword_score": 1,
+    "agent": {
+      "score": 2,
+      "reason": "It analyzes how post-training label policies and small updates change LLM benchmark behavior, relevant to training dynamics."
+    }
+  },
+  {
+    "title": "TokenGate: Adapting LLMs for Fast and Memory-Efficient Prefill with Learned Token Pruning",
+    "abstract": "Expert human readers process large inputs (e.g., code repositories and long documents) by skimming to closely read only what matters. On the other hand, language models process all input tokens through each model layer, resulting in significant processing costs for long-context inputs. We introduce TokenGate, a small, drop-in component that extends existing trained models to enable end-to-end learnable token pruning over long-context inputs for fast and memory-efficient prefill. To enable end-to-end learning despite the non-differentiable top-K operator for token pruning, we introduce token-gated attention, a mechanism inspired by Mixture-of-Experts that re-weights attention logits using token importance scores. Across diverse tasks, TokenGate achieves 1.4-11.3times faster time-to-first token (TTFT) and 1.5-3.4times lower peak memory at no accuracy degradation for prefill in transformers. Compared to the best-performing prior methods for token-pruning, TokenGate gives up to 6.4times faster prefill and 2times lower peak memory. TokenGate natively extends both standard transformers (e.g., Qwen3) and hybrid-attention models (e.g., Qwen3.5) with simple lightweight adaptation comparable to standard parameter-efficient fine-tuning. We make our code available at: https://github.com/tokengate-models/TokenGate.",
+    "authors": "Liana Patel, Rishabh Ranjan, Ion Stoica, Matei Zaharia, Carlos Guestrin",
+    "url": "https://arxiv.org/abs/2610.26754",
+    "pdf": "https://arxiv.org/pdf/2610.26754",
+    "date": "2026-10-19",
+    "source": "hf-daily",
+    "hf_upvotes": 10,
+    "keyword_matches": [
+      {
+        "topic": "PEFT",
+        "term": "parameter efficient fine tuning",
+        "matched": "parameter efficient fine tuning",
+        "similarity": 1.0
+      }
+    ],
+    "attention_evidence": [
+      {
+        "source": "hf-daily",
+        "url": "https://huggingface.co/api/daily_papers?date=2026-10-20&limit=100",
+        "attention_date": "2026-10-20",
+        "observed_at": "2026-10-26T03:11:03.738186+00:00",
+        "hf_upvotes": 10,
+        "raw_file": "papers/.state/runs/261026/work/sources/hf-2026-10-20.json"
+      }
+    ],
+    "score": 50,
+    "keyword_score": 1,
+    "agent": {
+      "score": 2,
+      "reason": "It adds a small learned component to adapt pretrained LLMs for memory-efficient long-context processing, adjacent to efficient adaptation."
+    }
+  },
+  {
+    "title": "Answering in the User's Variety: Calibrated Accommodation Pairs for Post-Training",
+    "abstract": "People adapt how they talk to the person in front of them. However, chat models tend to respond in Standard English regardless of the dialect used by the user. A uniform answer can hide whether training treats these users alike, and output audits cannot tell as well. We trace how each post-training stage, from supervised fine-tuning (SFT) to preference optimization (DPO) and reinforcement learning, changes a model's tendency to match the user, and read what each update prefers from two content-matched replies, one matching the user and one not. Across 10 open model lineages, post-training standardizes replies to every informal cue, yet after adjusting for how likely each reply already was, the DPO update still favours matching British and Australian spelling over AAE and Singlish on 10 lineages, and models still produce AAE features when asked. We then introduce calibrated accommodation pairs (CAP), preference data that reward matching users' dialect density while preserving Standard English for Standard-English users. On a fully open model, CAP raises convergence on features it was not trained on without a detectable increase in dialect for Standard-English users or a cost in instruction following. In contrast, one-sided pairs reach a similar gain only by overshooting the user and imposing dialect. Our findings show that uniform replies can hide selective updates and audits should read the update as well as the output. Code: https://github.com/kouzhizhuo/cap-accommodation.",
+    "authors": "Zhizhuo Kou, Heming Li, Jian Yang, Junyu Luo, Jingshu Peng, Sirui Han, Yike Guo",
+    "url": "https://arxiv.org/abs/2610.28474",
+    "pdf": "https://arxiv.org/pdf/2610.28474",
+    "date": "2026-10-20",
+    "source": "hf-daily",
+    "hf_upvotes": 16,
+    "keyword_matches": [
+      {
+        "topic": "LLM优化器",
+        "term": "optimization",
+        "matched": "optimization",
+        "similarity": 1.0
+      }
+    ],
+    "attention_evidence": [
+      {
+        "source": "hf-daily",
+        "url": "https://huggingface.co/api/daily_papers?date=2026-10-22&limit=100",
+        "attention_date": "2026-10-22",
+        "observed_at": "2026-10-26T03:11:09.761962+00:00",
+        "hf_upvotes": 16,
+        "raw_file": "papers/.state/runs/261026/work/sources/hf-2026-10-22.json"
+      }
+    ],
+    "score": 50,
+    "keyword_score": 1,
+    "agent": {
+      "score": 2,
+      "reason": "It studies DPO and RL update effects and proposes preference pairs for controlled LLM post-training behavior."
+    }
+  }
+]

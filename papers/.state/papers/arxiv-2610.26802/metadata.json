@@ -16,7 +16,7 @@
   "pdf": "https://arxiv.org/pdf/2610.26802",
   "date": "2026-10-19",
   "source": "hf-daily",
-  "hf_upvotes": 235,
+  "hf_upvotes": 247,
   "keyword_matches": [
     {
       "topic": "PEFT",
@@ -48,16 +48,16 @@
       "source": "hf-daily",
       "url": "https://huggingface.co/api/daily_papers?date=2026-10-20&limit=100",
       "attention_date": "2026-10-20",
-      "observed_at": "2026-10-21T08:54:16.562112+00:00",
-      "hf_upvotes": 235,
-      "raw_file": "papers/.state/runs/261021/work/sources/hf-2026-10-20.json"
+      "observed_at": "2026-10-26T03:11:03.738186+00:00",
+      "hf_upvotes": 247,
+      "raw_file": "papers/.state/runs/261026/work/sources/hf-2026-10-20.json"
     }
   ],
   "score": 75,
   "keyword_score": 4,
   "agent": {
     "score": 3,
-    "reason": "It develops LoRA-based PEFT and a multi-LoRA training kernel for large multimodal backbones, though the target task is brain encoding."
+    "reason": "Direct PEFT work: it scales LoRA adaptation to very large backbones and contributes a multi-LoRA training kernel."
   },
   "arxiv_id": "2610.26802",
   "doi": "",

@@ -49,17 +49,17 @@
     {
       "source": "hf-trending",
       "url": "https://huggingface.co/api/daily_papers?sort=trending&limit=100",
-      "attention_date": "2026-10-21",
-      "observed_at": "2026-10-21T08:54:20.849172+00:00",
+      "attention_date": "2026-10-26",
+      "observed_at": "2026-10-26T03:11:14.577844+00:00",
       "hf_upvotes": 14,
-      "raw_file": "papers/.state/runs/261021/work/sources/hf-trending.json"
+      "raw_file": "papers/.state/runs/261026/work/sources/hf-trending.json"
     }
   ],
   "score": 100,
   "keyword_score": 4,
   "agent": {
     "score": 4,
-    "reason": "It presents concrete mechanisms for accelerating distributed data-parallel training, including communication overlap, gradient bucketing and skip-synchronization; current weekly HF attention qualifies it independently despite its older first-upload date."
+    "reason": "It directly studies data-parallel training efficiency, gradient synchronization, communication overlap, and scaling across GPUs."
   },
   "arxiv_id": "2006.15704",
   "doi": "",

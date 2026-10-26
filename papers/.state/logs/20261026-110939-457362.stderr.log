@@ -1,0 +1,2 @@
+WARNING: failed to clean up stale arg0 temp dirs: Directory not empty (os error 39)
+2026-10-26T03:09:43.061029Z ERROR codex_state::sqlite: SQLite quick check detected corruption database=/home/yu/.codex/logs_2.sqlite

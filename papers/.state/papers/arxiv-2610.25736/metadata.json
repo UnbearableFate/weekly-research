@@ -49,7 +49,7 @@
   "pdf": "https://arxiv.org/pdf/2610.25736",
   "date": "2026-10-19",
   "source": "hf-daily",
-  "hf_upvotes": 111,
+  "hf_upvotes": 137,
   "keyword_matches": [
     {
       "topic": "LLM优化器",
@@ -69,16 +69,16 @@
       "source": "hf-daily",
       "url": "https://huggingface.co/api/daily_papers?date=2026-10-20&limit=100",
       "attention_date": "2026-10-20",
-      "observed_at": "2026-10-21T08:54:16.562112+00:00",
-      "hf_upvotes": 111,
-      "raw_file": "papers/.state/runs/261021/work/sources/hf-2026-10-20.json"
+      "observed_at": "2026-10-26T03:11:03.738186+00:00",
+      "hf_upvotes": 137,
+      "raw_file": "papers/.state/runs/261026/work/sources/hf-2026-10-20.json"
     }
   ],
   "score": 100,
   "keyword_score": 2,
   "agent": {
     "score": 4,
-    "reason": "It combines shared-experience policy fine-tuning with fault-tolerant asynchronous collection, optimization, and distribution across robot fleets."
+    "reason": "It directly contributes asynchronous fleet-scale learning, shared experience fine-tuning, and policy distribution across robots."
   },
   "arxiv_id": "2610.25736",
   "doi": "",

@@ -1,0 +1,6 @@
+{
+  "mode": "three-way-scan, limited to source verification and concise synthesis",
+  "common_why": "These papers address different bottlenecks in making learned behavior scalable or reliable: communication and experience collection, adapting large frozen backbones, optimization, memory-based continuity, and measurement of training effects.",
+  "divergent_how": "The mechanisms are not interchangeable: distributed systems schedule data and updates; PEFT and TokenGate add trainable modules; MuSGD changes parameter updates; memory-centric continual learning updates external state and management policies; the evaluation papers diagnose how training stages and supervision alter behavior.",
+  "selection": "All ten ranked candidates had qualifying HF attention within 2026-10-20–2026-10-26 at >=5 votes. Full-text review found substantive method, analysis, or system contributions tied to the configured interests; none was withdrawn."
+}
